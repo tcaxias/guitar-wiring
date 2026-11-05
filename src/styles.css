@@ -9,18 +9,54 @@
   --teal: #85c7bf;
   --muted: #9caaa9;
   --line: #334045;
+  --ink: #e8ebe4;
+  --surface: #101619;
 }
 
 /* Theme: light = Rust schema (warm beige) */
 [data-theme='light'] {
   --amber: #e69f67;
   --teal: #2b79a2;
-  --muted: #c8c9db;
+  --muted: #7a7a6a;
   --line: #6e6b5e;
   --wire-ground: #6e6b5e;
   --wire-ground-active: #3b2e2a;
+  --ink: #262625;
+  --surface: hsl(60, 9%, 87%);
   color: #262625;
   background: hsl(60, 9%, 87%);
+}
+
+[data-theme='light'] .board-footer {
+  color: var(--ink);
+  background: var(--surface);
+  border-top-color: var(--line);
+}
+
+[data-theme='light'] .output-card {
+  background: linear-gradient(130deg, #f0efe4, #e8e7dc 60%);
+  border-color: var(--line);
+}
+
+[data-theme='light'] .output-value strong {
+  color: var(--ink);
+}
+
+[data-theme='light'] .output-value span {
+  color: var(--muted);
+}
+
+[data-theme='light'] .app-footer {
+  color: var(--ink);
+  border-top-color: var(--line);
+}
+
+[data-theme='light'] .app-footer b {
+  color: var(--amber);
+}
+
+[data-theme='light'] .level-meter i {
+  background: #d9d8c9;
 }
 
 /* Theme: dark = Ayu schema (dark blue-grey) */
@@ -31,6 +67,8 @@
   --line: #ffb454;
   --wire-ground: #5c6773;
   --wire-ground-active: #14191f;
+  --ink: #c5c5c5;
+  --surface: hsl(210, 25%, 8%);
   color: #c5c5c5;
   background: hsl(210, 25%, 8%);
 }

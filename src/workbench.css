@@ -2,7 +2,7 @@
   --paper: hsl(60, 9%, 87%);
   --surface: hsl(60, 9%, 87%);
   --ink: #262625;
-  --muted: #c8c9db;
+  --muted: #7a7a6a;
   --line: #6e6b5e;
   --hover: #99908a;
   --amber: #e69f67;
@@ -98,7 +98,7 @@
 .workbench-ui .bench-title {
   font-size: 14px;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--ink);
   margin: 0 auto 0 12px;
   min-width: 0;
   overflow: hidden;
@@ -292,7 +292,7 @@
 }
 .workbench-ui .bench-status strong {
   font-size: 15px;
-  color: var(--amber);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 .workbench-ui .bench-contributors {
