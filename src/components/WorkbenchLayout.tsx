@@ -646,6 +646,25 @@ export function WorkbenchLayout({
                         ?.description
                     }
                   </p>
+                  {(() => {
+                    const current = exampleLibrary.find(
+                      (example) => example.id === exampleId,
+                    );
+                    return (
+                      current?.sourceUrl && (
+                        <p>
+                          ·{' '}
+                          <a
+                            href={current.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Source
+                          </a>
+                        </p>
+                      )
+                    );
+                  })()}
                   <button
                     onClick={() => {
                       const example = exampleLibrary.find(

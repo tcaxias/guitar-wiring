@@ -679,24 +679,29 @@ export const exampleLibrary: {
   id: string;
   title: string;
   description: string;
+  sourceUrl: string;
   createCircuit: () => Circuit;
 }[] = [
   {
     id: 'standard-tele',
     title: 'Standard Tele',
     description: 'Original 3-way, two-single-coil preset.',
+    sourceUrl: '',
     createCircuit: presetCircuit,
   },
   {
     id: 'split-humbuckers',
     title: 'Push-pull coil split',
     description: 'Two four-lead humbuckers; pull to retain each A coil.',
+    sourceUrl: 'https://www.fralinpickups.com/2017/03/29/push-pull-pots-mods/',
     createCircuit: splitHumbuckerCircuit,
   },
   {
     id: 'tele-four-way',
     title: '4-way Tele',
     description: 'Neck, parallel, bridge, series; separate neck cover ground.',
+    sourceUrl:
+      'https://www.stewmac.com/video-and-ideas/online-resources/learn-about-guitar-pickups-and-electronics-and-wiring/oak-grigsby-4-way-2-pole-lever-switch-instructions/',
     createCircuit: fourWayTeleCircuit,
   },
   {
@@ -704,24 +709,31 @@ export const exampleLibrary: {
     title: 'LC Varitone Tele',
     description:
       'Qualitative six-position LC shunt; not an exact vintage response.',
+    sourceUrl:
+      'https://www.premierguitar.com/pro-advice/mod-garage-varitone-wiring-reloaded-and-extended',
     createCircuit: varitoneCircuit,
   },
   {
     id: 'single-pickup-1v-1t',
     title: '1 single-coil, 1 volume, 1 tone',
     description: 'Single pickup with master volume and master tone.',
+    sourceUrl:
+      'https://guitarelectronics.com/guitar-wiring-resources/1-pickup-guitar-wiring-diagrams/1-humbucker-1-volume-1-tone/',
     createCircuit: singlePickupOneVolumeOneTone,
   },
   {
     id: 'single-humbucker-1v-1t',
     title: '1 humbucker, 1 volume, 1 tone',
     description: 'Single humbucker with master volume and master tone.',
+    sourceUrl:
+      'https://guitarelectronics.com/guitar-wiring-resources/1-pickup-guitar-wiring-diagrams/1-humbucker-1-volume-1-tone/',
     createCircuit: singleHumbuckerOneVolumeOneTone,
   },
   {
     id: 'single-humbucker-1v',
     title: '1 humbucker, 1 volume',
     description: 'Single humbucker with master volume only (no tone).',
+    sourceUrl: 'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V.pdf',
     createCircuit: singleHumbuckerOneVolume,
   },
   {
@@ -729,18 +741,24 @@ export const exampleLibrary: {
     title: '2 humbuckers, 3-way toggle, 1 volume, 1 tone',
     description:
       'Les Paul style: two humbuckers, 3-way toggle, shared controls.',
+    sourceUrl:
+      'https://guitarelectronics.com/guitar-wiring-resources/2-pickup-guitar-wiring-diagrams/2-humbuckers-w-3-way-switch/1-volume-1-tone/',
     createCircuit: twoHumbuckersThreeWayOneVolumeOneTone,
   },
   {
     id: 'two-humbuckers-3way-2v-2t',
     title: '2 humbuckers, 3-way toggle, 2 volumes, 2 tones',
     description: 'Les Paul style: individual volume and tone per pickup.',
+    sourceUrl:
+      'https://guitarelectronics.com/guitar-wiring-resources/2-pickup-guitar-wiring-diagrams/2-humbuckers-w-3-way-switch/2-volumes-2-tones/',
     createCircuit: twoHumbuckersThreeWayTwoVolumeTwoTone,
   },
   {
     id: 'two-humbuckers-3way-2v-2t-50s',
     title: '2 humbuckers, 3-way toggle, 2V/2T, 50s wiring',
     description: "Les Paul '50s wiring: tone taps off volume input, not wiper.",
+    sourceUrl:
+      'https://www.fralinpickups.com/diagram/gibson-les-paul-wiring-50s-wiring/',
     createCircuit: twoHumbuckersThreeWayTwoVolumeTwoTone50sWiring,
   },
   {
@@ -748,6 +766,7 @@ export const exampleLibrary: {
     title: '2 humbuckers, 3-way toggle, 1V/1T, push-pull tone split',
     description:
       'PRS SE Custom 24 style: push-pull tone splits both humbuckers.',
+    sourceUrl: 'https://www.cpearson.me.uk/2023/10/06/prs_se_24_wiring/',
     createCircuit: twoHumbuckersThreeWayOneVolumeOneTonePushPullTone,
   },
 ];

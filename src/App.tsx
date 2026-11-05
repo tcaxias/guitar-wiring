@@ -300,6 +300,25 @@ function Workbench() {
                   ?.description
               }
             </span>
+            {(() => {
+              const current = exampleLibrary.find(
+                (example) => example.id === exampleId,
+              );
+              return (
+                current?.sourceUrl && (
+                  <span>
+                    ·{' '}
+                    <a
+                      href={current.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Source
+                    </a>
+                  </span>
+                )
+              );
+            })()}
           </div>
         )}
         {flags.isDiagramFilesEnabled && (
