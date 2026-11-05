@@ -675,6 +675,464 @@ export function twoHumbuckersThreeWayOneVolumeOneTonePushPullTone(): Circuit {
   return circuit;
 }
 
+export function gretschSetzerHotRodCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Gretsch Setzer Hot Rod',
+      creator: 'Pickup Lab; reference: Gretsch Guitars',
+      sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+      permission:
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (Setzer-Hot-Rod_Circuit.pdf).',
+    },
+    parts: [
+      {
+        ...createPart('humbucker', 'neck'),
+        label: "Neck Filter'Tron",
+        x: 240,
+        y: 90,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: "Bridge Filter'Tron",
+        x: 240,
+        y: 300,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('blade', 'selector'),
+        label: '3-way toggle',
+        x: 420,
+        y: 200,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Master volume',
+        x: 620,
+        y: 200,
+        resistanceKOhms: 500,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 200 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      ['neck:a-start', 'selector:a1'],
+      ['neck:a-finish', 'neck:b-start'],
+      ['neck:b-finish', 'ground:common'],
+      ['neck:shield', 'ground:common'],
+      ['bridge:a-start', 'selector:b3'],
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      ['selector:a-common', 'volume:input'],
+      ['selector:b-common', 'selector:a-common'],
+      ['selector:a1', 'selector:a2'],
+      ['selector:b3', 'selector:b2'],
+      ['volume:wiper', 'jack:tip'],
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'tele');
+  return circuit;
+}
+
+export function gretschG6122CountryGentlemanCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Gretsch G6122-1959 Country Gentleman',
+      creator: 'Pickup Lab; reference: Gretsch Guitars',
+      sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+      permission:
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (NoToneREV.pdf).',
+    },
+    parts: [
+      {
+        ...createPart('humbucker', 'neck'),
+        label: "Neck Filter'Tron",
+        x: 240,
+        y: 90,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: "Bridge Filter'Tron",
+        x: 240,
+        y: 300,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('blade', 'selector'),
+        label: '3-way toggle',
+        x: 420,
+        y: 200,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Neck volume',
+        x: 600,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'volume-2'),
+        label: 'Bridge volume',
+        x: 780,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'master'),
+        label: 'Master volume',
+        x: 690,
+        y: 320,
+        resistanceKOhms: 500,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      ['neck:a-start', 'volume:input'],
+      ['neck:a-finish', 'neck:b-start'],
+      ['neck:b-finish', 'ground:common'],
+      ['neck:shield', 'ground:common'],
+      ['bridge:a-start', 'volume-2:input'],
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      ['selector:a-common', 'volume:wiper'],
+      ['selector:b-common', 'volume-2:wiper'],
+      ['selector:a1', 'selector:a2'],
+      ['selector:b3', 'selector:b2'],
+      ['selector:b-common', 'selector:a-common'],
+      ['volume:wiper', 'master:input'],
+      ['volume-2:wiper', 'master:input'],
+      ['master:wiper', 'jack:tip'],
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['volume-2:ground', 'ground:common'],
+      ['volume-2:casing', 'ground:common'],
+      ['master:ground', 'ground:common'],
+      ['master:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'split');
+  return circuit;
+}
+
+export function gretschTonePotCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Gretsch Tone Pot Circuit',
+      creator: 'Pickup Lab; reference: Gretsch Guitars',
+      sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+      permission:
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (TonePotRev.pdf). Gretsch typically uses 500k audio pots and a .022 uF tone cap (modeled as capacitor value 22 = 22 nF).',
+    },
+    parts: [
+      {
+        ...createPart('humbucker', 'neck'),
+        label: "Neck Filter'Tron",
+        x: 240,
+        y: 90,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: "Bridge Filter'Tron",
+        x: 240,
+        y: 300,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('blade', 'selector'),
+        label: '3-way toggle',
+        x: 420,
+        y: 200,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Neck volume',
+        x: 600,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'volume-2'),
+        label: 'Bridge volume',
+        x: 780,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'master'),
+        label: 'Master volume',
+        x: 690,
+        y: 320,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Master tone',
+        x: 690,
+        y: 460,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Tone capacitor',
+        x: 820,
+        y: 340,
+        value: 22,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      ['neck:a-start', 'volume:input'],
+      ['neck:a-finish', 'neck:b-start'],
+      ['neck:b-finish', 'ground:common'],
+      ['neck:shield', 'ground:common'],
+      ['bridge:a-start', 'volume-2:input'],
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      ['selector:a-common', 'volume:wiper'],
+      ['selector:b-common', 'volume-2:wiper'],
+      ['selector:a1', 'selector:a2'],
+      ['selector:b3', 'selector:b2'],
+      ['selector:b-common', 'selector:a-common'],
+      ['volume:wiper', 'master:input'],
+      ['volume-2:wiper', 'master:input'],
+      ['master:wiper', 'jack:tip'],
+      ['master:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['volume-2:ground', 'ground:common'],
+      ['volume-2:casing', 'ground:common'],
+      ['master:ground', 'ground:common'],
+      ['master:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'split');
+  return circuit;
+}
+
+export function gretschToneSwitchCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Gretsch Tone Switch Circuit',
+      creator: 'Pickup Lab; reference: Gretsch Guitars',
+      sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+      permission:
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (ToneSwitchRev.pdf). LIMITATION: This diagram uses a two-way tone switch selecting between two caps (.012 uF and .0039 uF). The current model supports a single capacitor (value 22, 47, 12, or 3.9 nF); modeled here with one capacitor at value 22 as an approximation. Gretsch typically uses 500k audio pots.',
+    },
+    parts: [
+      {
+        ...createPart('humbucker', 'neck'),
+        label: "Neck Filter'Tron",
+        x: 240,
+        y: 90,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: "Bridge Filter'Tron",
+        x: 240,
+        y: 300,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('blade', 'selector'),
+        label: '3-way toggle',
+        x: 420,
+        y: 200,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Neck volume',
+        x: 600,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'volume-2'),
+        label: 'Bridge volume',
+        x: 780,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'master'),
+        label: 'Master volume',
+        x: 690,
+        y: 320,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Tone switch',
+        x: 690,
+        y: 460,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Tone capacitor',
+        x: 820,
+        y: 340,
+        value: 22,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      ['neck:a-start', 'volume:input'],
+      ['neck:a-finish', 'neck:b-start'],
+      ['neck:b-finish', 'ground:common'],
+      ['neck:shield', 'ground:common'],
+      ['bridge:a-start', 'volume-2:input'],
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      ['selector:a-common', 'volume:wiper'],
+      ['selector:b-common', 'volume-2:wiper'],
+      ['selector:a1', 'selector:a2'],
+      ['selector:b3', 'selector:b2'],
+      ['selector:b-common', 'selector:a-common'],
+      ['volume:wiper', 'master:input'],
+      ['volume-2:wiper', 'master:input'],
+      ['master:wiper', 'jack:tip'],
+      ['master:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['volume-2:ground', 'ground:common'],
+      ['volume-2:casing', 'ground:common'],
+      ['master:ground', 'ground:common'],
+      ['master:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'split');
+  return circuit;
+}
+
+export function gretschToneStandbySwitchCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Gretsch Tone/Standby Switch Circuit',
+      creator: 'Pickup Lab; reference: Gretsch Guitars',
+      sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+      permission:
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (ToneSwitchStandBySwitchREV.pdf). LIMITATIONS: This diagram uses (1) a two-way tone switch selecting between two caps (.012 uF and .0039 uF) and (2) a standby switch that shorts output to ground. Neither switch type is representable in the current model; modeled here with one capacitor at value 22 as an approximation, with no standby switching. Gretsch typically uses 500k audio pots.',
+    },
+    parts: [
+      {
+        ...createPart('humbucker', 'neck'),
+        label: "Neck Filter'Tron",
+        x: 240,
+        y: 90,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: "Bridge Filter'Tron",
+        x: 240,
+        y: 300,
+        skin: 'filtertron',
+      },
+      {
+        ...createPart('blade', 'selector'),
+        label: '3-way toggle',
+        x: 420,
+        y: 200,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Neck volume',
+        x: 600,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'volume-2'),
+        label: 'Bridge volume',
+        x: 780,
+        y: 180,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('volume', 'master'),
+        label: 'Master volume',
+        x: 690,
+        y: 320,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Tone / standby switch',
+        x: 690,
+        y: 460,
+        resistanceKOhms: 500,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Tone capacitor',
+        x: 820,
+        y: 340,
+        value: 22,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      ['neck:a-start', 'volume:input'],
+      ['neck:a-finish', 'neck:b-start'],
+      ['neck:b-finish', 'ground:common'],
+      ['neck:shield', 'ground:common'],
+      ['bridge:a-start', 'volume-2:input'],
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      ['selector:a-common', 'volume:wiper'],
+      ['selector:b-common', 'volume-2:wiper'],
+      ['selector:a1', 'selector:a2'],
+      ['selector:b3', 'selector:b2'],
+      ['selector:b-common', 'selector:a-common'],
+      ['volume:wiper', 'master:input'],
+      ['volume-2:wiper', 'master:input'],
+      ['master:wiper', 'jack:tip'],
+      ['master:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['volume-2:ground', 'ground:common'],
+      ['volume-2:casing', 'ground:common'],
+      ['master:ground', 'ground:common'],
+      ['master:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'split');
+  return circuit;
+}
+
 export const exampleLibrary: {
   id: string;
   title: string;
@@ -768,5 +1226,44 @@ export const exampleLibrary: {
       'PRS SE Custom 24 style: push-pull tone splits both humbuckers.',
     sourceUrl: 'https://www.cpearson.me.uk/2023/10/06/prs_se_24_wiring/',
     createCircuit: twoHumbuckersThreeWayOneVolumeOneTonePushPullTone,
+  },
+  {
+    id: 'gretsch-setzer-hot-rod',
+    title: 'Gretsch Setzer Hot Rod',
+    description: "2 Filter'Trons, 3-way toggle, master volume, no tone.",
+    sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+    createCircuit: gretschSetzerHotRodCircuit,
+  },
+  {
+    id: 'gretsch-g6122-country-gentleman',
+    title: 'Gretsch G6122-1959 Country Gentleman',
+    description:
+      "2 Filter'Trons, 3-way toggle, individual volumes, master volume, no tone.",
+    sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+    createCircuit: gretschG6122CountryGentlemanCircuit,
+  },
+  {
+    id: 'gretsch-tone-pot',
+    title: 'Gretsch Tone Pot Circuit',
+    description:
+      "2 Filter'Trons, 3-way toggle, individual volumes, master volume, master tone.",
+    sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+    createCircuit: gretschTonePotCircuit,
+  },
+  {
+    id: 'gretsch-tone-switch',
+    title: 'Gretsch Tone Switch Circuit',
+    description:
+      "2 Filter'Trons, 3-way toggle, individual volumes, master volume, two-way tone switch (approximated with single capacitor).",
+    sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+    createCircuit: gretschToneSwitchCircuit,
+  },
+  {
+    id: 'gretsch-tone-standby-switch',
+    title: 'Gretsch Tone/Standby Switch Circuit',
+    description:
+      "2 Filter'Trons, 3-way toggle, individual volumes, master volume, tone/standby switch (approximated; standby switching not representable).",
+    sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
+    createCircuit: gretschToneStandbySwitchCircuit,
   },
 ];
