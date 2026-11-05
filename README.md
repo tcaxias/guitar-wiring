@@ -208,11 +208,29 @@ and **4178, 4179, 4181, 4182, 4184, 4186, 4187** for the default workbench and i
 Keep those ports free; **4180** remains available for manual preview.
 See [`package.json`](package.json) and [`playwright.config.ts`](playwright.config.ts).
 
-## Deployment
+## Deployment and live sites
 
-Publish to the existing Cloudflare Pages project `pickup-lab` using Direct Upload.
-The production target is <https://pickup-lab.pages.dev>. After [setup](#start),
-authenticate through Wrangler's browser OAuth flow when needed:
+The playground is available live at two mirrors:
+
+- **GitHub Pages:** <https://tcaxias.github.io/guitar-wiring/>
+- **Cloudflare Pages:** <https://pickup-lab.pages.dev>
+
+### Continuous Deployment (CD)
+
+Every push to `main` triggers GitHub Actions (`.github/workflows/ci.yml`), which
+runs the full verification suite (`npm run check`) and deploys:
+
+1. **GitHub Pages (automatic):** Deploys built assets on every push to `main` using
+   GitHub Actions Pages deployment.
+2. **Cloudflare Pages (automatic or manual):**
+   - **Automatic in CI:** Runs on push to `main` when `CLOUDFLARE_API_TOKEN` and
+     `CLOUDFLARE_ACCOUNT_ID` are configured in GitHub repository secrets.
+   - **Manual CLI deploy:** Run `npm run deploy` locally anytime to build, verify,
+     and upload directly to Cloudflare Pages via Wrangler.
+
+### Manual Cloudflare deployment
+
+After [setup](#start), authenticate through Wrangler's browser OAuth flow when needed:
 
 ```sh
 npx wrangler login
@@ -228,11 +246,16 @@ npm run deploy:preview  # Preview: preview.pickup-lab.pages.dev
 Both [scripts](package.json) run the full `npm run check`, including the build,
 then upload only built static assets from `dist/` ([configuration](wrangler.jsonc)).
 They build the current working tree; `--commit-dirty=true` acknowledges uncommitted
-changes. Uploads are independent of Git remotes and pushes. The explicit `main`
-and `preview` branches are Cloudflare deployment metadata, independent of the
-current local branch.
+changes. Uploads are independent of Git remotes and pushes.
 
 Saved circuits stay in the browser, separately for each origin. Use **Export JSON**
-on localhost and **Import JSON** on the deployed site to transfer saved work.
-[Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/)
-supports CLI-based CI; switching to built-in Git integration requires a new project.
+and **Import JSON** to transfer saved work between environments.
+
+## License
+
+Dual-licensed under either:
+
+- MIT License ([`LICENSE-MIT`](LICENSE-MIT))
+- Apache License, Version 2.0 ([`LICENSE-APACHE-2.0`](LICENSE-APACHE-2.0))
+
+at your option. SPDX identifier: `(MIT OR Apache-2.0)`.
