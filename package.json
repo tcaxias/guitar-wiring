@@ -1,0 +1,48 @@
+{
+  "name": "guitar-wiring",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "26.13.x",
+    "npm": "11.20.x"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "deploy": "npm run check && wrangler pages deploy dist --project-name=pickup-lab --branch=main --commit-dirty=true",
+    "deploy:preview": "npm run check && wrangler pages deploy dist --project-name=pickup-lab --branch=preview --commit-dirty=true",
+    "typecheck": "tsc -b",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "test:identity": "node --test scripts/check-git-identity.test.mjs",
+    "check": "npm run identity:check && npm run format:check && npm run lint && npm run test:identity && npm run test && npm run build && npm run test:browser",
+    "identity:check": "node scripts/check-git-identity.mjs",
+    "hooks:install": "git config --local core.hooksPath .githooks"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "eslint": "^9.39.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.5.0",
+    "prettier": "^3.6.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vite": "^7.2.0",
+    "vitest": "^4.0.8",
+    "wrangler": "4.156.0"
+  }
+}
