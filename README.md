@@ -4,6 +4,13 @@ A local-first playground for exploring passive guitar wiring. Change a control,
 follow the signal, then edit the circuit. Built with React, TypeScript, and Vite;
 circuit processing and saved work stay in your browser.
 
+## Live sites
+
+- **GitHub Pages:** <https://tcaxias.github.io/guitar-wiring/>
+- **Cloudflare Pages:** <https://pickup-lab.pages.dev>
+
+Both deploy automatically on every push to `main` via GitHub Actions.
+
 ## Start
 
 Use Node **26.13.0** ([`.node-version`](.node-version)) and npm **11.20.x**

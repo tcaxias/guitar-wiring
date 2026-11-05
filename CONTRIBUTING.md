@@ -5,33 +5,22 @@ in the browser. Read [AGENTS.md](AGENTS.md) and [README.md](README.md) first.
 
 ## Personal Git identity
 
-Every commit author and committer must be
-**Tiago Caxias <12184375+tcaxias@users.noreply.github.com>**.
-Configure identity locally in this repository:
+Every commit uses **Tiago Caxias <12184375+tcaxias@users.noreply.github.com>**.
+Set it locally in this repository:
 
 ```sh
 git config --local user.name "Tiago Caxias"
 git config --local user.email "12184375+tcaxias@users.noreply.github.com"
-git config --local user.useConfigOnly true
-npm run hooks:install
-npm run identity:check
 ```
 
-Before each commit, verify the local configuration and resolved identities:
+Verify before committing:
 
 ```sh
-git config --local --get user.name
-git config --local --get user.email
 git var GIT_AUTHOR_IDENT
 git var GIT_COMMITTER_IDENT
-npm run identity:check
 ```
 
-Stop on any mismatch, including an environment override. The
-[identity checker](scripts/check-git-identity.mjs) verifies repository-local
-settings and both resolved identities. The installed
-[pre-commit hook](.githooks/pre-commit) runs this check; `npm run check` runs it
-again. Preserve attribution trailers added by tooling.
+Stop on any mismatch. Preserve attribution trailers added by tooling.
 
 ## Change loop
 
