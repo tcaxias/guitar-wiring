@@ -482,7 +482,11 @@ describe('library and strict portable additions', () => {
       // arrangement — only the tone tap point differs.
       const expectedStatus =
         example.id === 'two-humbuckers-3way-2v-2t' ||
-        example.id === 'two-humbuckers-3way-2v-2t-50s'
+        example.id === 'two-humbuckers-3way-2v-2t-50s' ||
+        example.id === 'gretsch-g6122-country-gentleman' ||
+        example.id === 'gretsch-tone-pot' ||
+        example.id === 'gretsch-tone-switch' ||
+        example.id === 'gretsch-tone-standby-switch'
           ? 'unavailable'
           : 'live';
       expect(analyze(circuit).status).toBe(expectedStatus);
@@ -494,8 +498,8 @@ describe('library and strict portable additions', () => {
       if (example.id !== 'standard-tele') {
         expect(circuit.metadata.sourceUrl).toMatch(/^https:\/\//);
         expect(circuit.metadata.creator).toMatch(/Pickup Lab; reference:/);
-        expect(circuit.metadata.permission).toBe(
-          'Reference credited; reuse terms not specified.',
+        expect(circuit.metadata.permission).toMatch(
+          /^Reference credited; reuse terms not specified\./,
         );
       }
     },

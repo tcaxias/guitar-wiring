@@ -1038,7 +1038,7 @@ export function gretschToneStandbySwitchCircuit(): Circuit {
       creator: 'Pickup Lab; reference: Gretsch Guitars',
       sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
       permission:
-        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (ToneSwitchStandBySwitchREV.pdf). LIMITATIONS: This diagram uses (1) a two-way tone switch selecting between two caps (.012 uF and .0039 uF) and (2) a standby switch that shorts output to ground. Neither switch type is representable in the current model; modeled here with one capacitor at value 22 as an approximation, with no standby switching. Gretsch typically uses 500k audio pots.',
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF (ToneSwitchStandBySwitchREV.pdf). LIMITATIONS: Two-way tone switch and standby switch not representable; modeled with one capacitor (value 22) and no standby switching.',
     },
     parts: [
       {

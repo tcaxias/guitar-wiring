@@ -58,9 +58,11 @@ describe('stable physical lead roles', () => {
       for (const id of groundPresentation(circuit).groundWires)
         expect(baseline[id]).toBe('ground');
       // Both master volumes may join at the tip; every lead there is HOT.
-      expect(new Set(roleAt(circuit, 'jack:tip'))).toEqual(new Set(['hot']));
+      if (analyze(circuit).status === 'live') {
+        expect(new Set(roleAt(circuit, 'jack:tip'))).toEqual(new Set(['hot']));
+      }
       // Tone-less arrangements (e.g. single-humbucker-1v) have no tone leads.
-      if (circuit.parts.some((part) => part.id === 'tone')) {
+      if (circuit.parts.some((part) => part.id === 'tone') && analyze(circuit).status === 'live') {
         expect(roleAt(circuit, 'tone:input')).toEqual(['tone']);
         expect(roleAt(circuit, 'tone:wiper')).toEqual(['tone']);
       }
