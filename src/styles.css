@@ -17,7 +17,7 @@
 [data-theme='light'] {
   --amber: #e69f67;
   --teal: #2b79a2;
-  --muted: #7a7a6a;
+  --muted: #5a5950;
   --line: #6e6b5e;
   --wire-ground: #6e6b5e;
   --wire-ground-active: #3b2e2a;
@@ -46,13 +46,17 @@
   color: var(--muted);
 }
 
+[data-theme='light'] .panel-subtitle {
+  color: var(--muted);
+}
+
 [data-theme='light'] .app-footer {
   color: var(--ink);
   border-top-color: var(--line);
 }
 
-[data-theme='light'] .app-footer b {
-  color: var(--amber);
+[data-theme='light'] .knob-number {
+  fill: var(--ink);
 }
 
 [data-theme='light'] .level-meter i {
