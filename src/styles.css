@@ -656,7 +656,7 @@ h1 {
   color: #a4b3b0;
 }
 .control-heading output {
-  color: var(--amber);
+  color: currentColor;
   font-size: 16px;
 }
 .control-heading output > span {
