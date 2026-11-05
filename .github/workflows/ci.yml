@@ -20,7 +20,12 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - run: npx playwright install chromium
+      - run: npx playwright install --with-deps chromium
+      - name: Configure Git identity for check
+        run: |
+          git config --local user.name "Tiago Caxias"
+          git config --local user.email "12184375+tcaxias@users.noreply.github.com"
+          git config --local user.useConfigOnly true
       - run: npm run check
 
   deploy-gh-pages:
