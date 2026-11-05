@@ -131,7 +131,7 @@ export function isCircuit(value: unknown): value is Circuit {
       return false;
     if (
       part.kind === 'capacitor'
-        ? ![22, 47].includes(part.value)
+        ? ![22, 47, 12, 3.9].includes(part.value)
         : part.value > 10
     )
       return false;

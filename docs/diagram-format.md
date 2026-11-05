@@ -25,7 +25,7 @@ plus the optional part fields below. All ranges include both endpoints.
 - **Parts:** `kind` is one of the table entries below; `label` is a string of
   1–40 characters. `x` and `y` are finite numbers in 0–900 and 0–525 respectively.
 - **Settings:** every part includes numeric `value` and string `position`.
-  Capacitors accept `value` 22 or 47; `blade4` accepts integers 1–4;
+  Capacitors accept `value` 22, 47, 12, or 3.9; `blade4` accepts integers 1–4;
   `varitone` accepts integers 1–6. All other kinds accept 0–10, including
   fractional values. `position` accepts `neck`, `both`, or `bridge` and remains
   required for compatibility, including on parts controlled by `value` or `isPulled`.
