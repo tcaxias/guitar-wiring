@@ -62,7 +62,10 @@ describe('stable physical lead roles', () => {
         expect(new Set(roleAt(circuit, 'jack:tip'))).toEqual(new Set(['hot']));
       }
       // Tone-less arrangements (e.g. single-humbucker-1v) have no tone leads.
-      if (circuit.parts.some((part) => part.id === 'tone') && analyze(circuit).status === 'live') {
+      if (
+        circuit.parts.some((part) => part.id === 'tone') &&
+        analyze(circuit).status === 'live'
+      ) {
         expect(roleAt(circuit, 'tone:input')).toEqual(['tone']);
         expect(roleAt(circuit, 'tone:wiper')).toEqual(['tone']);
       }
