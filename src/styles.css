@@ -56,7 +56,7 @@
 }
 
 [data-theme='light'] .knob-number {
-  fill: var(--ink);
+  fill: var(--amber);
 }
 
 [data-theme='light'] .level-meter i {
