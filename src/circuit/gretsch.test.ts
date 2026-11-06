@@ -198,10 +198,10 @@ describe('Gretsch tone circuits — standby switch limitation', () => {
     const circuit = gretschToneSwitchCircuit();
     const estimate = analyze(circuit);
     expect(estimate.status).toBe('unavailable');
-    // Single capacitor modeled at value 22 as documented approximation
+    // Single capacitor modeled at value 12 as documented approximation
     const tone = circuit.parts.find((p) => p.id === 'tone')!;
     expect(tone.kind).toBe('tone');
     const cap = circuit.parts.find((p) => p.kind === 'capacitor')!;
-    expect([22, 47]).toContain(cap.value);
+    expect(cap.value).toBe(12);
   });
 });

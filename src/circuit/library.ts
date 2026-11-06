@@ -935,7 +935,7 @@ export function gretschToneSwitchCircuit(): Circuit {
       creator: 'Pickup Lab; reference: Gretsch Guitars',
       sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
       permission:
-        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF title and known Gretsch wiring conventions; verify against source PDF (ToneSwitchRev.pdf). LIMITATION: This diagram uses a two-way tone switch selecting between two caps (.012 uF and .0039 uF). The current model supports a single capacitor (value 22, 47, 12, or 3.9 nF); modeled here with one capacitor at value 22 as an approximation. Gretsch typically uses 500k audio pots.',
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF (ToneSwitchRev.pdf). LIMITATION: This diagram uses a two-way tone switch selecting between two caps (.012 uF and .0039 uF). The current model supports one capacitor; modeled here at value 12 (12 nF = .012 uF). Gretsch typically uses 500k audio pots.',
     },
     parts: [
       {
@@ -991,7 +991,7 @@ export function gretschToneSwitchCircuit(): Circuit {
         label: 'Tone capacitor',
         x: 820,
         y: 340,
-        value: 22,
+        value: 12,
       },
       { ...createPart('jack', 'jack'), x: 820, y: 480 },
       { ...createPart('ground', 'ground'), x: 440, y: 480 },
@@ -1038,7 +1038,7 @@ export function gretschToneStandbySwitchCircuit(): Circuit {
       creator: 'Pickup Lab; reference: Gretsch Guitars',
       sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
       permission:
-        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF (ToneSwitchStandBySwitchREV.pdf). LIMITATIONS: Two-way tone switch and standby switch not representable; modeled with one capacitor (value 22) and no standby switching.',
+        'Reference credited; reuse terms not specified. Circuit reconstructed from Gretsch PDF (ToneSwitchStandBySwitchREV.pdf). LIMITATIONS: Two-way tone switch selecting between .012 uF and .0039 uF caps, plus a standby switch shorting output to ground. Neither switch type is representable; modeled here with one capacitor at value 12 (12 nF = .012 uF) and no standby switching.',
     },
     parts: [
       {
@@ -1094,7 +1094,7 @@ export function gretschToneStandbySwitchCircuit(): Circuit {
         label: 'Tone capacitor',
         x: 820,
         y: 340,
-        value: 22,
+        value: 12,
       },
       { ...createPart('jack', 'jack'), x: 820, y: 480 },
       { ...createPart('ground', 'ground'), x: 440, y: 480 },
