@@ -240,7 +240,7 @@ function PartArtwork({
           <text
             transform={`translate(90 71) scale(${labelScale})`}
             textAnchor="middle"
-            className="knob-number"
+            className={`knob-number knob-number-${potRole(part)}`}
           >
             {part.value}
           </text>

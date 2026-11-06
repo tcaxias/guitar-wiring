@@ -55,10 +55,6 @@
   border-top-color: var(--line);
 }
 
-[data-theme='light'] .knob-number {
-  fill: var(--amber);
-}
-
 [data-theme='light'] .level-meter i {
   background: #d9d8c9;
 }
@@ -431,6 +427,12 @@ h1 {
   fill: var(--ink);
   font-size: 17px;
   font-weight: 500;
+}
+.knob-number.knob-number-volume {
+  fill: var(--amber);
+}
+.knob-number.knob-number-tone {
+  fill: var(--teal);
 }
 .capacitor-number {
   fill: var(--ink);
