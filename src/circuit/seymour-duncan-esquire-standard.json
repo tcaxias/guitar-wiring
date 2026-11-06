@@ -4,7 +4,7 @@
     "title": "Seymour Duncan: Standard Esquire",
     "creator": "Pickup Lab; reference: Seymour Duncan",
     "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/Esq_Standard.pdf",
-    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: Source position 3 needs a 0.05 uF capacitor in series with a 3.3 kOhm resistor. This model has no resistor and supports only 3.9, 12, 22, or 47 nF capacitors; that fixed treble-roll-off branch is omitted, not approximated. App neck/both/bridge positions map to source 1/2/3. The source bridge ground ends at the volume casing; no bridge terminal exists in this model."
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: Source position 3 needs a 0.05 uF capacitor in series with a 3.3 kOhm resistor. This model has no resistor and supports only 3.9, 12, 22, or 47 nF capacitors; that branch is omitted. App neck/both/bridge = source 1/2/3, so neck and bridge are now identical (no tone/roll-off). Bridge ground ends at volume casing; no bridge terminal."
   },
   "parts": [
     {

@@ -1,0 +1,189 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull split, 2 tones",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSPL_2T.pdf",
+    "permission": "Seymour Duncan encourages sharing wiring diagrams freely; commercial use needs prior written permission. LIMITATIONS: Generic humbuckers use logical coil terminals, not lead colors/polarity. Bridge ground, cable, and load omitted; no bridge terminal. Blade poles model selection logic, not physical terminals. Logical pot lugs and linear scale, not audio taper. Two volumes and two tones exceed analyzer limit so the estimate is unavailable. Each push/pull splits its pickup. 0.047uF shown as 47nF."
+  },
+  "parts": [
+    {
+      "id": "neck",
+      "kind": "humbucker",
+      "label": "Neck humbucker",
+      "x": 120,
+      "y": 70,
+      "value": 10,
+      "position": "neck"
+    },
+    {
+      "id": "bridge",
+      "kind": "humbucker",
+      "label": "Bridge humbucker",
+      "x": 120,
+      "y": 280,
+      "value": 10,
+      "position": "bridge"
+    },
+    {
+      "id": "neck-volume",
+      "kind": "push-pull-volume",
+      "label": "Neck volume / coil split",
+      "x": 350,
+      "y": 70,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500,
+      "isPulled": false
+    },
+    {
+      "id": "bridge-volume",
+      "kind": "push-pull-volume",
+      "label": "Bridge volume / coil split",
+      "x": 350,
+      "y": 280,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500,
+      "isPulled": false
+    },
+    {
+      "id": "selector",
+      "kind": "blade",
+      "label": "3-way blade logic",
+      "x": 590,
+      "y": 170,
+      "value": 10,
+      "position": "neck"
+    },
+    {
+      "id": "neck-tone",
+      "kind": "tone",
+      "label": "Neck tone",
+      "x": 570,
+      "y": 265,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "bridge-tone",
+      "kind": "tone",
+      "label": "Bridge tone",
+      "x": 760,
+      "y": 265,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "neck-capacitor",
+      "kind": "capacitor",
+      "label": "Neck 0.047 uF capacitor",
+      "x": 550,
+      "y": 390,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "bridge-capacitor",
+      "kind": "capacitor",
+      "label": "Bridge 0.047 uF capacitor",
+      "x": 770,
+      "y": 390,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 890,
+      "y": 150,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "label": "Ground network",
+      "x": 500,
+      "y": 500,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    { "id": "wire-0", "from": "neck:a-start", "to": "neck-volume:input" },
+    { "id": "wire-1", "from": "neck:a-finish", "to": "neck:b-start" },
+    { "id": "wire-2", "from": "neck:b-finish", "to": "ground:common" },
+    { "id": "wire-3", "from": "neck:shield", "to": "ground:common" },
+    {
+      "id": "wire-4",
+      "from": "neck:a-finish",
+      "to": "neck-volume:switch-a-common"
+    },
+    {
+      "id": "wire-5",
+      "from": "neck-volume:switch-a2",
+      "to": "neck-volume:casing"
+    },
+    { "id": "wire-6", "from": "bridge:a-start", "to": "bridge-volume:input" },
+    { "id": "wire-7", "from": "bridge:a-finish", "to": "bridge:b-start" },
+    { "id": "wire-8", "from": "bridge:b-finish", "to": "ground:common" },
+    { "id": "wire-9", "from": "bridge:shield", "to": "ground:common" },
+    {
+      "id": "wire-10",
+      "from": "bridge:a-finish",
+      "to": "bridge-volume:switch-a-common"
+    },
+    {
+      "id": "wire-11",
+      "from": "bridge-volume:switch-a2",
+      "to": "bridge-volume:casing"
+    },
+    { "id": "wire-12", "from": "neck-volume:ground", "to": "ground:common" },
+    { "id": "wire-13", "from": "neck-volume:casing", "to": "ground:common" },
+    { "id": "wire-14", "from": "bridge-volume:ground", "to": "ground:common" },
+    { "id": "wire-15", "from": "bridge-volume:casing", "to": "ground:common" },
+    { "id": "wire-16", "from": "neck-volume:input", "to": "neck-tone:input" },
+    {
+      "id": "wire-17",
+      "from": "bridge-volume:input",
+      "to": "bridge-tone:input"
+    },
+    { "id": "wire-18", "from": "neck-tone:wiper", "to": "neck-capacitor:a" },
+    { "id": "wire-19", "from": "neck-capacitor:b", "to": "neck-tone:casing" },
+    { "id": "wire-20", "from": "neck-tone:casing", "to": "ground:common" },
+    {
+      "id": "wire-21",
+      "from": "bridge-tone:wiper",
+      "to": "bridge-capacitor:a"
+    },
+    {
+      "id": "wire-22",
+      "from": "bridge-capacitor:b",
+      "to": "bridge-tone:casing"
+    },
+    { "id": "wire-23", "from": "bridge-tone:casing", "to": "ground:common" },
+    { "id": "wire-24", "from": "neck-volume:wiper", "to": "selector:a1" },
+    { "id": "wire-25", "from": "neck-volume:wiper", "to": "selector:a2" },
+    {
+      "id": "wire-26",
+      "from": "bridge-volume:wiper",
+      "to": "selector:b2"
+    },
+    {
+      "id": "wire-27",
+      "from": "bridge-volume:wiper",
+      "to": "selector:b3"
+    },
+    { "id": "wire-28", "from": "selector:a-common", "to": "jack:tip" },
+    {
+      "id": "wire-29",
+      "from": "selector:b-common",
+      "to": "selector:a-common"
+    },
+    { "id": "wire-30", "from": "ground:common", "to": "jack:sleeve" }
+  ]
+}
