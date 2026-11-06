@@ -1,0 +1,92 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: Standard Esquire",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/Esq_Standard.pdf",
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: Source position 3 needs a 0.05 uF capacitor in series with a 3.3 kOhm resistor. This model has no resistor and supports only 3.9, 12, 22, or 47 nF capacitors; that fixed treble-roll-off branch is omitted, not approximated. App neck/both/bridge positions map to source 1/2/3. The source bridge ground ends at the volume casing; no bridge terminal exists in this model."
+  },
+  "parts": [
+    {
+      "id": "bridge",
+      "kind": "pickup",
+      "label": "Bridge single coil",
+      "x": 180,
+      "y": 90,
+      "value": 10,
+      "position": "bridge"
+    },
+    {
+      "id": "selector",
+      "kind": "blade",
+      "label": "3-way Esquire selector",
+      "x": 400,
+      "y": 160,
+      "value": 10,
+      "position": "neck"
+    },
+    {
+      "id": "volume",
+      "kind": "volume",
+      "label": "Master volume",
+      "x": 620,
+      "y": 300,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "tone",
+      "kind": "tone",
+      "label": "Master tone (position 2)",
+      "x": 620,
+      "y": 440,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "capacitor",
+      "kind": "capacitor",
+      "label": "0.047 uF tone capacitor",
+      "x": 820,
+      "y": 340,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 820,
+      "y": 480,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "label": "Signal ground",
+      "x": 420,
+      "y": 480,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    { "id": "wire-0", "from": "bridge:hot", "to": "selector:a-common" },
+    { "id": "wire-1", "from": "bridge:hot", "to": "selector:b-common" },
+    { "id": "wire-2", "from": "selector:a1", "to": "volume:input" },
+    { "id": "wire-3", "from": "selector:a2", "to": "volume:input" },
+    { "id": "wire-4", "from": "selector:a3", "to": "volume:input" },
+    { "id": "wire-5", "from": "selector:b2", "to": "tone:input" },
+    { "id": "wire-6", "from": "bridge:return", "to": "volume:casing" },
+    { "id": "wire-7", "from": "volume:wiper", "to": "jack:tip" },
+    { "id": "wire-8", "from": "volume:ground", "to": "ground:common" },
+    { "id": "wire-9", "from": "volume:casing", "to": "ground:common" },
+    { "id": "wire-10", "from": "tone:wiper", "to": "capacitor:a" },
+    { "id": "wire-11", "from": "capacitor:b", "to": "ground:common" },
+    { "id": "wire-12", "from": "tone:casing", "to": "ground:common" },
+    { "id": "wire-13", "from": "ground:common", "to": "jack:sleeve" }
+  ]
+}

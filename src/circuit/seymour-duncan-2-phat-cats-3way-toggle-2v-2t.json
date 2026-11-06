@@ -1,0 +1,233 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: 2 Phat Cats, 3-way toggle, 2 volumes, 2 tones",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/2PhatCat_3G_2V_2T.pdf",
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: Two blade poles logically represent the 3-way toggle, not its physical terminals. Each Phat Cat's braided lead is modeled as HOT/RETURN. The model omits source lead construction, bridge ground, cable, and load. Pots use logical lugs and a linear scale, not physical orientation or audio taper. Two volumes and two tones make the analyzer estimate unavailable."
+  },
+  "parts": [
+    {
+      "id": "neck",
+      "kind": "pickup",
+      "label": "Neck Phat Cat",
+      "x": 120,
+      "y": 280,
+      "value": 10,
+      "position": "neck",
+      "skin": "p90"
+    },
+    {
+      "id": "bridge",
+      "kind": "pickup",
+      "label": "Bridge Phat Cat",
+      "x": 120,
+      "y": 70,
+      "value": 10,
+      "position": "bridge",
+      "skin": "p90"
+    },
+    {
+      "id": "neck-volume",
+      "kind": "volume",
+      "label": "Neck volume",
+      "x": 390,
+      "y": 280,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "bridge-volume",
+      "kind": "volume",
+      "label": "Bridge volume",
+      "x": 390,
+      "y": 70,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "neck-tone",
+      "kind": "tone",
+      "label": "Neck tone",
+      "x": 610,
+      "y": 280,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "bridge-tone",
+      "kind": "tone",
+      "label": "Bridge tone",
+      "x": 610,
+      "y": 70,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "neck-capacitor",
+      "kind": "capacitor",
+      "label": "Neck 0.047 uF capacitor",
+      "x": 810,
+      "y": 280,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "bridge-capacitor",
+      "kind": "capacitor",
+      "label": "Bridge 0.047 uF capacitor",
+      "x": 810,
+      "y": 70,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "selector",
+      "kind": "blade",
+      "label": "3-way toggle logic",
+      "x": 610,
+      "y": 430,
+      "value": 10,
+      "position": "neck"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 890,
+      "y": 430,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "label": "Ground network",
+      "x": 350,
+      "y": 470,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    {
+      "id": "wire-0",
+      "from": "neck:hot",
+      "to": "neck-volume:input"
+    },
+    {
+      "id": "wire-1",
+      "from": "neck:return",
+      "to": "neck-volume:casing"
+    },
+    {
+      "id": "wire-2",
+      "from": "neck-volume:ground",
+      "to": "neck-volume:casing"
+    },
+    {
+      "id": "wire-3",
+      "from": "bridge:hot",
+      "to": "bridge-volume:input"
+    },
+    {
+      "id": "wire-4",
+      "from": "bridge:return",
+      "to": "bridge-volume:casing"
+    },
+    {
+      "id": "wire-5",
+      "from": "bridge-volume:ground",
+      "to": "bridge-volume:casing"
+    },
+    {
+      "id": "wire-6",
+      "from": "neck-volume:input",
+      "to": "neck-tone:input"
+    },
+    {
+      "id": "wire-7",
+      "from": "bridge-volume:input",
+      "to": "bridge-tone:input"
+    },
+    {
+      "id": "wire-8",
+      "from": "neck-tone:wiper",
+      "to": "neck-capacitor:a"
+    },
+    {
+      "id": "wire-9",
+      "from": "neck-capacitor:b",
+      "to": "neck-tone:casing"
+    },
+    {
+      "id": "wire-10",
+      "from": "bridge-tone:wiper",
+      "to": "bridge-capacitor:a"
+    },
+    {
+      "id": "wire-11",
+      "from": "bridge-capacitor:b",
+      "to": "bridge-tone:casing"
+    },
+    {
+      "id": "wire-12",
+      "from": "neck-volume:wiper",
+      "to": "selector:a1"
+    },
+    {
+      "id": "wire-13",
+      "from": "bridge-volume:wiper",
+      "to": "selector:b3"
+    },
+    {
+      "id": "wire-14",
+      "from": "neck-volume:wiper",
+      "to": "selector:a2"
+    },
+    {
+      "id": "wire-15",
+      "from": "bridge-volume:wiper",
+      "to": "selector:b2"
+    },
+    {
+      "id": "wire-16",
+      "from": "selector:a-common",
+      "to": "jack:tip"
+    },
+    {
+      "id": "wire-17",
+      "from": "selector:b-common",
+      "to": "jack:tip"
+    },
+    {
+      "id": "wire-18",
+      "from": "neck-volume:casing",
+      "to": "ground:common"
+    },
+    {
+      "id": "wire-19",
+      "from": "bridge-volume:casing",
+      "to": "ground:common"
+    },
+    {
+      "id": "wire-20",
+      "from": "neck-tone:casing",
+      "to": "ground:common"
+    },
+    {
+      "id": "wire-21",
+      "from": "bridge-tone:casing",
+      "to": "ground:common"
+    },
+    {
+      "id": "wire-22",
+      "from": "ground:common",
+      "to": "jack:sleeve"
+    }
+  ]
+}

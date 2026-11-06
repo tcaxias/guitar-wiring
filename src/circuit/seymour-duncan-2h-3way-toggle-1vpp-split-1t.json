@@ -1,0 +1,116 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: 2 humbuckers, 3-way toggle, push/pull volume coil split, 1 tone",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1VppSPL_1T.pdf",
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: Blade poles model toggle logic, not physical terminals. Generic four-conductor humbuckers model series and split topology, not source lead colors, polarity, electrical values, bridge ground, cable, or load. Logical pot lugs and linear scale omit physical orientation and audio taper. The PDF 0.047 uF capacitor maps to 47 nF."
+  },
+  "parts": [
+    {
+      "id": "neck",
+      "kind": "humbucker",
+      "label": "Neck humbucker",
+      "x": 120,
+      "y": 70,
+      "value": 10,
+      "position": "neck"
+    },
+    {
+      "id": "bridge",
+      "kind": "humbucker",
+      "label": "Bridge humbucker",
+      "x": 120,
+      "y": 280,
+      "value": 10,
+      "position": "bridge"
+    },
+    {
+      "id": "selector",
+      "kind": "blade",
+      "label": "3-way toggle logic",
+      "x": 390,
+      "y": 170,
+      "value": 10,
+      "position": "neck"
+    },
+    {
+      "id": "volume",
+      "kind": "push-pull-volume",
+      "label": "Master volume / coil split",
+      "x": 650,
+      "y": 120,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500,
+      "isPulled": false
+    },
+    {
+      "id": "tone",
+      "kind": "tone",
+      "label": "Master tone",
+      "x": 650,
+      "y": 350,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 500
+    },
+    {
+      "id": "capacitor",
+      "kind": "capacitor",
+      "label": "0.047 uF tone capacitor",
+      "x": 850,
+      "y": 350,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 890,
+      "y": 150,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "label": "Ground network",
+      "x": 500,
+      "y": 460,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    { "id": "wire-0", "from": "neck:a-start", "to": "selector:a1" },
+    { "id": "wire-1", "from": "neck:a-finish", "to": "neck:b-start" },
+    { "id": "wire-2", "from": "neck:b-finish", "to": "ground:common" },
+    { "id": "wire-3", "from": "neck:shield", "to": "ground:common" },
+    { "id": "wire-4", "from": "neck:a-finish", "to": "volume:switch-a-common" },
+    { "id": "wire-5", "from": "volume:switch-a2", "to": "ground:common" },
+    { "id": "wire-6", "from": "bridge:a-start", "to": "selector:b3" },
+    { "id": "wire-7", "from": "bridge:a-finish", "to": "bridge:b-start" },
+    { "id": "wire-8", "from": "bridge:b-finish", "to": "ground:common" },
+    { "id": "wire-9", "from": "bridge:shield", "to": "ground:common" },
+    {
+      "id": "wire-10",
+      "from": "bridge:a-finish",
+      "to": "volume:switch-b-common"
+    },
+    { "id": "wire-11", "from": "volume:switch-b2", "to": "ground:common" },
+    { "id": "wire-12", "from": "selector:a1", "to": "selector:a2" },
+    { "id": "wire-13", "from": "selector:b2", "to": "selector:b3" },
+    { "id": "wire-14", "from": "selector:a-common", "to": "volume:input" },
+    { "id": "wire-15", "from": "selector:b-common", "to": "selector:a-common" },
+    { "id": "wire-16", "from": "volume:input", "to": "tone:input" },
+    { "id": "wire-17", "from": "volume:wiper", "to": "jack:tip" },
+    { "id": "wire-18", "from": "volume:ground", "to": "ground:common" },
+    { "id": "wire-19", "from": "volume:casing", "to": "ground:common" },
+    { "id": "wire-20", "from": "tone:wiper", "to": "capacitor:a" },
+    { "id": "wire-21", "from": "capacitor:b", "to": "ground:common" },
+    { "id": "wire-22", "from": "tone:casing", "to": "ground:common" },
+    { "id": "wire-23", "from": "ground:common", "to": "jack:sleeve" }
+  ]
+}

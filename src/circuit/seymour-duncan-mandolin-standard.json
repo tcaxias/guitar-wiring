@@ -1,0 +1,69 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: Mandolin, 1 single coil, 1 volume, 1 tone",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/Mandolin_Standard.pdf",
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: The generic single-coil part replaces the mandolin pickup's physical lead arrangement. The PDF's bridge ground wire ends at the grounded volume casing; no bridge terminal exists in this model. Raster drawing values are not text-verifiable; 250 kOhm pots and a 47 nF cap follow the single-coil convention. Pots use logical lugs and a linear scale, not audio taper."
+  },
+  "parts": [
+    {
+      "id": "mandolin",
+      "kind": "pickup",
+      "label": "Mandolin single coil",
+      "x": 240,
+      "y": 90,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "volume",
+      "kind": "volume",
+      "label": "Master volume",
+      "x": 620,
+      "y": 320,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "tone",
+      "kind": "tone",
+      "label": "Master tone",
+      "x": 620,
+      "y": 460,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "capacitor",
+      "kind": "capacitor",
+      "label": "0.047 uF tone capacitor",
+      "x": 820,
+      "y": 340,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 820,
+      "y": 480,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    { "id": "wire-0", "from": "mandolin:hot", "to": "volume:input" },
+    { "id": "wire-1", "from": "mandolin:return", "to": "volume:casing" },
+    { "id": "wire-2", "from": "volume:input", "to": "tone:input" },
+    { "id": "wire-3", "from": "volume:wiper", "to": "jack:tip" },
+    { "id": "wire-4", "from": "volume:ground", "to": "volume:casing" },
+    { "id": "wire-5", "from": "volume:casing", "to": "tone:casing" },
+    { "id": "wire-6", "from": "tone:wiper", "to": "capacitor:a" },
+    { "id": "wire-7", "from": "capacitor:b", "to": "tone:casing" },
+    { "id": "wire-8", "from": "tone:casing", "to": "jack:sleeve" }
+  ]
+}

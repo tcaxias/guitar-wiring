@@ -1,0 +1,106 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: Tele, 2 single-coils, 4-way blade, 1 volume, 1 tone",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/Tele_2S_4B_1V_1T.pdf",
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires prior written permission. LIMITATIONS: The generic model uses logical HOT/RETURN terminals rather than the PDF's black/white lead colors and does not model its bridge ground wire, cable, or load. Pot lugs are logical rather than physical and use a linear teaching scale, not audio taper. The 4-way switch positions preserve the source order: bridge, parallel, neck, series."
+  },
+  "parts": [
+    {
+      "id": "neck",
+      "kind": "pickup",
+      "label": "Neck single coil",
+      "x": 180,
+      "y": 70,
+      "value": 10,
+      "position": "neck",
+      "hasSeparateShield": true
+    },
+    {
+      "id": "bridge",
+      "kind": "pickup",
+      "label": "Bridge single coil",
+      "x": 180,
+      "y": 275,
+      "value": 10,
+      "position": "bridge"
+    },
+    {
+      "id": "selector",
+      "kind": "blade4",
+      "label": "4-way blade",
+      "x": 460,
+      "y": 65,
+      "value": 1,
+      "position": "both"
+    },
+    {
+      "id": "volume",
+      "kind": "volume",
+      "label": "Master volume",
+      "x": 700,
+      "y": 220,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "tone",
+      "kind": "tone",
+      "label": "Master tone",
+      "x": 700,
+      "y": 410,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "capacitor",
+      "kind": "capacitor",
+      "label": "0.047 uF tone capacitor",
+      "x": 900,
+      "y": 370,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 900,
+      "y": 150,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "label": "Ground network",
+      "x": 490,
+      "y": 490,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    { "id": "wire-0", "from": "bridge:hot", "to": "volume:input" },
+    { "id": "wire-1", "from": "neck:return", "to": "ground:common" },
+    { "id": "wire-2", "from": "selector:a-common", "to": "neck:hot" },
+    { "id": "wire-3", "from": "selector:b-common", "to": "bridge:return" },
+    { "id": "wire-4", "from": "selector:a2", "to": "volume:input" },
+    { "id": "wire-5", "from": "selector:a3", "to": "volume:input" },
+    { "id": "wire-6", "from": "selector:a4", "to": "selector:b4" },
+    { "id": "wire-7", "from": "selector:b1", "to": "ground:common" },
+    { "id": "wire-8", "from": "selector:b2", "to": "ground:common" },
+    { "id": "wire-9", "from": "neck:shield", "to": "ground:common" },
+    { "id": "wire-10", "from": "volume:ground", "to": "ground:common" },
+    { "id": "wire-11", "from": "volume:casing", "to": "ground:common" },
+    { "id": "wire-12", "from": "volume:input", "to": "tone:input" },
+    { "id": "wire-13", "from": "tone:wiper", "to": "capacitor:a" },
+    { "id": "wire-14", "from": "capacitor:b", "to": "ground:common" },
+    { "id": "wire-15", "from": "tone:casing", "to": "ground:common" },
+    { "id": "wire-16", "from": "volume:wiper", "to": "jack:tip" },
+    { "id": "wire-17", "from": "ground:common", "to": "jack:sleeve" }
+  ]
+}

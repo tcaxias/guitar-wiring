@@ -1,0 +1,104 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Seymour Duncan: Music Man passive, 2 volumes, 1 tone",
+    "creator": "Pickup Lab; reference: Seymour Duncan",
+    "sourceUrl": "https://www.seymourduncan.com/images/wiring-diagrams/MM_Passive_2V_1T.pdf",
+    "permission": "Seymour Duncan encourages sharing these wiring diagrams freely; commercial use requires written permission. LIMITATIONS: Black/red map to front/rear coil starts; shared green/white/bare map to finishes and shield. Two volumes exceed the analyzer's master-volume limit, so no estimate. Bridge ground reaches master-tone casing; no bridge terminal. The 0.05 cap maps to 47 nF. Pots use logical lugs and linear—not physical/audio-taper—controls."
+  },
+  "parts": [
+    {
+      "id": "pickup",
+      "kind": "humbucker",
+      "label": "Music Man humbucker",
+      "x": 130,
+      "y": 90,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "front-volume",
+      "kind": "volume",
+      "label": "Front coil volume",
+      "x": 390,
+      "y": 80,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "rear-volume",
+      "kind": "volume",
+      "label": "Rear coil volume",
+      "x": 390,
+      "y": 290,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "tone",
+      "kind": "tone",
+      "label": "Master tone",
+      "x": 650,
+      "y": 180,
+      "value": 10,
+      "position": "both",
+      "resistanceKOhms": 250
+    },
+    {
+      "id": "capacitor",
+      "kind": "capacitor",
+      "label": "0.05 cap",
+      "x": 830,
+      "y": 180,
+      "value": 47,
+      "position": "both"
+    },
+    {
+      "id": "jack",
+      "kind": "jack",
+      "label": "Output jack",
+      "x": 850,
+      "y": 400,
+      "value": 10,
+      "position": "both"
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "label": "Ground network",
+      "x": 580,
+      "y": 450,
+      "value": 10,
+      "position": "both"
+    }
+  ],
+  "wires": [
+    { "id": "wire-0", "from": "pickup:a-start", "to": "front-volume:input" },
+    { "id": "wire-1", "from": "pickup:a-finish", "to": "front-volume:casing" },
+    { "id": "wire-2", "from": "pickup:b-start", "to": "rear-volume:input" },
+    { "id": "wire-3", "from": "pickup:b-finish", "to": "front-volume:casing" },
+    { "id": "wire-4", "from": "pickup:b-finish", "to": "rear-volume:casing" },
+    { "id": "wire-5", "from": "pickup:shield", "to": "front-volume:casing" },
+    {
+      "id": "wire-6",
+      "from": "front-volume:ground",
+      "to": "front-volume:casing"
+    },
+    {
+      "id": "wire-7",
+      "from": "rear-volume:ground",
+      "to": "rear-volume:casing"
+    },
+    { "id": "wire-8", "from": "front-volume:wiper", "to": "jack:tip" },
+    { "id": "wire-9", "from": "rear-volume:wiper", "to": "jack:tip" },
+    { "id": "wire-10", "from": "jack:tip", "to": "tone:input" },
+    { "id": "wire-11", "from": "tone:wiper", "to": "capacitor:a" },
+    { "id": "wire-12", "from": "capacitor:b", "to": "tone:casing" },
+    { "id": "wire-13", "from": "front-volume:casing", "to": "ground:common" },
+    { "id": "wire-14", "from": "rear-volume:casing", "to": "ground:common" },
+    { "id": "wire-15", "from": "tone:casing", "to": "ground:common" },
+    { "id": "wire-16", "from": "ground:common", "to": "jack:sleeve" }
+  ]
+}

@@ -6,8 +6,8 @@ import {
   gretschTonePotCircuit,
   gretschToneSwitchCircuit,
   gretschToneStandbySwitchCircuit,
-  type Circuit,
 } from './library';
+import type { Circuit } from './model';
 
 const update = (
   circuit: Circuit,
@@ -32,7 +32,7 @@ describe('Gretsch Setzer Hot Rod — switch positions', () => {
     'position %d: selector common connects to the matching throw',
     (position) => {
       const circuit = update(gretschSetzerHotRodCircuit(), 'selector', {
-        position: ['neck', 'both', 'bridge'][position - 1]!,
+        position: (['neck', 'both', 'bridge'] as const)[position - 1]!,
       });
       const estimate = analyze(circuit);
       expect(estimate.status).toBe('live');
