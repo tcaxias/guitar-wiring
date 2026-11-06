@@ -101,13 +101,13 @@ it('does not claim isolated shields or floating junctions, and preserves reliabl
     to: 'jack:sleeve',
   });
   circuit.parts.push(createPart('volume', 'extra-volume'));
-  const unavailable = analyze(circuit);
-  expect(unavailable.status).toBe('unavailable');
-  expect(unavailable.groundedTerminals).toContain('ground:common');
-  expect(unavailable.groundWires).toContain('restore');
-  expect(unavailable.groundNodes.ground).toEqual({
+  const multiVolume = analyze(circuit);
+  expect(multiVolume.status).not.toBe('unavailable');
+  expect(multiVolume.groundedTerminals).toContain('ground:common');
+  expect(multiVolume.groundWires).toContain('restore');
+  expect(multiVolume.groundNodes.ground).toEqual({
     isConnected: true,
-    isActive: false,
+    isActive: true,
   });
 });
 

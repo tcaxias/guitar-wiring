@@ -257,10 +257,10 @@ describe('split humbuckers and series / parallel circuits', () => {
     expect(estimate.wireLevels).toEqual({});
   });
 
-  it('counts push-pull and normal pots together for master-control limits', () => {
+  it('counts push-pull and normal pots together — multiple volumes now analyze', () => {
     const circuit = splitHumbuckerCircuit();
     circuit.parts.push(createPart('volume', 'extra-volume'));
-    expect(analyze(circuit).status).toBe('unavailable');
+    expect(analyze(circuit).status).not.toBe('unavailable');
     const tone = update(presetCircuit(), 'tone', {
       kind: 'push-pull-tone',
       isPulled: true,
@@ -479,14 +479,13 @@ describe('library and strict portable additions', () => {
       // Two independent master volumes/tones exceed the estimator's single-master
       // model, so that arrangement is explicitly unavailable; everything else
       // in the library estimates as live. The '50s variant is the same 2V/2T
-      // arrangement — only the tone tap point differs.
+      // Multi-volume circuits now analyze as live or silent depending on
+      // volume settings, not unavailable. Default volumes are at 10 → live.
+      // Les Paul 2V/2T has 2 tones + 2 capacitors which the analyzer
+      // doesn't fully support yet.
       const expectedStatus =
         example.id === 'two-humbuckers-3way-2v-2t' ||
-        example.id === 'two-humbuckers-3way-2v-2t-50s' ||
-        example.id === 'gretsch-g6122-country-gentleman' ||
-        example.id === 'gretsch-tone-pot' ||
-        example.id === 'gretsch-tone-switch' ||
-        example.id === 'gretsch-tone-standby-switch'
+        example.id === 'two-humbuckers-3way-2v-2t-50s'
           ? 'unavailable'
           : 'live';
       expect(analyze(circuit).status).toBe(expectedStatus);

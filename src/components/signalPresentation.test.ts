@@ -274,6 +274,12 @@ describe('outputward educational flow', () => {
               ]!;
             }
             volume.value = value;
+            circuit.parts
+              .filter(
+                (part) =>
+                  part.kind === 'volume' || part.kind === 'push-pull-volume',
+              )
+              .forEach((part) => (part.value = value));
             if (example.id === 'split-humbuckers')
               circuit.parts.find((part) => part.id === 'volume')!.isPulled =
                 isPulled;
@@ -348,7 +354,11 @@ describe('outputward educational flow', () => {
           to: 'jack:sleeve',
         });
       if (fault === 'unavailable')
-        circuit.parts.push(createPart('volume', 'extra'));
+        circuit.wires.push({
+          id: 'short',
+          from: 'jack:tip',
+          to: 'jack:sleeve',
+        });
       expect(signalFlowDirections(circuit, analyze(circuit))).toEqual({});
     });
 

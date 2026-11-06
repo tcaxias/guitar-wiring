@@ -124,45 +124,65 @@ export function analyze(circuit: Circuit): Estimate {
   const selector = byKind('selector')[0];
   for (const part of circuit.parts)
     for (const [from, to] of switchConnections(part)) join(from, to);
+  // Volume/tone pot input→wiper edges: signal can traverse through pots in
+  // markPath. Added with wire 'pot' so wireNets building can skip them.
+  for (const part of circuit.parts)
+    if (potRole(part))
+      join(terminalId(part, 'input'), terminalId(part, 'wiper'), 'pot');
 
-  // Only ideal wires and closed switch contacts form nets. Pots and capacitors
-  // are classified below, so ground can never become a signal traversal edge.
-  const nets = new Map<string, number>();
+  // wireNets: ideal wires + closed switch contacts only. Pot edges are skipped.
+  const wireNets = new Map<string, number>();
   for (const terminal of graph.keys()) {
-    if (nets.has(terminal)) continue;
-    const net = nets.size;
+    if (wireNets.has(terminal)) continue;
+    const net = wireNets.size;
     const queue = [terminal];
-    nets.set(terminal, net);
+    wireNets.set(terminal, net);
     for (let index = 0; index < queue.length; index++) {
       for (const edge of graph.get(queue[index]!)!)
-        if (!nets.has(edge.to)) {
-          nets.set(edge.to, net);
+        if (edge.wire !== 'pot' && !wireNets.has(edge.to)) {
+          wireNets.set(edge.to, net);
           queue.push(edge.to);
         }
     }
   }
-  const same = (left: string, right: string) =>
-    nets.get(left) === nets.get(right);
+
+  // signalNets: wireNets plus pot input→wiper edges. Signal can flow through
+  // pots (input→wiper), so multi-volume circuits like Gretsch architectures
+  // can route pickups through individual volumes to the master.
+  const signalNets = new Map(wireNets);
+  for (const part of circuit.parts)
+    if (potRole(part)) {
+      const inputNet = wireNets.get(terminalId(part, 'input'));
+      const wiperNet = wireNets.get(terminalId(part, 'wiper'));
+      if (inputNet !== undefined && wiperNet !== undefined) {
+        const from = Math.max(inputNet, wiperNet);
+        const into = Math.min(inputNet, wiperNet);
+        for (const [terminal, net] of signalNets)
+          if (net === from) signalNets.set(terminal, into);
+      }
+    }
+
+  const wireSame = (left: string, right: string) =>
+    wireNets.get(left) === wireNets.get(right);
+  const signalSame = (left: string, right: string) =>
+    signalNets.get(left) === signalNets.get(right);
   const tip = terminalId(jack, 'tip');
   const ground = terminalId(jack, 'sleeve');
   if (jacks.length === 1)
     result.groundedTerminals = [...graph.keys()].filter((id) =>
-      same(id, ground),
-    );
+      wireSame(id, ground),    );
   result.groundWires = circuit.wires
-    .filter((wire) => same(wire.from, ground))
+    .filter((wire) => wireSame(wire.from, ground))
     .map((wire) => wire.id);
   if (jacks.length === 1)
     for (const part of byKind('ground'))
-      result.groundNodes[part.id]!.isConnected = same(
+      result.groundNodes[part.id]!.isConnected = wireSame(
         terminalId(part, 'common'),
         ground,
       );
   if (
     jacks.length > 1 ||
-    circuit.parts.filter((part) => potRole(part) === 'volume').length > 1 ||
     circuit.parts.filter((part) => potRole(part) === 'tone').length > 1 ||
-    byKind('capacitor').length > 1 ||
     byKind('selector').length + circuit.parts.filter(isBladePart).length > 1
   ) {
     if (jacks.length > 1) result.groundWires = [];
@@ -172,18 +192,22 @@ export function analyze(circuit: Circuit): Estimate {
   }
   if (byKind('varitone').length > 1)
     return unavailable('Use at most one Varitone module.');
-  if (same(tip, ground))
+  if (wireSame(tip, ground))
     return { ...result, message: 'Output shorted to ground.' };
 
-  const volume = circuit.parts.find((part) => potRole(part) === 'volume');
+  const volumes = circuit.parts.filter((part) => potRole(part) === 'volume');
+  // The master/output volume is the one whose wiper connects to jack tip.
+  // Falls back to the first volume if none connects directly.
+  const volume =
+    volumes.find((v) => wireSame(terminalId(v, 'wiper'), tip)) ?? volumes[0];
   const source = volume ? terminalId(volume, 'input') : tip;
   const varitone = byKind('varitone')[0];
   if (varitone) {
     const setting = varitoneSetting(varitone);
     const signal = terminalId(varitone, 'signal');
     const isConnected =
-      (same(signal, source) || same(signal, tip)) &&
-      same(terminalId(varitone, 'ground'), ground);
+      (wireSame(signal, source) || wireSame(signal, tip)) &&
+      wireSame(terminalId(varitone, 'ground'), ground);
     result.varitone = {
       partId: varitone.id,
       position: setting.position,
@@ -200,18 +224,18 @@ export function analyze(circuit: Circuit): Estimate {
   }
   if (!pickups.length) return result;
   if (volume) {
-    if (!same(terminalId(volume, 'wiper'), tip))
+    if (!wireSame(terminalId(volume, 'wiper'), tip))
       return {
         ...result,
         message: 'Output disconnected. Connect volume OUT to jack TIP.',
       };
-    if (!same(terminalId(volume, 'ground'), ground))
+    if (!wireSame(terminalId(volume, 'ground'), ground))
       return unavailable(
         'The volume ground needs a return to the jack sleeve.',
       );
-    if (same(source, ground))
+    if (wireSame(source, ground))
       return { ...result, message: 'Pickup signal shorted to ground.' };
-    if (same(source, tip))
+    if (wireSame(source, tip))
       return unavailable('The volume input and output are bypassed.');
   }
 
@@ -231,30 +255,30 @@ export function analyze(circuit: Circuit): Estimate {
     if (graph.get(terminalId(tone, 'unused'))!.length)
       return unavailable('Tone lug 3 must remain unused in this estimate.');
     const isCapConnected =
-      (same(toneWiper, capA) && same(capB, ground)) ||
-      (same(toneWiper, capB) && same(capA, ground));
+      (wireSame(toneWiper, capA) && wireSame(capB, ground)) ||
+      (wireSame(toneWiper, capB) && wireSame(capA, ground));
     if (
-      !same(toneInput, source) ||
+      !wireSame(toneInput, source) ||
       !isCapConnected ||
-      same(toneWiper, source) ||
-      same(toneWiper, ground)
+      wireSame(toneWiper, source) ||
+      wireSame(toneWiper, ground)
     )
       return unavailable(
         'Use the master tone input on the pickup bus, then CAP through the capacitor to ground.',
       );
     result.treble = Math.round(25 + tone.value * 7.5);
-    toneCapInput = same(toneWiper, capA) ? capA : capB;
+    toneCapInput = wireSame(toneWiper, capA) ? capA : capB;
     toneCapReturn = toneCapInput === capA ? capB : capA;
   } else result.treble = 100;
 
-  if (selector && !same(terminalId(selector, 'common'), source))
+  if (selector && !wireSame(terminalId(selector, 'common'), source))
     return unavailable('Connect selector OUT to the master input.');
   const coils: CoilEdge[] = [];
   for (const pickup of pickups) {
     const isHumbucker = pickup.kind === 'humbucker';
     if (isHumbucker || pickup.hasSeparateShield) {
       const shield = terminalId(pickup, 'shield');
-      if (graph.get(shield)!.length && !same(shield, ground))
+      if (graph.get(shield)!.length && !wireSame(shield, ground))
         return unavailable(
           'Pickup shields must be separate from signal leads and connect to ground.',
         );
@@ -270,12 +294,12 @@ export function analyze(circuit: Circuit): Estimate {
     for (const [start, finish, coil] of definitions) {
       const hot = terminalId(pickup, start!);
       const pickupReturn = terminalId(pickup, finish!);
-      if (volume && [hot, pickupReturn].some((terminal) => same(terminal, tip)))
+      if (volume && [hot, pickupReturn].some((terminal) => wireSame(terminal, tip)))
         return unavailable('A pickup bypasses the master volume.');
       if (
         tone &&
         [hot, pickupReturn].some((terminal) =>
-          same(terminal, terminalId(tone, 'wiper')),
+          wireSame(terminal, terminalId(tone, 'wiper')),
         )
       )
         return unavailable('A pickup is connected inside the tone branch.');
@@ -284,15 +308,15 @@ export function analyze(circuit: Circuit): Estimate {
         coil: coil as 'a' | 'b' | undefined,
         hot,
         return: pickupReturn,
-        from: nets.get(hot)!,
-        to: nets.get(pickupReturn)!,
+        from: signalNets.get(hot)!,
+        to: signalNets.get(pickupReturn)!,
       });
     }
   }
   const network = reduceCoilNetwork(
     coils,
-    nets.get(source)!,
-    nets.get(ground)!,
+    signalNets.get(source)!,
+    signalNets.get(ground)!,
   );
   if (network.reason) return unavailable(network.reason);
   result.pickupTopology = network.topology;
@@ -306,7 +330,7 @@ export function analyze(circuit: Circuit): Estimate {
         );
     } else if (
       coils.some(
-        (coil) => coil.pickupId === pickup.id && same(coil.hot, source),
+        (coil) => coil.pickupId === pickup.id && wireSame(coil.hot, source),
       )
     )
       result.notes.push(
@@ -332,7 +356,7 @@ export function analyze(circuit: Circuit): Estimate {
     const seen = new Set([from]);
     for (let index = 0; index < queue.length && !seen.has(to); index++) {
       for (const edge of graph.get(queue[index]!)!) {
-        if (seen.has(edge.to) || (!allowGround && same(edge.to, ground)))
+        if (seen.has(edge.to) || (!allowGround && wireSame(edge.to, ground)))
           continue;
         seen.add(edge.to);
         previous.set(edge.to, { from: queue[index]!, wire: edge.wire });
@@ -348,7 +372,7 @@ export function analyze(circuit: Circuit): Estimate {
     markGroundNode(current);
     while (previous.has(current)) {
       const step = previous.get(current)!;
-      if (step.wire)
+      if (step.wire && step.wire !== 'pot')
         levels[step.wire] = Math.max(levels[step.wire] ?? 0, level);
       current = step.from;
       markGroundNode(current);
@@ -359,14 +383,14 @@ export function analyze(circuit: Circuit): Estimate {
   const activeTerminals = new Map<number, string[]>();
   for (const coil of network.active)
     for (const terminal of [coil.hot, coil.return]) {
-      const net = nets.get(terminal)!;
+      const net = signalNets.get(terminal)!;
       activeTerminals.set(net, [...(activeTerminals.get(net) ?? []), terminal]);
     }
   for (const [net, endpoints] of activeTerminals) {
-    const isGround = net === nets.get(ground);
+    const isGround = net === signalNets.get(ground);
     const anchor = isGround
       ? ground
-      : net === nets.get(source)
+      : net === signalNets.get(source)
         ? source
         : endpoints[0]!;
     for (const endpoint of endpoints)
@@ -410,7 +434,7 @@ export function analyze(circuit: Circuit): Estimate {
     // This is a separate qualitative LC shunt indication, not a DC short or a
     // vintage response model (loading, anti-pop and main-path resistors omitted).
     const signal = terminalId(varitone, 'signal');
-    const isInputSide = same(signal, source);
+    const isInputSide = wireSame(signal, source);
     const level = isInputSide ? 1 : result.output / 100;
     result.varitone.level = level;
     if (level > 0) {

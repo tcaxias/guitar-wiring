@@ -115,14 +115,14 @@ describe('Gretsch Setzer Hot Rod — signal path', () => {
   });
 });
 
-describe('Gretsch circuits with multiple volumes — unavailable', () => {
+describe('Gretsch circuits with multiple volumes — live/silent', () => {
   it.each([
     ['gretsch-g6122-country-gentleman', gretschG6122CountryGentlemanCircuit],
     ['gretsch-tone-pot', gretschTonePotCircuit],
     ['gretsch-tone-switch', gretschToneSwitchCircuit],
     ['gretsch-tone-standby-switch', gretschToneStandbySwitchCircuit],
   ] as const)(
-    '%s is unavailable because it has multiple master volumes',
+    '%s with multiple volumes is not unavailable — status depends on volume',
     (_id, createCircuit) => {
       const circuit = createCircuit();
       const volumeCount = circuit.parts.filter(
@@ -130,9 +130,8 @@ describe('Gretsch circuits with multiple volumes — unavailable', () => {
       ).length;
       expect(volumeCount).toBeGreaterThan(1);
       const estimate = analyze(circuit);
-      expect(estimate.status).toBe('unavailable');
-      expect(estimate.message).toMatch(/one master volume/);
-      expect(estimate.output).toBeNull();
+      expect(estimate.status).not.toBe('unavailable');
+      expect(estimate.message).not.toMatch(/one master volume/);
     },
   );
 });
@@ -188,16 +187,16 @@ describe('Gretsch tone circuits — standby switch limitation', () => {
   it('tone-standby-switch has no standby switching representable', () => {
     const circuit = gretschToneStandbySwitchCircuit();
     const estimate = analyze(circuit);
-    // Standby switching is not a model concept; the circuit falls back to
-    // single-capacitor tone behavior (unavailable due to multiple volumes).
-    expect(estimate.status).toBe('unavailable');
+    // Standby switching is not a model concept; the circuit analyzes as live
+    // since multi-volume Gretsch wiring is now supported.
+    expect(estimate.status).toBe('live');
     expect(estimate.notes.length).toBeGreaterThanOrEqual(0);
   });
 
   it('tone-switch approximates two-way switch with single capacitor', () => {
     const circuit = gretschToneSwitchCircuit();
     const estimate = analyze(circuit);
-    expect(estimate.status).toBe('unavailable');
+    expect(estimate.status).toBe('live');
     // Single capacitor modeled at value 12 as documented approximation
     const tone = circuit.parts.find((p) => p.id === 'tone')!;
     expect(tone.kind).toBe('tone');
