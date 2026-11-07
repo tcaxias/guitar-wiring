@@ -1,0 +1,91 @@
+@startuml
+title Standard Telecaster Wiring
+-- 2x Single-coil pickups, 3-way blade, 1 volume, 1 tone
+
+rectangle "Neck pickup" as neck
+rectangle "Bridge pickup" as bridge
+rectangle "3-way blade" as selector
+rectangle "Master volume 250k" as volume
+rectangle "Master tone 250k" as tone
+rectangle "Tone capacitor 47nF" as cap
+rectangle "Output jack" as jack
+rectangle "Ground" as ground
+
+node "HOT (neck:hot)" as neck_hot
+node "RETURN (neck:return)" as neck_ret
+
+node "HOT (bridge:hot)" as bridge_hot
+node "RETURN (bridge:return)" as bridge_ret
+
+node "A1 (selector:a1)" as sel_a1
+node "A3 (selector:a3)" as sel_a3
+node "A-COMMON (selector:a-common)" as sel_acom
+node "B-COMMON (selector:b-common)" as sel_bcom
+
+node "INPUT (volume:input)" as vol_in
+node "WIPER (volume:wiper)" as vol_wip
+node "GROUND (volume:ground)" as vol_gnd
+node "CASING (volume:casing)" as vol_case
+
+node "INPUT (tone:input)" as tone_in
+node "WIPER (tone:wiper)" as tone_wip
+node "CASING (tone:casing)" as tone_case
+
+node "A (capacitor:a)" as cap_a
+node "B (capacitor:b)" as cap_b
+
+node "TIP (jack:tip)" as jack_tip
+node "SLEEVE (jack:sleeve)" as jack_slv
+
+node "COMMON (ground:common)" as gnd_comm
+
+neck_hot -[red]> neck
+neck_ret -[green]> neck
+
+bridge_hot -[red]> bridge
+bridge_ret -[green]> bridge
+
+sel_a1 -[red]> selector
+sel_a3 -[red]> selector
+sel_acom -[red]> selector
+sel_bcom -[red]> selector
+
+vol_in -[red]> volume
+vol_wip -[red]> volume
+vol_gnd -[gray]> volume
+vol_case -[gray]> volume
+
+tone_in -[red]> tone
+tone_wip -[red]> tone
+tone_case -[gray]> tone
+
+cap_a -[red]> cap
+cap_b -[gray]> cap
+
+jack_tip -[red]> jack
+jack_slv -[gray]> jack
+
+neck_hot -[red]> sel_a1
+bridge_hot -[red]> sel_a3
+
+sel_acom -[red]> vol_in
+vol_wip -[red]> jack_tip
+
+vol_in -[red]> tone_in
+tone_wip -[red]> cap_a
+cap_b -[gray]> gnd_comm
+
+vol_gnd -[gray]> gnd_comm
+vol_case -[gray]> gnd_comm
+tone_case -[gray]> gnd_comm
+
+neck_ret -[gray]> gnd_comm
+bridge_ret -[gray]> gnd_comm
+
+sel_a1 -[red]> sel_a2
+sel_a3 -[red]> sel_b2
+sel_bcom -[red]> sel_acom
+
+gnd_comm -[gray]> jack_slv
+
+@enduml

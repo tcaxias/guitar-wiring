@@ -1,0 +1,82 @@
+@startuml
+title Gretsch Setzer Hot Rod
+-- 2x Filter'Tron humbuckers, 3-way toggle, master volume, no tone
+
+rectangle "Neck Filter'Tron" as neck
+rectangle "Bridge Filter'Tron" as bridge
+rectangle "3-way toggle" as selector
+rectangle "Master volume 500k" as volume
+rectangle "Output jack" as jack
+rectangle "Ground" as ground
+
+node "A START (neck:a-start)" as neck_hot
+node "A END (neck:a-finish)" as neck_ret
+node "B END (neck:b-finish)" as neck_bend
+node "SHIELD (neck:shield)" as neck_shield
+
+node "A START (bridge:a-start)" as bridge_hot
+node "A END (bridge:a-finish)" as bridge_ret
+node "B END (bridge:b-finish)" as bridge_bend
+node "SHIELD (bridge:shield)" as bridge_shield
+
+node "A1 (selector:a1)" as sel_a1
+node "A2 (selector:a2)" as sel_a2
+node "A3 (selector:a3)" as sel_a3
+node "B1 (selector:b1)" as sel_b1
+node "B2 (selector:b2)" as sel_b2
+node "B3 (selector:b3)" as sel_b3
+node "A-COMMON (selector:a-common)" as sel_acom
+node "B-COMMON (selector:b-common)" as sel_bcom
+
+node "INPUT (volume:input)" as vol_in
+node "WIPER (volume:wiper)" as vol_wip
+node "GROUND (volume:ground)" as vol_gnd
+node "CASING (volume:casing)" as vol_case
+
+node "TIP (jack:tip)" as jack_tip
+node "SLEEVE (jack:sleeve)" as jack_slv
+
+node "COMMON (ground:common)" as gnd_comm
+
+neck_hot -[red]> neck
+neck -[red]> neck_ret
+neck_ret -[red]> neck_bend
+neck_bend -[gray]> neck
+neck_shield -[gray]> neck
+
+bridge_hot -[red]> bridge
+bridge -[red]> bridge_ret
+bridge_ret -[red]> bridge_bend
+bridge_bend -[gray]> bridge
+bridge_shield -[gray]> bridge
+
+sel_a1 -[red]> selector
+sel_a2 -[red]> selector
+sel_a3 -[red]> selector
+sel_b1 -[red]> selector
+sel_b2 -[red]> selector
+sel_b3 -[red]> selector
+sel_acom -[red]> selector
+sel_bcom -[red]> selector
+
+neck_hot -[red]> sel_a1
+neck_ret -[red]> neck_bend
+neck_bend -[gray]> gnd_comm
+neck_shield -[gray]> gnd_comm
+
+bridge_hot -[red]> sel_b3
+bridge_ret -[red]> bridge_bend
+bridge_bend -[gray]> gnd_comm
+bridge_shield -[gray]> gnd_comm
+
+sel_acom -[red]> vol_in
+sel_bcom -[red]> sel_acom
+sel_a1 -[red]> sel_a2
+sel_b3 -[red]> sel_b2
+
+vol_wip -[red]> jack_tip
+vol_gnd -[gray]> gnd_comm
+vol_case -[gray]> gnd_comm
+gnd_comm -[gray]> jack_slv
+
+@enduml
