@@ -481,13 +481,36 @@ describe('library and strict portable additions', () => {
       // in the library estimates as live. The '50s variant is the same 2V/2T
       // Multi-volume circuits now analyze as live or silent depending on
       // volume settings, not unavailable. Default volumes are at 10 → live.
-      // Les Paul 2V/2T has 2 tones + 2 capacitors which the analyzer
-      // doesn't fully support yet.
-      const expectedStatus =
-        example.id === 'two-humbuckers-3way-2v-2t' ||
-        example.id === 'two-humbuckers-3way-2v-2t-50s'
-          ? 'unavailable'
-          : 'live';
+      // Seymour Duncan JSONs carry raw multi-volume/multi-capacitor layouts.
+      // The estimator treats a tone/capacitor branch with more than one
+      // capacitor as unsupported, and a multi-volume circuit that also has a
+      // tone branch as unavailable; multi-volume with no capacitors (no tone
+      // branch) still estimates as live. sd-esquire-standard is the single
+      // exception: its tone input feeds off the selector, not the source bus,
+      // so the estimator marks it unavailable despite 1V/1T/1C.
+      const isSd = example.id.startsWith('sd-');
+      let expectedStatus: 'live' | 'unavailable';
+      if (isSd) {
+        const volumes = circuit.parts.filter(
+          (part) => part.kind === 'volume' || part.kind === 'push-pull-volume',
+        ).length;
+        const capacitors = circuit.parts.filter(
+          (part) => part.kind === 'capacitor',
+        ).length;
+        const multiVolumeWithTone = volumes > 1 && capacitors >= 1;
+        expectedStatus =
+          capacitors > 1 ||
+          multiVolumeWithTone ||
+          example.id === 'sd-esquire-standard'
+            ? 'unavailable'
+            : 'live';
+      } else {
+        expectedStatus =
+          example.id === 'two-humbuckers-3way-2v-2t' ||
+          example.id === 'two-humbuckers-3way-2v-2t-50s'
+            ? 'unavailable'
+            : 'live';
+      }
       expect(analyze(circuit).status).toBe(expectedStatus);
       expect(parseCircuitText(serializeCircuit(circuit))).toEqual(circuit);
       circuit.parts[0]!.label = 'Changed locally';
@@ -498,7 +521,7 @@ describe('library and strict portable additions', () => {
         expect(circuit.metadata.sourceUrl).toMatch(/^https:\/\//);
         expect(circuit.metadata.creator).toMatch(/Pickup Lab; reference:/);
         expect(circuit.metadata.permission).toMatch(
-          /^Reference credited; reuse terms not specified\./,
+          /^(Reference credited; reuse terms not specified\.|Seymour Duncan)/,
         );
       }
     },

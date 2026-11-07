@@ -164,13 +164,12 @@ export function analyze(circuit: Circuit): Estimate {
 
   const wireSame = (left: string, right: string) =>
     wireNets.get(left) === wireNets.get(right);
-  const signalSame = (left: string, right: string) =>
-    signalNets.get(left) === signalNets.get(right);
   const tip = terminalId(jack, 'tip');
   const ground = terminalId(jack, 'sleeve');
   if (jacks.length === 1)
     result.groundedTerminals = [...graph.keys()].filter((id) =>
-      wireSame(id, ground),    );
+      wireSame(id, ground),
+    );
   result.groundWires = circuit.wires
     .filter((wire) => wireSame(wire.from, ground))
     .map((wire) => wire.id);
@@ -294,7 +293,10 @@ export function analyze(circuit: Circuit): Estimate {
     for (const [start, finish, coil] of definitions) {
       const hot = terminalId(pickup, start!);
       const pickupReturn = terminalId(pickup, finish!);
-      if (volume && [hot, pickupReturn].some((terminal) => wireSame(terminal, tip)))
+      if (
+        volume &&
+        [hot, pickupReturn].some((terminal) => wireSame(terminal, tip))
+      )
         return unavailable('A pickup bypasses the master volume.');
       if (
         tone &&

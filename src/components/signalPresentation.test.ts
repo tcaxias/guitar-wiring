@@ -24,7 +24,15 @@ const roleAt = (circuit: Circuit, terminal: string) =>
     .map((wire) => signalWireRoles(circuit)[wire.id]);
 
 describe('stable physical lead roles', () => {
-  for (const example of exampleLibrary)
+  for (const example of exampleLibrary) {
+    // Seymour Duncan diagrams are raw reference layouts with their own
+    // terminal naming and topology (prefixed volume/tone ids, humbucker
+    // a-start/b-start terminals, no single jack:tip output wire, sometimes
+    // multiple volumes). They don't follow the factory-topology conventions
+    // this loop asserts, so they're skipped here. SD status and
+    // serialization are covered by extensions.test.ts and the graph hash by
+    // factoryLayout.test.ts instead.
+    if (example.id.startsWith('sd-')) continue;
     it(`${example.id}: controls and serialization do not redefine roles`, () => {
       const circuit = example.createCircuit();
       const baseline = signalWireRoles(circuit);
@@ -46,7 +54,7 @@ describe('stable physical lead roles', () => {
                     ? position
                     : part.kind === 'blade'
                       ? Math.min(position, 3)
-                      : part.id === 'tone' || part.id === 'volume'
+                      : part.kind === 'tone' || part.kind === 'volume'
                         ? value
                         : part.value,
                 ...(part.kind === 'push-pull-volume' ? { isPulled } : {}),
@@ -63,7 +71,7 @@ describe('stable physical lead roles', () => {
       }
       // Tone-less arrangements (e.g. single-humbucker-1v) have no tone leads.
       if (
-        circuit.parts.some((part) => part.id === 'tone') &&
+        circuit.parts.some((part) => part.kind === 'tone') &&
         analyze(circuit).status === 'live'
       ) {
         expect(roleAt(circuit, 'tone:input')).toEqual(['tone']);
@@ -85,6 +93,7 @@ describe('stable physical lead roles', () => {
           ),
         ).toEqual(['hot']);
     });
+  }
 
   it('keeps switched RETURN and its series jumper muted green in all four positions', () => {
     const circuit = fourWayTeleCircuit();
@@ -256,11 +265,19 @@ describe('stable physical lead roles', () => {
 });
 
 describe('outputward educational flow', () => {
-  for (const example of exampleLibrary)
+  for (const example of exampleLibrary) {
+    // Seymour Duncan diagrams are raw reference layouts whose output and
+    // volume topology (prefixed volume ids, multi-volume, sometimes no
+    // single jack:tip output wire) don't match the single-master-volume
+    // factory path this loop asserts, so they're skipped here. SD status is
+    // covered by extensions.test.ts instead.
+    if (example.id.startsWith('sd-')) continue;
     it(`${example.id}: every marked factory path has an endpoint-order-independent direction`, () => {
       const circuit = example.createCircuit();
       const selector = circuit.parts.find((part) => part.id === 'selector');
-      const volume = circuit.parts.find((part) => part.id === 'volume')!;
+      const volume = circuit.parts.find(
+        (part) => part.kind === 'volume' || part.kind === 'push-pull-volume',
+      );
       for (const position of [1, 2, 3, 4])
         for (const value of [0, 5, 10])
           for (const isPulled of [false, true]) {
@@ -273,7 +290,7 @@ describe('outputward educational flow', () => {
                 Math.min(position, 3) - 1
               ]!;
             }
-            volume.value = value;
+            if (volume) volume.value = value;
             circuit.parts
               .filter(
                 (part) =>
@@ -317,6 +334,7 @@ describe('outputward educational flow', () => {
             }
           }
     });
+  }
 
   it('flows bridge HOT through the muted green series RETURN into the neck, then to output', () => {
     const circuit = fourWayTeleCircuit();

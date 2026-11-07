@@ -1,5 +1,84 @@
 import { createPart, presetCircuit, type Circuit } from './model';
 import { factoryLayout } from './factoryLayout';
+import sd1_phat_cat_1h_3way_toggle_2v_1t from './seymour-duncan-1-phat-cat-1h-3way-toggle-2v-1t.json' assert { type: 'json' };
+import sd1_phat_cat_1v_1t from './seymour-duncan-1-phat-cat-1v-1t.json' assert { type: 'json' };
+import sd1_phat_cat_1v from './seymour-duncan-1-phat-cat-1v.json' assert { type: 'json' };
+import sd1h_1v_1t from './seymour-duncan-1h-1v-1t.json' assert { type: 'json' };
+import sd1h_1v_1tpp_series_parallel from './seymour-duncan-1h-1v-1tpp-series-parallel.json' assert { type: 'json' };
+import sd1h_1v_1tpp_spl from './seymour-duncan-1h-1v-1tpp-spl.json' assert { type: 'json' };
+import sd1h_1vpp_series_parallel_1t from './seymour-duncan-1h-1vpp-series-parallel-1t.json' assert { type: 'json' };
+import sd1h_1vpp_series_parallel from './seymour-duncan-1h-1vpp-series-parallel.json' assert { type: 'json' };
+import sd1h_1vpp_split_1t from './seymour-duncan-1h-1vpp-split-1t.json' assert { type: 'json' };
+import sd1h_1vpp_split from './seymour-duncan-1h-1vpp-split.json' assert { type: 'json' };
+import sd1p90_1phat_cat_3way_toggle_2v_2t from './seymour-duncan-1p90-1phat-cat-3way-toggle-2v-2t.json' assert { type: 'json' };
+import sd1s_1v_1t from './seymour-duncan-1s-1v-1t.json' assert { type: 'json' };
+import sd1s_1v from './seymour-duncan-1s-1v.json' assert { type: 'json' };
+import sd2_p90s_3way_toggle_2v_2t from './seymour-duncan-2-p90s-3way-toggle-2v-2t.json' assert { type: 'json' };
+import sd2_phat_cats_3way_toggle_2v_1t from './seymour-duncan-2-phat-cats-3way-toggle-2v-1t.json' assert { type: 'json' };
+import sd2_phat_cats_3way_toggle_2v_2t from './seymour-duncan-2-phat-cats-3way-toggle-2v-2t.json' assert { type: 'json' };
+import sd2h_3way_blade_1v_1t from './seymour-duncan-2h-3way-blade-1v-1t.json' assert { type: 'json' };
+import sd2h_3way_blade_1v_1tpp_split from './seymour-duncan-2h-3way-blade-1v-1tpp-split.json' assert { type: 'json' };
+import sd2h_3way_blade_1v_2t from './seymour-duncan-2h-3way-blade-1v-2t.json' assert { type: 'json' };
+import sd2h_3way_blade_1v_2tpp_split from './seymour-duncan-2h-3way-blade-1v-2tpp-split.json' assert { type: 'json' };
+import sd2h_3way_blade_1v from './seymour-duncan-2h-3way-blade-1v.json' assert { type: 'json' };
+import sd2h_3way_blade_1vpp_split_1t from './seymour-duncan-2h-3way-blade-1vpp-split-1t.json' assert { type: 'json' };
+import sd2h_3way_blade_1vpp_split_2t from './seymour-duncan-2h-3way-blade-1vpp-split-2t.json' assert { type: 'json' };
+import sd2h_3way_blade_2v_1t from './seymour-duncan-2h-3way-blade-2v-1t.json' assert { type: 'json' };
+import sd2h_3way_blade_2v_1tpp_split from './seymour-duncan-2h-3way-blade-2v-1tpp-split.json' assert { type: 'json' };
+import sd2h_3way_blade_2v_2t from './seymour-duncan-2h-3way-blade-2v-2t.json' assert { type: 'json' };
+import sd2h_3way_blade_2v_2tpp_split from './seymour-duncan-2h-3way-blade-2v-2tpp-split.json' assert { type: 'json' };
+import sd2h_3way_blade_2v from './seymour-duncan-2h-3way-blade-2v.json' assert { type: 'json' };
+import sd2h_3way_blade_2vpp_series_parallel_2t from './seymour-duncan-2h-3way-blade-2vpp-series-parallel-2t.json' assert { type: 'json' };
+import sd2h_3way_blade_2vpp_series_parallel from './seymour-duncan-2h-3way-blade-2vpp-series-parallel.json' assert { type: 'json' };
+import sd2h_3way_blade_2vpp_split_1t from './seymour-duncan-2h-3way-blade-2vpp-split-1t.json' assert { type: 'json' };
+import sd2h_3way_blade_2vpp_split_2t from './seymour-duncan-2h-3way-blade-2vpp-split-2t.json' assert { type: 'json' };
+import sd2h_3way_blade_2vpp_split from './seymour-duncan-2h-3way-blade-2vpp-split.json' assert { type: 'json' };
+import sd2h_3way_toggle_1v_1t from './seymour-duncan-2h-3way-toggle-1v-1t.json' assert { type: 'json' };
+import sd2h_3way_toggle_1v_1tpp_split from './seymour-duncan-2h-3way-toggle-1v-1tpp-split.json' assert { type: 'json' };
+import sd2h_3way_toggle_1v_2t from './seymour-duncan-2h-3way-toggle-1v-2t.json' assert { type: 'json' };
+import sd2h_3way_toggle_1v from './seymour-duncan-2h-3way-toggle-1v.json' assert { type: 'json' };
+import sd2h_3way_toggle_1vpp_split_1t from './seymour-duncan-2h-3way-toggle-1vpp-split-1t.json' assert { type: 'json' };
+import sd2h_3way_toggle_2v_1t from './seymour-duncan-2h-3way-toggle-2v-1t.json' assert { type: 'json' };
+import sd2h_3way_toggle_2v_2t from './seymour-duncan-2h-3way-toggle-2v-2t.json' assert { type: 'json' };
+import sd2h_3way_toggle_2v from './seymour-duncan-2h-3way-toggle-2v.json' assert { type: 'json' };
+import sd2h_3way_toggle_2vpp_series_parallel_2t from './seymour-duncan-2h-3way-toggle-2vpp-series-parallel-2t.json' assert { type: 'json' };
+import sd2h_3way_toggle_2vpp_series_parallel from './seymour-duncan-2h-3way-toggle-2vpp-series-parallel.json' assert { type: 'json' };
+import sd2h_3way_toggle_2vpp_splb from './seymour-duncan-2h-3way-toggle-2vpp-splb.json' assert { type: 'json' };
+import sd2h_3way_toggle_2vpp_split_1t from './seymour-duncan-2h-3way-toggle-2vpp-split-1t.json' assert { type: 'json' };
+import sd2h_3way_toggle_2vpp_split_2t from './seymour-duncan-2h-3way-toggle-2vpp-split-2t.json' assert { type: 'json' };
+import sd2h_3way_toggle_2vpp_split from './seymour-duncan-2h-3way-toggle-2vpp-split.json' assert { type: 'json' };
+import sd2mh_3way_toggle_2v_2t from './seymour-duncan-2mh-3way-toggle-2v-2t.json' assert { type: 'json' };
+import sd2s_3way_blade_1v_1t from './seymour-duncan-2s-3way-blade-1v-1t.json' assert { type: 'json' };
+import sdesquire_1h_ssp from './seymour-duncan-esquire-1h-ssp.json' assert { type: 'json' };
+import sdesquire_standard from './seymour-duncan-esquire-standard.json' assert { type: 'json' };
+import sdjazz_bass_standard from './seymour-duncan-jazz-bass-standard.json' assert { type: 'json' };
+import sdmandolin_standard from './seymour-duncan-mandolin-standard.json' assert { type: 'json' };
+import sdmusic_man_p_bass_2v_1t from './seymour-duncan-music-man-p-bass-2v-1t.json' assert { type: 'json' };
+import sdmusic_man_passive_1v_1t from './seymour-duncan-music-man-passive-1v-1t.json' assert { type: 'json' };
+import sdmusic_man_passive_2v_1t from './seymour-duncan-music-man-passive-2v-1t.json' assert { type: 'json' };
+import sdp_bass_1s_1v_1t from './seymour-duncan-p-bass-1s-1v-1t.json' assert { type: 'json' };
+import sdp_j_bass_standard from './seymour-duncan-p-j-bass-standard.json' assert { type: 'json' };
+import sdp_j_stkj_2v_1t from './seymour-duncan-p-j-stkj-2v-1t.json' assert { type: 'json' };
+import sdpassive_soapbars_2v_1t from './seymour-duncan-passive-soapbars-2v-1t.json' assert { type: 'json' };
+import sdprecision_bass_standard from './seymour-duncan-precision-bass-standard.json' assert { type: 'json' };
+import sdtele_1966 from './seymour-duncan-tele-1966.json' assert { type: 'json' };
+import sdtele_1h_1s_3way_blade_1v_1t from './seymour-duncan-tele-1h-1s-3way-blade-1v-1t.json' assert { type: 'json' };
+import sdtele_1h_1s_3way_blade_1v_1tpp_split from './seymour-duncan-tele-1h-1s-3way-blade-1v-1tpp-split.json' assert { type: 'json' };
+import sdtele_1h_1s_3way_blade_1vpp_split_1t from './seymour-duncan-tele-1h-1s-3way-blade-1vpp-split-1t.json' assert { type: 'json' };
+import sdtele_1s_1h_3b_2vpp_spln from './seymour-duncan-tele-1s-1h-3b-2vpp-spln.json' assert { type: 'json' };
+import sdtele_1s_1h_3way_blade_1v_1tpp_split from './seymour-duncan-tele-1s-1h-3way-blade-1v-1tpp-split.json' assert { type: 'json' };
+import sdtele_1s_1h_3way_blade_1vpp_split_1t from './seymour-duncan-tele-1s-1h-3way-blade-1vpp-split-1t.json' assert { type: 'json' };
+import sdtele_1s_1h_3way_blade_2v from './seymour-duncan-tele-1s-1h-3way-blade-2v.json' assert { type: 'json' };
+import sdtele_1th_1s_3b_2v from './seymour-duncan-tele-1th-1s-3b-2v.json' assert { type: 'json' };
+import sdtele_1th_1s_3b_2vbpp_split from './seymour-duncan-tele-1th-1s-3b-2vbpp-split.json' assert { type: 'json' };
+import sdtele_1th_1s_4way_1v_1t from './seymour-duncan-tele-1th-1s-4way-1v-1t.json' assert { type: 'json' };
+import sdtele_2_stacks_3way_blade_1v_1t from './seymour-duncan-tele-2-stacks-3way-blade-1v-1t.json' assert { type: 'json' };
+import sdtele_2h_3way_blade_1v_1tpp_split from './seymour-duncan-tele-2h-3way-blade-1v-1tpp-split.json' assert { type: 'json' };
+import sdtele_2h_3way_blade_1vpp_split_1t from './seymour-duncan-tele-2h-3way-blade-1vpp-split-1t.json' assert { type: 'json' };
+import sdtele_2s_3way_blade_2v from './seymour-duncan-tele-2s-3way-blade-2v.json' assert { type: 'json' };
+import sdtele_2s_4way_1v_1t from './seymour-duncan-tele-2s-4way-1v-1t.json' assert { type: 'json' };
+import sdtele_2th_4way_1v_1t from './seymour-duncan-tele-2th-4way-1v-1t.json' assert { type: 'json' };
+import sdtele_standard from './seymour-duncan-tele-standard.json' assert { type: 'json' };
 
 const permission = 'Reference credited; reuse terms not specified.';
 const wires = (connections: string[][]) =>
@@ -1265,5 +1344,772 @@ export const exampleLibrary: {
       "2 Filter'Trons, 3-way toggle, individual volumes, master volume, tone/standby switch (approximated; standby switching not representable).",
     sourceUrl: 'https://www.gretschguitars.com/support/wiring-schematics/',
     createCircuit: gretschToneStandbySwitchCircuit,
+  },
+  {
+    id: 'sd-1-phat-cat-1h-3way-toggle-2v-1t',
+    title:
+      'Seymour Duncan: 1 Phat Cat, 1 humbucker, 3-way toggle, 2 volumes, 1 tone',
+    description: '1 Phat Cat, 1 humbucker, 3-way toggle, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1PC_1H_3G_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1_phat_cat_1h_3way_toggle_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-1-phat-cat-1v-1t',
+    title: 'Seymour Duncan: 1 Phat Cat, 1 volume, 1 tone',
+    description: '1 Phat Cat, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1PhatCat_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1_phat_cat_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-1-phat-cat-1v',
+    title: 'Seymour Duncan: 1 Phat Cat, 1 volume',
+    description: '1 Phat Cat, 1 volume',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1PhatCat_1V.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sd1_phat_cat_1v)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1v-1t',
+    title: 'Seymour Duncan: 1 humbucker, 1 volume, 1 tone',
+    description: '1 humbucker, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V_1T.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sd1h_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1v-1tpp-series-parallel',
+    title:
+      'Seymour Duncan: 1 humbucker, 1 volume, 1 tone push/pull series/parallel',
+    description: '1 humbucker, 1 volume, 1 tone push/pull series/parallel',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V_1TppSP.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1h_1v_1tpp_series_parallel)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1v-1tpp-spl',
+    title: 'Seymour Duncan: 1 humbucker, 1 volume, 1 tone push/pull coil split',
+    description: '1 humbucker, 1 volume, 1 tone push/pull coil split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1h_1v_1tpp_spl)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1vpp-series-parallel-1t',
+    title:
+      'Seymour Duncan: 1 humbucker, push/pull volume series/parallel, 1 tone',
+    description: '1 humbucker, push/pull volume series/parallel, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSP_1T.rev2.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1h_1vpp_series_parallel_1t)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1vpp-series-parallel',
+    title: 'Seymour Duncan: 1 humbucker, 1 volume push/pull series/parallel',
+    description: '1 humbucker, 1 volume push/pull series/parallel',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSP.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1h_1vpp_series_parallel)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1vpp-split-1t',
+    title: 'Seymour Duncan: 1 humbucker, push/pull volume coil split, 1 tone',
+    description: '1 humbucker, push/pull volume coil split, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1h_1vpp_split_1t)) as Circuit,
+  },
+  {
+    id: 'sd-1h-1vpp-split',
+    title: 'Seymour Duncan: 1 humbucker, 1 volume push/pull coil split',
+    description: '1 humbucker, 1 volume push/pull coil split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSPL.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sd1h_1vpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-1p90-1phat-cat-3way-toggle-2v-2t',
+    title:
+      'Seymour Duncan: 1 P90, 1 Phat Cat, 3-way toggle, 2 volumes, 2 tones',
+    description: '1 P90, 1 Phat Cat, 3-way toggle, 2 volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1P90_1PhatCat_3G_2V_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd1p90_1phat_cat_3way_toggle_2v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-1s-1v-1t',
+    title: 'Seymour Duncan: 1 single coil, 1 volume, 1 tone',
+    description: '1 single coil, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1S_1V_1T.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sd1s_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-1s-1v',
+    title: 'Seymour Duncan: 1 single coil, 1 volume',
+    description: '1 single coil, 1 volume',
+    sourceUrl: 'https://www.seymourduncan.com/images/wiring-diagrams/1S_1V.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sd1s_1v)) as Circuit,
+  },
+  {
+    id: 'sd-2-p90s-3way-toggle-2v-2t',
+    title: 'Seymour Duncan: 2 P90s, 3-way toggle, 2 volumes, 2 tones',
+    description: '2 P90s, 3-way toggle, 2 volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/P90_Standard.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2_p90s_3way_toggle_2v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2-phat-cats-3way-toggle-2v-1t',
+    title: 'Seymour Duncan: 2 Phat Cats, 3-way toggle, 2 volumes, 1 tone',
+    description: '2 Phat Cats, 3-way toggle, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2PhatCat_3G_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2_phat_cats_3way_toggle_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2-phat-cats-3way-toggle-2v-2t',
+    title: 'Seymour Duncan: 2 Phat Cats, 3-way toggle, 2 volumes, 2 tones',
+    description: '2 Phat Cats, 3-way toggle, 2 volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2PhatCat_3G_2V_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2_phat_cats_3way_toggle_2v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1v-1t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 1 tone',
+    description: '2 humbuckers, 3-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1v-1tpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 1 tone push/pull split',
+    description: '2 humbuckers, 3-way blade, 1 volume, 1 tone push/pull split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1v_1tpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1v-2t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 2 tones',
+    description: '2 humbuckers, 3-way blade, 1 volume, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1v-2tpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 2 tones push/pull split',
+    description: '2 humbuckers, 3-way blade, 1 volume, 2 tones push/pull split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_2TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1v_2tpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1v',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume',
+    description: '2 humbuckers, 3-way blade, 1 volume',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1v)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1vpp-split-1t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, push/pull volume coil split, 1 tone',
+    description:
+      '2 humbuckers, 3-way blade, push/pull volume coil split, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1vpp_split_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-1vpp-split-2t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, volume push/pull split, 2 tones',
+    description: '2 humbuckers, 3-way blade, volume push/pull split, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1VppSPL_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_1vpp_split_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2v-1t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 1 tone',
+    description: '2 humbuckers, 3-way blade, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2v-1tpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 1 tone push/pull split',
+    description: '2 humbuckers, 3-way blade, 2 volumes, 1 tone push/pull split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2v_1tpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2v-2t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 2 tones',
+    description: '2 humbuckers, 3-way blade, 2 volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2v-2tpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 2 tones pp coil split',
+    description: '2 humbuckers, 3-way blade, 2 volumes, 2 tones pp coil split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_2TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2v_2tpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2v',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes',
+    description: '2 humbuckers, 3-way blade, 2 volumes',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2v)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2vpp-series-parallel-2t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, series/parallel volumes, 2 tones',
+    description: '2 humbuckers, 3-way blade, series/parallel volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSP_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sd2h_3way_blade_2vpp_series_parallel_2t),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2vpp-series-parallel',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull series/parallel',
+    description:
+      '2 humbuckers, 3-way blade, 2 volumes push/pull series/parallel',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSP.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sd2h_3way_blade_2vpp_series_parallel),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2vpp-split-1t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, coil split, 1 tone',
+    description: '2 humbuckers, 3-way blade, 2 volumes, coil split, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2vpp_split_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2vpp-split-2t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull split, 2 tones',
+    description:
+      '2 humbuckers, 3-way blade, 2 volumes push/pull split, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSPL_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2vpp_split_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-blade-2vpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull coil split',
+    description: '2 humbuckers, 3-way blade, 2 volumes push/pull coil split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_blade_2vpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-1v-1t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume, 1 tone',
+    description: '2 humbuckers, 3-way toggle, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-1v-1tpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume, 1 tone push/pull split',
+    description: '2 humbuckers, 3-way toggle, 1 volume, 1 tone push/pull split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_1v_1tpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-1v-2t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume, 2 tones',
+    description: '2 humbuckers, 3-way toggle, 1 volume, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V_2T.rev2.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_1v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-1v',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume',
+    description: '2 humbuckers, 3-way toggle, 1 volume',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_1v)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-1vpp-split-1t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, push/pull volume coil split, 1 tone',
+    description:
+      '2 humbuckers, 3-way toggle, push/pull volume coil split, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_1vpp_split_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2v-1t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes, 1 tone',
+    description: '2 humbuckers, 3-way toggle, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2v-2t',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes, 2 tones',
+    description: '2 humbuckers, 3-way toggle, 2 volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2V_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2v',
+    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes',
+    description: '2 humbuckers, 3-way toggle, 2 volumes',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2v)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2vpp-series-parallel-2t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, series/parallel volumes, 2 tones',
+    description: '2 humbuckers, 3-way toggle, series/parallel volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSP_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sd2h_3way_toggle_2vpp_series_parallel_2t),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2vpp-series-parallel',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes push/pull series/parallel',
+    description:
+      '2 humbuckers, 3-way toggle, 2 volumes push/pull series/parallel',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSP.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sd2h_3way_toggle_2vpp_series_parallel),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2vpp-splb',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes, bridge coil split',
+    description: '2 humbuckers, 3-way toggle, 2 volumes, bridge coil split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPLB.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2vpp_splb)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2vpp-split-1t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes pp split, 1 tone',
+    description: '2 humbuckers, 3-way toggle, 2 volumes pp split, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2vpp_split_1t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2vpp-split-2t',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes pp split, 2 tones',
+    description: '2 humbuckers, 3-way toggle, 2 volumes pp split, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPL_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2vpp_split_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2h-3way-toggle-2vpp-split',
+    title:
+      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes push/pull coil split',
+    description: '2 humbuckers, 3-way toggle, 2 volumes push/pull coil split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2h_3way_toggle_2vpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-2mh-3way-toggle-2v-2t',
+    title:
+      'Seymour Duncan: 2 mini-humbuckers, 3-way toggle, 2 volumes, 2 tones',
+    description: '2 mini-humbuckers, 3-way toggle, 2 volumes, 2 tones',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2MH_3G_2V_2T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2mh_3way_toggle_2v_2t)) as Circuit,
+  },
+  {
+    id: 'sd-2s-3way-blade-1v-1t',
+    title: 'Seymour Duncan: 2 single coils, 3-way blade, 1 volume, 1 tone',
+    description: '2 single coils, 3-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2S_3B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sd2s_3way_blade_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-esquire-1h-ssp',
+    title:
+      'Seymour Duncan: Esquire, 1 humbucker, 3-way blade SSP, 1 volume, 1 tone',
+    description: 'Esquire, 1 humbucker, 3-way blade SSP, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Esq_1H_SSP.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdesquire_1h_ssp)) as Circuit,
+  },
+  {
+    id: 'sd-esquire-standard',
+    title: 'Seymour Duncan: Standard Esquire',
+    description: 'Standard Esquire',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Esq_Standard.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdesquire_standard)) as Circuit,
+  },
+  {
+    id: 'sd-jazz-bass-standard',
+    title: 'Seymour Duncan: Jazz Bass Standard',
+    description: 'Jazz Bass Standard',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/JazzBass_Standard.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdjazz_bass_standard)) as Circuit,
+  },
+  {
+    id: 'sd-mandolin-standard',
+    title: 'Seymour Duncan: Mandolin, 1 single coil, 1 volume, 1 tone',
+    description: 'Mandolin, 1 single coil, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Mandolin_Standard.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdmandolin_standard)) as Circuit,
+  },
+  {
+    id: 'sd-music-man-p-bass-2v-1t',
+    title: 'Seymour Duncan: Music Man and P-Bass, 2 volumes, 1 tone',
+    description: 'Music Man and P-Bass, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/1MM_1P_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdmusic_man_p_bass_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-music-man-passive-1v-1t',
+    title: 'Seymour Duncan: Music Man passive, 1 volume, 1 tone',
+    description: 'Music Man passive, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/MM_Passive_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdmusic_man_passive_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-music-man-passive-2v-1t',
+    title: 'Seymour Duncan: Music Man passive, 2 volumes, 1 tone',
+    description: 'Music Man passive, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/MM_Passive_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdmusic_man_passive_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-p-bass-1s-1v-1t',
+    title: 'Seymour Duncan: P-Bass, 1 single coil, 1 volume, 1 tone',
+    description: 'P-Bass, 1 single coil, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Pbass_1S_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdp_bass_1s_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-p-j-bass-standard',
+    title: 'Seymour Duncan: Standard PJ Bass, 2 volumes, 1 tone',
+    description: 'Standard PJ Bass, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/P_JBass_Standard.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdp_j_bass_standard)) as Circuit,
+  },
+  {
+    id: 'sd-p-j-stkj-2v-1t',
+    title: 'Seymour Duncan: P-Bass and Jazz Bass Stack, 2 volumes, 1 tone',
+    description: 'P-Bass and Jazz Bass Stack, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/P_J_STKJ_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdp_j_stkj_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-passive-soapbars-2v-1t',
+    title: 'Seymour Duncan: Passive soapbars, 2 volumes, 1 tone',
+    description: 'Passive soapbars, 2 volumes, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/2pSB_2V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdpassive_soapbars_2v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-precision-bass-standard',
+    title: 'Seymour Duncan: Standard P-Bass, 1 volume, 1 tone',
+    description: 'Standard P-Bass, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/PrecisionBass_Standard.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdprecision_bass_standard)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1966',
+    title: 'Seymour Duncan: Tele 1966',
+    description: 'Tele 1966',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1966.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sdtele_1966)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1h-1s-3way-blade-1v-1t',
+    title:
+      'Seymour Duncan: Tele, 1 humbucker, 1 single coil, 3-way blade, 1 volume, 1 tone',
+    description:
+      'Tele, 1 humbucker, 1 single coil, 3-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1H_1S_3B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_1h_1s_3way_blade_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1h-1s-3way-blade-1v-1tpp-split',
+    title:
+      'Seymour Duncan: Tele, 1 humbucker, 1 single coil, 3-way blade, 1V1T split',
+    description: 'Tele, 1 humbucker, 1 single coil, 3-way blade, 1V1T split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1H_1S_3B_1V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sdtele_1h_1s_3way_blade_1v_1tpp_split),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-tele-1h-1s-3way-blade-1vpp-split-1t',
+    title:
+      'Seymour Duncan: Tele, 1 humbucker, 1 single coil, 3-way blade, 1Vpp split, 1T',
+    description:
+      'Tele, 1 humbucker, 1 single coil, 3-way blade, 1Vpp split, 1T',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1H_1S_3B_1VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sdtele_1h_1s_3way_blade_1vpp_split_1t),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-tele-1s-1h-3b-2vpp-spln',
+    title:
+      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 2VppSPLn',
+    description: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 2VppSPLn',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_2VppSPLn.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_1s_1h_3b_2vpp_spln)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1s-1h-3way-blade-1v-1tpp-split',
+    title:
+      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 1V1T split',
+    description: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 1V1T split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_1V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sdtele_1s_1h_3way_blade_1v_1tpp_split),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-tele-1s-1h-3way-blade-1vpp-split-1t',
+    title:
+      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 1Vpp split, 1T',
+    description:
+      'Tele, 1 single coil, 1 humbucker, 3-way blade, 1Vpp split, 1T',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_1VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(
+        JSON.stringify(sdtele_1s_1h_3way_blade_1vpp_split_1t),
+      ) as Circuit,
+  },
+  {
+    id: 'sd-tele-1s-1h-3way-blade-2v',
+    title:
+      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 2 volumes',
+    description: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 2 volumes',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_2V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_1s_1h_3way_blade_2v)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1th-1s-3b-2v',
+    title:
+      'Seymour Duncan: Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2 volumes',
+    description:
+      'Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2 volumes',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1TH_1S_3B_2V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_1th_1s_3b_2v)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1th-1s-3b-2vbpp-split',
+    title:
+      'Seymour Duncan: Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2Vbpp split',
+    description:
+      'Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2Vbpp split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1TH_1S_3B_2VbppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_1th_1s_3b_2vbpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-tele-1th-1s-4way-1v-1t',
+    title:
+      'Seymour Duncan: Tele, humbucker + single-coil, 4-way blade, 1 volume, 1 tone',
+    description: 'Tele, humbucker + single-coil, 4-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1TH_1S_4B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_1th_1s_4way_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-tele-2-stacks-3way-blade-1v-1t',
+    title: 'Seymour Duncan: Tele, 2 Tele Stacks, 3-way blade, 1 volume, 1 tone',
+    description: 'Tele, 2 Tele Stacks, 3-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2TSTK_3B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_2_stacks_3way_blade_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-tele-2h-3way-blade-1v-1tpp-split',
+    title:
+      'Seymour Duncan: Tele, 2 humbuckers, 3-way blade, 1V1T push/pull split',
+    description: 'Tele, 2 humbuckers, 3-way blade, 1V1T push/pull split',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2H_3B_1V_1TppSPL.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_2h_3way_blade_1v_1tpp_split)) as Circuit,
+  },
+  {
+    id: 'sd-tele-2h-3way-blade-1vpp-split-1t',
+    title:
+      'Seymour Duncan: Tele, 2 humbuckers, 3-way blade, 1Vpp split neck, 1T',
+    description: 'Tele, 2 humbuckers, 3-way blade, 1Vpp split neck, 1T',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2H_3B_1VppSPL_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_2h_3way_blade_1vpp_split_1t)) as Circuit,
+  },
+  {
+    id: 'sd-tele-2s-3way-blade-2v',
+    title: 'Seymour Duncan: Tele, 2 single coils, 2 volumes, 3-way blade',
+    description: 'Tele, 2 single coils, 2 volumes, 3-way blade',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2S_3B_2V.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_2s_3way_blade_2v)) as Circuit,
+  },
+  {
+    id: 'sd-tele-2s-4way-1v-1t',
+    title:
+      'Seymour Duncan: Tele, 2 single-coils, 4-way blade, 1 volume, 1 tone',
+    description: 'Tele, 2 single-coils, 4-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2S_4B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_2s_4way_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-tele-2th-4way-1v-1t',
+    title: 'Seymour Duncan: Tele, 2 humbuckers, 4-way blade, 1 volume, 1 tone',
+    description: 'Tele, 2 humbuckers, 4-way blade, 1 volume, 1 tone',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2TH_4B_1V_1T.pdf',
+    createCircuit: () =>
+      JSON.parse(JSON.stringify(sdtele_2th_4way_1v_1t)) as Circuit,
+  },
+  {
+    id: 'sd-tele-standard',
+    title: 'Seymour Duncan: Standard Telecaster',
+    description: 'Standard Telecaster',
+    sourceUrl:
+      'https://www.seymourduncan.com/images/wiring-diagrams/Tele_Standard.pdf',
+    createCircuit: () => JSON.parse(JSON.stringify(sdtele_standard)) as Circuit,
   },
 ];
