@@ -8,6 +8,7 @@ export function readFlags(environment: Record<string, unknown>) {
     isClearWiringEnabled: environment.VITE_ENABLE_CLEAR_WIRING !== 'false',
     isCompactGroundEnabled: environment.VITE_ENABLE_COMPACT_GROUND !== 'false',
     isSignalFlowEnabled: environment.VITE_ENABLE_SIGNAL_FLOW !== 'false',
+    isTruthTableEnabled: environment.VITE_ENABLE_TRUTH_TABLE !== 'false',
   };
 }
 

@@ -31,6 +31,7 @@ import { groundPresentation } from './groundPresentation';
 import { DiagramFiles } from './DiagramFiles';
 import { PartControl } from './PartControl';
 import { PickupOptions, pickupVariants } from './PickupOptions';
+import { TruthTableDialog } from './TruthTableDialog';
 import { VaritoneCard } from './VaritoneCard';
 import '../workbench.css';
 
@@ -159,7 +160,12 @@ export function WorkbenchLayout({
   }, [isSelectionHidden, isPendingHidden, onSelect, onCancelConnection]);
   const [operationMessage, setOperationMessage] = useState('');
   const [dialog, setDialog] = useState<
-    'Open diagram' | 'Add part' | 'Diagram details' | 'Help' | null
+    | 'Open diagram'
+    | 'Add part'
+    | 'Diagram details'
+    | 'Help'
+    | 'Truth table'
+    | null
   >(null);
   const [exampleId, setExampleId] = useState('standard-tele');
   const [showAllLabels, setShowAllLabels] = useState(false);
@@ -374,6 +380,14 @@ export function WorkbenchLayout({
         <button disabled={!canUndo} onClick={onUndo}>
           Undo
         </button>
+        {flags.isTruthTableEnabled && (
+          <button
+            aria-label="Truth table"
+            onClick={() => openDialog('Truth table')}
+          >
+            Truth table
+          </button>
+        )}
         {isEditing && (
           <button onClick={() => openDialog('Add part')}>Add part</button>
         )}
@@ -872,6 +886,9 @@ export function WorkbenchLayout({
                 .
               </p>
             </div>
+          )}
+          {dialog === 'Truth table' && (
+            <TruthTableDialog circuit={circuit} />
           )}
         </BenchDialog>
       )}
