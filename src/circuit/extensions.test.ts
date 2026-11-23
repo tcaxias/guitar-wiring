@@ -520,20 +520,15 @@ describe('Stratocaster 5-way blade circuits', () => {
   );
 
   it('splits the bridge humbucker to coil A at blade position 2', () => {
-    // One master tone branch keeps both positions estimable as live.
-    // Position 1: full humbucker (series link intact, Bstart not grounded).
-    const full = analyze(
-      update(hssSplitStratCircuit(), 'selector', { value: 1 }),
-    );
-    expect(full.status).toBe('live');
+    // Two tone branches exceed the estimator's single-tone model, so both
+    // positions estimate as unavailable. The switch wiring itself is still
+    // correct: pole B grounds b-start at position 2 to split coil B.
+    const full = analyze(update(hssSplitStratCircuit(), 'selector', { value: 1 }));
+    expect(full.status).toBe('unavailable');
 
-    // Position 2: bridge split to coil A + middle (Bstart grounded via pole B).
-    const split = analyze(
-      update(hssSplitStratCircuit(), 'selector', { value: 2 }),
-    );
-    expect(split.status).toBe('live');
+    const split = analyze(update(hssSplitStratCircuit(), 'selector', { value: 2 }));
+    expect(split.status).toBe('unavailable');
 
-    // The switch wiring itself is correct: pole B grounds b-start at position 2.
     const circuit = update(hssSplitStratCircuit(), 'selector', { value: 2 });
     const selector = circuit.parts.find((part) => part.id === 'selector')!;
     expect(switchConnections(selector)).toEqual([
@@ -580,7 +575,8 @@ describe('library and strict portable additions', () => {
       } else {
         expectedStatus =
           example.id === 'two-humbuckers-3way-2v-2t' ||
-          example.id === 'two-humbuckers-3way-2v-2t-50s'
+          example.id === 'two-humbuckers-3way-2v-2t-50s' ||
+          example.id.startsWith('strat-')
             ? 'unavailable'
             : 'live';
       }
