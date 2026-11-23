@@ -13,6 +13,7 @@ export const partKinds = [
   'push-pull-volume',
   'push-pull-tone',
   'blade4',
+  'blade5',
   'varitone',
 ] as const;
 export type PartKind = (typeof partKinds)[number];
@@ -74,6 +75,7 @@ export const partLabels: Record<PartKind, string> = {
   'push-pull-volume': 'Push-pull volume',
   'push-pull-tone': 'Push-pull tone',
   blade4: '4-way blade',
+  blade5: '5-way blade',
   varitone: 'Varitone',
 };
 
@@ -89,6 +91,15 @@ export const terminals: Record<PartKind, readonly Terminal[]> = {
   'push-pull-tone': [],
   blade4: ['a', 'b'].flatMap((pole) =>
     ['common', '1', '2', '3', '4'].map((contact, index) => ({
+      name: contact === 'common' ? `${pole}-common` : `${pole}${contact}`,
+      label: `${pole.toUpperCase()}${contact === 'common' ? 'C' : contact}`,
+      x: pole === 'a' ? 0 : 180,
+      y: 20 + index * 40,
+      exit: pole === 'a' ? ('left' as const) : ('right' as const),
+    })),
+  ),
+  blade5: ['a', 'b'].flatMap((pole) =>
+    ['common', '1', '2', '3', '4', '5'].map((contact, index) => ({
       name: contact === 'common' ? `${pole}-common` : `${pole}${contact}`,
       label: `${pole.toUpperCase()}${contact === 'common' ? 'C' : contact}`,
       x: pole === 'a' ? 0 : 180,
@@ -175,9 +186,9 @@ export const potRole = (part: Part): 'volume' | 'tone' | null =>
 export const isPushPullPart = (part: Part): boolean =>
   part.kind === 'push-pull-volume' || part.kind === 'push-pull-tone';
 export const isBladePart = (part: Part): boolean =>
-  part.kind === 'blade' || part.kind === 'blade4';
+  part.kind === 'blade' || part.kind === 'blade4' || part.kind === 'blade5';
 export const bladePosition = (part: Part): number =>
-  part.kind === 'blade4'
+  part.kind === 'blade4' || part.kind === 'blade5'
     ? part.value
     : { neck: 1, both: 2, bridge: 3 }[part.position];
 
@@ -262,7 +273,7 @@ export function createPart(kind: PartKind, id: string, index = 0): Part {
     value:
       kind === 'capacitor'
         ? 22
-        : kind === 'blade4' || kind === 'varitone'
+        : kind === 'blade4' || kind === 'blade5' || kind === 'varitone'
           ? 1
           : 10,
     position: 'both',

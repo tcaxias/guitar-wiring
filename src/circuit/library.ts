@@ -192,6 +192,346 @@ export function varitoneCircuit(): Circuit {
   return circuit;
 }
 
+export function sssStratCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: '3 single-coils, 5-way blade, 1 volume, 2 tones',
+      creator: 'Pickup Lab; reference: Seymour Duncan',
+      sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+      permission,
+    },
+    parts: [
+      {
+        ...createPart('pickup', 'neck'),
+        label: 'Neck pickup',
+        x: 240,
+        y: 75,
+      },
+      {
+        ...createPart('pickup', 'middle'),
+        label: 'Middle pickup',
+        x: 240,
+        y: 195,
+      },
+      {
+        ...createPart('pickup', 'bridge'),
+        label: 'Bridge pickup',
+        x: 240,
+        y: 300,
+      },
+      {
+        ...createPart('blade5', 'selector'),
+        label: '5-way blade',
+        x: 620,
+        y: 195,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Master volume',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 320,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Neck tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 420,
+      },
+      {
+        ...createPart('tone', 'tone-2'),
+        label: 'Middle tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 490,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Neck tone capacitor',
+        value: 47,
+        x: 820,
+        y: 340,
+      },
+      {
+        ...createPart('capacitor', 'capacitor-2'),
+        label: 'Middle tone capacitor',
+        value: 47,
+        x: 820,
+        y: 420,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      // 5-way blade: 1 bridge, 2 bridge+middle, 3 middle, 4 middle+neck, 5 neck.
+      // Both poles close together; both commons join at the volume input.
+      ['bridge:hot', 'selector:a1'],
+      ['bridge:hot', 'selector:a2'],
+      ['middle:hot', 'selector:b2'],
+      ['middle:hot', 'selector:a3'],
+      ['middle:hot', 'selector:b4'],
+      ['neck:hot', 'selector:a4'],
+      ['neck:hot', 'selector:a5'],
+      ['selector:a-common', 'volume:input'],
+      ['selector:b-common', 'volume:input'],
+      // Neck tone: volume bus → tone → capacitor → ground
+      ['volume:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      // Middle tone: volume bus → tone-2 → capacitor-2 → ground
+      ['volume:input', 'tone-2:input'],
+      ['tone-2:wiper', 'capacitor-2:a'],
+      ['capacitor-2:b', 'ground:common'],
+      // Master volume → jack tip
+      ['volume:wiper', 'jack:tip'],
+      // Ground returns and pot casings
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['tone-2:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+      // Pickup returns to ground
+      ['neck:return', 'ground:common'],
+      ['middle:return', 'ground:common'],
+      ['bridge:return', 'ground:common'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'strat');
+  return circuit;
+}
+
+export function hssStratCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 2 tones',
+      creator: 'Pickup Lab; reference: Seymour Duncan',
+      sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+      permission,
+    },
+    parts: [
+      {
+        ...createPart('pickup', 'neck'),
+        label: 'Neck pickup',
+        x: 240,
+        y: 75,
+      },
+      {
+        ...createPart('pickup', 'middle'),
+        label: 'Middle pickup',
+        x: 240,
+        y: 195,
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: 'Bridge humbucker',
+        x: 240,
+        y: 300,
+      },
+      {
+        ...createPart('blade5', 'selector'),
+        label: '5-way blade',
+        x: 620,
+        y: 195,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Master volume',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 320,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Neck tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 420,
+      },
+      {
+        ...createPart('tone', 'tone-2'),
+        label: 'Middle tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 490,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Neck tone capacitor',
+        value: 47,
+        x: 820,
+        y: 340,
+      },
+      {
+        ...createPart('capacitor', 'capacitor-2'),
+        label: 'Middle tone capacitor',
+        value: 47,
+        x: 820,
+        y: 420,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      // 5-way blade: 1 bridge, 2 bridge+middle, 3 middle, 4 middle+neck, 5 neck.
+      // Both poles close together; both commons join at the volume input.
+      ['bridge:a-start', 'selector:a1'],
+      ['bridge:a-start', 'selector:a2'],
+      ['middle:hot', 'selector:b2'],
+      ['middle:hot', 'selector:a3'],
+      ['middle:hot', 'selector:b4'],
+      ['neck:hot', 'selector:a4'],
+      ['neck:hot', 'selector:a5'],
+      ['selector:a-common', 'volume:input'],
+      ['selector:b-common', 'volume:input'],
+      // Four-conductor humbucker: series link Afinish–Bstart, Bfinish to ground
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      // Neck tone: volume bus → tone → capacitor → ground
+      ['volume:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      // Middle tone: volume bus → tone-2 → capacitor-2 → ground
+      ['volume:input', 'tone-2:input'],
+      ['tone-2:wiper', 'capacitor-2:a'],
+      ['capacitor-2:b', 'ground:common'],
+      // Master volume → jack tip
+      ['volume:wiper', 'jack:tip'],
+      // Ground returns and pot casings
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['tone-2:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+      // Pickup returns to ground
+      ['neck:return', 'ground:common'],
+      ['middle:return', 'ground:common'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'strat');
+  return circuit;
+}
+
+export function hssSplitStratCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 2 tones, blade split',
+      creator: 'Pickup Lab; reference: Seymour Duncan',
+      sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+      permission,
+    },
+    parts: [
+      {
+        ...createPart('pickup', 'neck'),
+        label: 'Neck pickup',
+        x: 240,
+        y: 75,
+      },
+      {
+        ...createPart('pickup', 'middle'),
+        label: 'Middle pickup',
+        x: 240,
+        y: 195,
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: 'Bridge humbucker',
+        x: 240,
+        y: 300,
+      },
+      {
+        ...createPart('blade5', 'selector'),
+        label: '5-way blade',
+        x: 620,
+        y: 195,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Master volume',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 320,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Neck tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 420,
+      },
+      {
+        ...createPart('tone', 'tone-2'),
+        label: 'Middle tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 490,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Neck tone capacitor',
+        value: 47,
+        x: 820,
+        y: 340,
+      },
+      {
+        ...createPart('capacitor', 'capacitor-2'),
+        label: 'Middle tone capacitor',
+        value: 47,
+        x: 820,
+        y: 420,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      // 5-way blade: 1 bridge full, 2 bridge split (coil A) + middle, 3 middle,
+      // 4 middle+neck, 5 neck.
+      // Pole A carries the signal to the volume input. Pole B grounds the bridge
+      // series junction at position 2 to short coil B and leave coil A (split).
+      // Pole B common is deliberately NOT joined to the volume input so grounding
+      // it at position 2 does not short the output.
+      ['bridge:a-start', 'selector:a1'],
+      ['selector:a1', 'selector:a2'],
+      ['middle:hot', 'selector:a2'],
+      ['middle:hot', 'selector:a3'],
+      ['neck:hot', 'selector:a4'],
+      ['selector:a4', 'selector:a5'],
+      ['selector:a-common', 'volume:input'],
+      // Position 2: ground the bridge series junction (Bstart) to split to coil A.
+      ['bridge:b-start', 'selector:b2'],
+      // Four-conductor humbucker: series link Afinish–Bstart, Bfinish to ground
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      // Neck tone: volume bus → tone → capacitor → ground
+      ['volume:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      // Middle tone: volume bus → tone-2 → capacitor-2 → ground
+      ['volume:input', 'tone-2:input'],
+      ['tone-2:wiper', 'capacitor-2:a'],
+      ['capacitor-2:b', 'ground:common'],
+      // Master volume → jack tip
+      ['volume:wiper', 'jack:tip'],
+      // Ground returns and pot casings
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['tone-2:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+      // Pickup returns to ground
+      ['neck:return', 'ground:common'],
+      ['middle:return', 'ground:common'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'strat');
+  return circuit;
+}
+
 export function singlePickupOneVolumeOneTone(): Circuit {
   const circuit: Circuit = {
     version: 2,
@@ -1347,8 +1687,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1-phat-cat-1h-3way-toggle-2v-1t',
-    title:
-      'Seymour Duncan: 1 Phat Cat, 1 humbucker, 3-way toggle, 2 volumes, 1 tone',
+    title: '1 Phat Cat, 1 humbucker, 3-way toggle, 2 volumes, 1 tone',
     description: '1 Phat Cat, 1 humbucker, 3-way toggle, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1PC_1H_3G_2V_1T.pdf',
@@ -1357,7 +1696,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1-phat-cat-1v-1t',
-    title: 'Seymour Duncan: 1 Phat Cat, 1 volume, 1 tone',
+    title: '1 Phat Cat, 1 volume, 1 tone',
     description: '1 Phat Cat, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1PhatCat_1V_1T.pdf',
@@ -1366,7 +1705,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1-phat-cat-1v',
-    title: 'Seymour Duncan: 1 Phat Cat, 1 volume',
+    title: '1 Phat Cat, 1 volume',
     description: '1 Phat Cat, 1 volume',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1PhatCat_1V.pdf',
@@ -1374,7 +1713,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1v-1t',
-    title: 'Seymour Duncan: 1 humbucker, 1 volume, 1 tone',
+    title: '1 humbucker, 1 volume, 1 tone',
     description: '1 humbucker, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V_1T.pdf',
@@ -1382,8 +1721,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1v-1tpp-series-parallel',
-    title:
-      'Seymour Duncan: 1 humbucker, 1 volume, 1 tone push/pull series/parallel',
+    title: '1 humbucker, 1 volume, 1 tone push/pull series/parallel',
     description: '1 humbucker, 1 volume, 1 tone push/pull series/parallel',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V_1TppSP.pdf',
@@ -1392,7 +1730,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1v-1tpp-spl',
-    title: 'Seymour Duncan: 1 humbucker, 1 volume, 1 tone push/pull coil split',
+    title: '1 humbucker, 1 volume, 1 tone push/pull coil split',
     description: '1 humbucker, 1 volume, 1 tone push/pull coil split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1V_1TppSPL.pdf',
@@ -1401,8 +1739,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1vpp-series-parallel-1t',
-    title:
-      'Seymour Duncan: 1 humbucker, push/pull volume series/parallel, 1 tone',
+    title: '1 humbucker, push/pull volume series/parallel, 1 tone',
     description: '1 humbucker, push/pull volume series/parallel, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSP_1T.rev2.pdf',
@@ -1411,7 +1748,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1vpp-series-parallel',
-    title: 'Seymour Duncan: 1 humbucker, 1 volume push/pull series/parallel',
+    title: '1 humbucker, 1 volume push/pull series/parallel',
     description: '1 humbucker, 1 volume push/pull series/parallel',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSP.pdf',
@@ -1420,7 +1757,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1vpp-split-1t',
-    title: 'Seymour Duncan: 1 humbucker, push/pull volume coil split, 1 tone',
+    title: '1 humbucker, push/pull volume coil split, 1 tone',
     description: '1 humbucker, push/pull volume coil split, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSPL_1T.pdf',
@@ -1429,7 +1766,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1h-1vpp-split',
-    title: 'Seymour Duncan: 1 humbucker, 1 volume push/pull coil split',
+    title: '1 humbucker, 1 volume push/pull coil split',
     description: '1 humbucker, 1 volume push/pull coil split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1H_1VppSPL.pdf',
@@ -1437,8 +1774,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1p90-1phat-cat-3way-toggle-2v-2t',
-    title:
-      'Seymour Duncan: 1 P90, 1 Phat Cat, 3-way toggle, 2 volumes, 2 tones',
+    title: '1 P90, 1 Phat Cat, 3-way toggle, 2 volumes, 2 tones',
     description: '1 P90, 1 Phat Cat, 3-way toggle, 2 volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1P90_1PhatCat_3G_2V_2T.pdf',
@@ -1447,7 +1783,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1s-1v-1t',
-    title: 'Seymour Duncan: 1 single coil, 1 volume, 1 tone',
+    title: '1 single coil, 1 volume, 1 tone',
     description: '1 single coil, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1S_1V_1T.pdf',
@@ -1455,14 +1791,14 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-1s-1v',
-    title: 'Seymour Duncan: 1 single coil, 1 volume',
+    title: '1 single coil, 1 volume',
     description: '1 single coil, 1 volume',
     sourceUrl: 'https://www.seymourduncan.com/images/wiring-diagrams/1S_1V.pdf',
     createCircuit: () => JSON.parse(JSON.stringify(sd1s_1v)) as Circuit,
   },
   {
     id: 'sd-2-p90s-3way-toggle-2v-2t',
-    title: 'Seymour Duncan: 2 P90s, 3-way toggle, 2 volumes, 2 tones',
+    title: '2 P90s, 3-way toggle, 2 volumes, 2 tones',
     description: '2 P90s, 3-way toggle, 2 volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/P90_Standard.pdf',
@@ -1471,7 +1807,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2-phat-cats-3way-toggle-2v-1t',
-    title: 'Seymour Duncan: 2 Phat Cats, 3-way toggle, 2 volumes, 1 tone',
+    title: '2 Phat Cats, 3-way toggle, 2 volumes, 1 tone',
     description: '2 Phat Cats, 3-way toggle, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2PhatCat_3G_2V_1T.pdf',
@@ -1480,7 +1816,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2-phat-cats-3way-toggle-2v-2t',
-    title: 'Seymour Duncan: 2 Phat Cats, 3-way toggle, 2 volumes, 2 tones',
+    title: '2 Phat Cats, 3-way toggle, 2 volumes, 2 tones',
     description: '2 Phat Cats, 3-way toggle, 2 volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2PhatCat_3G_2V_2T.pdf',
@@ -1489,7 +1825,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1v-1t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 1 tone',
+    title: '2 humbuckers, 3-way blade, 1 volume, 1 tone',
     description: '2 humbuckers, 3-way blade, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_1T.pdf',
@@ -1498,8 +1834,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1v-1tpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 1 tone push/pull split',
+    title: '2 humbuckers, 3-way blade, 1 volume, 1 tone push/pull split',
     description: '2 humbuckers, 3-way blade, 1 volume, 1 tone push/pull split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_1TppSPL.pdf',
@@ -1508,7 +1843,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1v-2t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 2 tones',
+    title: '2 humbuckers, 3-way blade, 1 volume, 2 tones',
     description: '2 humbuckers, 3-way blade, 1 volume, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_2T.pdf',
@@ -1517,8 +1852,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1v-2tpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume, 2 tones push/pull split',
+    title: '2 humbuckers, 3-way blade, 1 volume, 2 tones push/pull split',
     description: '2 humbuckers, 3-way blade, 1 volume, 2 tones push/pull split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V_2TppSPL.pdf',
@@ -1527,7 +1861,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1v',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 1 volume',
+    title: '2 humbuckers, 3-way blade, 1 volume',
     description: '2 humbuckers, 3-way blade, 1 volume',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1V.pdf',
@@ -1536,8 +1870,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1vpp-split-1t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, push/pull volume coil split, 1 tone',
+    title: '2 humbuckers, 3-way blade, push/pull volume coil split, 1 tone',
     description:
       '2 humbuckers, 3-way blade, push/pull volume coil split, 1 tone',
     sourceUrl:
@@ -1547,8 +1880,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-1vpp-split-2t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, volume push/pull split, 2 tones',
+    title: '2 humbuckers, 3-way blade, volume push/pull split, 2 tones',
     description: '2 humbuckers, 3-way blade, volume push/pull split, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_1VppSPL_2T.pdf',
@@ -1557,7 +1889,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2v-1t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 1 tone',
+    title: '2 humbuckers, 3-way blade, 2 volumes, 1 tone',
     description: '2 humbuckers, 3-way blade, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_1T.pdf',
@@ -1566,8 +1898,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2v-1tpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 1 tone push/pull split',
+    title: '2 humbuckers, 3-way blade, 2 volumes, 1 tone push/pull split',
     description: '2 humbuckers, 3-way blade, 2 volumes, 1 tone push/pull split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_1TppSPL.pdf',
@@ -1576,7 +1907,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2v-2t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 2 tones',
+    title: '2 humbuckers, 3-way blade, 2 volumes, 2 tones',
     description: '2 humbuckers, 3-way blade, 2 volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_2T.pdf',
@@ -1585,8 +1916,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2v-2tpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, 2 tones pp coil split',
+    title: '2 humbuckers, 3-way blade, 2 volumes, 2 tones pp coil split',
     description: '2 humbuckers, 3-way blade, 2 volumes, 2 tones pp coil split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V_2TppSPL.pdf',
@@ -1595,7 +1925,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2v',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes',
+    title: '2 humbuckers, 3-way blade, 2 volumes',
     description: '2 humbuckers, 3-way blade, 2 volumes',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2V.pdf',
@@ -1604,8 +1934,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2vpp-series-parallel-2t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, series/parallel volumes, 2 tones',
+    title: '2 humbuckers, 3-way blade, series/parallel volumes, 2 tones',
     description: '2 humbuckers, 3-way blade, series/parallel volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSP_2T.pdf',
@@ -1616,8 +1945,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2vpp-series-parallel',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull series/parallel',
+    title: '2 humbuckers, 3-way blade, 2 volumes push/pull series/parallel',
     description:
       '2 humbuckers, 3-way blade, 2 volumes push/pull series/parallel',
     sourceUrl:
@@ -1629,8 +1957,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2vpp-split-1t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes, coil split, 1 tone',
+    title: '2 humbuckers, 3-way blade, 2 volumes, coil split, 1 tone',
     description: '2 humbuckers, 3-way blade, 2 volumes, coil split, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSPL_1T.pdf',
@@ -1639,8 +1966,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2vpp-split-2t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull split, 2 tones',
+    title: '2 humbuckers, 3-way blade, 2 volumes push/pull split, 2 tones',
     description:
       '2 humbuckers, 3-way blade, 2 volumes push/pull split, 2 tones',
     sourceUrl:
@@ -1650,8 +1976,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-blade-2vpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way blade, 2 volumes push/pull coil split',
+    title: '2 humbuckers, 3-way blade, 2 volumes push/pull coil split',
     description: '2 humbuckers, 3-way blade, 2 volumes push/pull coil split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3B_2VppSPL.pdf',
@@ -1660,7 +1985,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-1v-1t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume, 1 tone',
+    title: '2 humbuckers, 3-way toggle, 1 volume, 1 tone',
     description: '2 humbuckers, 3-way toggle, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V_1T.pdf',
@@ -1669,8 +1994,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-1v-1tpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume, 1 tone push/pull split',
+    title: '2 humbuckers, 3-way toggle, 1 volume, 1 tone push/pull split',
     description: '2 humbuckers, 3-way toggle, 1 volume, 1 tone push/pull split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V_1TppSPL.pdf',
@@ -1679,7 +2003,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-1v-2t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume, 2 tones',
+    title: '2 humbuckers, 3-way toggle, 1 volume, 2 tones',
     description: '2 humbuckers, 3-way toggle, 1 volume, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V_2T.rev2.pdf',
@@ -1688,7 +2012,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-1v',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 1 volume',
+    title: '2 humbuckers, 3-way toggle, 1 volume',
     description: '2 humbuckers, 3-way toggle, 1 volume',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_1V.pdf',
@@ -1697,8 +2021,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-1vpp-split-1t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, push/pull volume coil split, 1 tone',
+    title: '2 humbuckers, 3-way toggle, push/pull volume coil split, 1 tone',
     description:
       '2 humbuckers, 3-way toggle, push/pull volume coil split, 1 tone',
     sourceUrl:
@@ -1708,7 +2031,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2v-1t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes, 1 tone',
+    title: '2 humbuckers, 3-way toggle, 2 volumes, 1 tone',
     description: '2 humbuckers, 3-way toggle, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2V_1T.pdf',
@@ -1717,7 +2040,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2v-2t',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes, 2 tones',
+    title: '2 humbuckers, 3-way toggle, 2 volumes, 2 tones',
     description: '2 humbuckers, 3-way toggle, 2 volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2V_2T.pdf',
@@ -1726,7 +2049,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2v',
-    title: 'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes',
+    title: '2 humbuckers, 3-way toggle, 2 volumes',
     description: '2 humbuckers, 3-way toggle, 2 volumes',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2V.pdf',
@@ -1735,8 +2058,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2vpp-series-parallel-2t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, series/parallel volumes, 2 tones',
+    title: '2 humbuckers, 3-way toggle, series/parallel volumes, 2 tones',
     description: '2 humbuckers, 3-way toggle, series/parallel volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSP_2T.pdf',
@@ -1747,8 +2069,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2vpp-series-parallel',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes push/pull series/parallel',
+    title: '2 humbuckers, 3-way toggle, 2 volumes push/pull series/parallel',
     description:
       '2 humbuckers, 3-way toggle, 2 volumes push/pull series/parallel',
     sourceUrl:
@@ -1760,8 +2081,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2vpp-splb',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes, bridge coil split',
+    title: '2 humbuckers, 3-way toggle, 2 volumes, bridge coil split',
     description: '2 humbuckers, 3-way toggle, 2 volumes, bridge coil split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPLB.pdf',
@@ -1770,8 +2090,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2vpp-split-1t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes pp split, 1 tone',
+    title: '2 humbuckers, 3-way toggle, 2 volumes pp split, 1 tone',
     description: '2 humbuckers, 3-way toggle, 2 volumes pp split, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPL_1T.pdf',
@@ -1780,8 +2099,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2vpp-split-2t',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes pp split, 2 tones',
+    title: '2 humbuckers, 3-way toggle, 2 volumes pp split, 2 tones',
     description: '2 humbuckers, 3-way toggle, 2 volumes pp split, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPL_2T.pdf',
@@ -1790,8 +2108,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2h-3way-toggle-2vpp-split',
-    title:
-      'Seymour Duncan: 2 humbuckers, 3-way toggle, 2 volumes push/pull coil split',
+    title: '2 humbuckers, 3-way toggle, 2 volumes push/pull coil split',
     description: '2 humbuckers, 3-way toggle, 2 volumes push/pull coil split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2H_3G_2VppSPL.pdf',
@@ -1800,8 +2117,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2mh-3way-toggle-2v-2t',
-    title:
-      'Seymour Duncan: 2 mini-humbuckers, 3-way toggle, 2 volumes, 2 tones',
+    title: '2 mini-humbuckers, 3-way toggle, 2 volumes, 2 tones',
     description: '2 mini-humbuckers, 3-way toggle, 2 volumes, 2 tones',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2MH_3G_2V_2T.pdf',
@@ -1810,7 +2126,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-2s-3way-blade-1v-1t',
-    title: 'Seymour Duncan: 2 single coils, 3-way blade, 1 volume, 1 tone',
+    title: '2 single coils, 3-way blade, 1 volume, 1 tone',
     description: '2 single coils, 3-way blade, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2S_3B_1V_1T.pdf',
@@ -1819,8 +2135,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-esquire-1h-ssp',
-    title:
-      'Seymour Duncan: Esquire, 1 humbucker, 3-way blade SSP, 1 volume, 1 tone',
+    title: 'Esquire, 1 humbucker, 3-way blade SSP, 1 volume, 1 tone',
     description: 'Esquire, 1 humbucker, 3-way blade SSP, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Esq_1H_SSP.pdf',
@@ -1829,7 +2144,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-esquire-standard',
-    title: 'Seymour Duncan: Standard Esquire',
+    title: 'Standard Esquire',
     description: 'Standard Esquire',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Esq_Standard.pdf',
@@ -1838,7 +2153,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-jazz-bass-standard',
-    title: 'Seymour Duncan: Jazz Bass Standard',
+    title: 'Jazz Bass Standard',
     description: 'Jazz Bass Standard',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/JazzBass_Standard.pdf',
@@ -1847,7 +2162,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-mandolin-standard',
-    title: 'Seymour Duncan: Mandolin, 1 single coil, 1 volume, 1 tone',
+    title: 'Mandolin, 1 single coil, 1 volume, 1 tone',
     description: 'Mandolin, 1 single coil, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Mandolin_Standard.pdf',
@@ -1856,7 +2171,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-music-man-p-bass-2v-1t',
-    title: 'Seymour Duncan: Music Man and P-Bass, 2 volumes, 1 tone',
+    title: 'Music Man and P-Bass, 2 volumes, 1 tone',
     description: 'Music Man and P-Bass, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/1MM_1P_2V_1T.pdf',
@@ -1865,7 +2180,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-music-man-passive-1v-1t',
-    title: 'Seymour Duncan: Music Man passive, 1 volume, 1 tone',
+    title: 'Music Man passive, 1 volume, 1 tone',
     description: 'Music Man passive, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/MM_Passive_1V_1T.pdf',
@@ -1874,7 +2189,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-music-man-passive-2v-1t',
-    title: 'Seymour Duncan: Music Man passive, 2 volumes, 1 tone',
+    title: 'Music Man passive, 2 volumes, 1 tone',
     description: 'Music Man passive, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/MM_Passive_2V_1T.pdf',
@@ -1883,7 +2198,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-p-bass-1s-1v-1t',
-    title: 'Seymour Duncan: P-Bass, 1 single coil, 1 volume, 1 tone',
+    title: 'P-Bass, 1 single coil, 1 volume, 1 tone',
     description: 'P-Bass, 1 single coil, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Pbass_1S_1V_1T.pdf',
@@ -1892,7 +2207,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-p-j-bass-standard',
-    title: 'Seymour Duncan: Standard PJ Bass, 2 volumes, 1 tone',
+    title: 'Standard PJ Bass, 2 volumes, 1 tone',
     description: 'Standard PJ Bass, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/P_JBass_Standard.pdf',
@@ -1901,7 +2216,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-p-j-stkj-2v-1t',
-    title: 'Seymour Duncan: P-Bass and Jazz Bass Stack, 2 volumes, 1 tone',
+    title: 'P-Bass and Jazz Bass Stack, 2 volumes, 1 tone',
     description: 'P-Bass and Jazz Bass Stack, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/P_J_STKJ_2V_1T.pdf',
@@ -1910,7 +2225,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-passive-soapbars-2v-1t',
-    title: 'Seymour Duncan: Passive soapbars, 2 volumes, 1 tone',
+    title: 'Passive soapbars, 2 volumes, 1 tone',
     description: 'Passive soapbars, 2 volumes, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/2pSB_2V_1T.pdf',
@@ -1919,7 +2234,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-precision-bass-standard',
-    title: 'Seymour Duncan: Standard P-Bass, 1 volume, 1 tone',
+    title: 'Standard P-Bass, 1 volume, 1 tone',
     description: 'Standard P-Bass, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/PrecisionBass_Standard.pdf',
@@ -1928,7 +2243,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1966',
-    title: 'Seymour Duncan: Tele 1966',
+    title: 'Tele 1966',
     description: 'Tele 1966',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1966.pdf',
@@ -1936,8 +2251,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1h-1s-3way-blade-1v-1t',
-    title:
-      'Seymour Duncan: Tele, 1 humbucker, 1 single coil, 3-way blade, 1 volume, 1 tone',
+    title: 'Tele, 1 humbucker, 1 single coil, 3-way blade, 1 volume, 1 tone',
     description:
       'Tele, 1 humbucker, 1 single coil, 3-way blade, 1 volume, 1 tone',
     sourceUrl:
@@ -1947,8 +2261,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1h-1s-3way-blade-1v-1tpp-split',
-    title:
-      'Seymour Duncan: Tele, 1 humbucker, 1 single coil, 3-way blade, 1V1T split',
+    title: 'Tele, 1 humbucker, 1 single coil, 3-way blade, 1V1T split',
     description: 'Tele, 1 humbucker, 1 single coil, 3-way blade, 1V1T split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1H_1S_3B_1V_1TppSPL.pdf',
@@ -1959,8 +2272,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1h-1s-3way-blade-1vpp-split-1t',
-    title:
-      'Seymour Duncan: Tele, 1 humbucker, 1 single coil, 3-way blade, 1Vpp split, 1T',
+    title: 'Tele, 1 humbucker, 1 single coil, 3-way blade, 1Vpp split, 1T',
     description:
       'Tele, 1 humbucker, 1 single coil, 3-way blade, 1Vpp split, 1T',
     sourceUrl:
@@ -1972,8 +2284,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1s-1h-3b-2vpp-spln',
-    title:
-      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 2VppSPLn',
+    title: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 2VppSPLn',
     description: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 2VppSPLn',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_2VppSPLn.pdf',
@@ -1982,8 +2293,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1s-1h-3way-blade-1v-1tpp-split',
-    title:
-      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 1V1T split',
+    title: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 1V1T split',
     description: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 1V1T split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_1V_1TppSPL.pdf',
@@ -1994,8 +2304,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1s-1h-3way-blade-1vpp-split-1t',
-    title:
-      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 1Vpp split, 1T',
+    title: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 1Vpp split, 1T',
     description:
       'Tele, 1 single coil, 1 humbucker, 3-way blade, 1Vpp split, 1T',
     sourceUrl:
@@ -2007,8 +2316,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1s-1h-3way-blade-2v',
-    title:
-      'Seymour Duncan: Tele, 1 single coil, 1 humbucker, 3-way blade, 2 volumes',
+    title: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 2 volumes',
     description: 'Tele, 1 single coil, 1 humbucker, 3-way blade, 2 volumes',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1S_1H_3B_2V.pdf',
@@ -2017,8 +2325,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1th-1s-3b-2v',
-    title:
-      'Seymour Duncan: Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2 volumes',
+    title: 'Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2 volumes',
     description:
       'Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2 volumes',
     sourceUrl:
@@ -2028,8 +2335,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1th-1s-3b-2vbpp-split',
-    title:
-      'Seymour Duncan: Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2Vbpp split',
+    title: 'Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2Vbpp split',
     description:
       'Tele, 1 Tele humbucker, 1 single coil, 3-way blade, 2Vbpp split',
     sourceUrl:
@@ -2039,8 +2345,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-1th-1s-4way-1v-1t',
-    title:
-      'Seymour Duncan: Tele, humbucker + single-coil, 4-way blade, 1 volume, 1 tone',
+    title: 'Tele, humbucker + single-coil, 4-way blade, 1 volume, 1 tone',
     description: 'Tele, humbucker + single-coil, 4-way blade, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_1TH_1S_4B_1V_1T.pdf',
@@ -2049,7 +2354,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-2-stacks-3way-blade-1v-1t',
-    title: 'Seymour Duncan: Tele, 2 Tele Stacks, 3-way blade, 1 volume, 1 tone',
+    title: 'Tele, 2 Tele Stacks, 3-way blade, 1 volume, 1 tone',
     description: 'Tele, 2 Tele Stacks, 3-way blade, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2TSTK_3B_1V_1T.pdf',
@@ -2058,8 +2363,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-2h-3way-blade-1v-1tpp-split',
-    title:
-      'Seymour Duncan: Tele, 2 humbuckers, 3-way blade, 1V1T push/pull split',
+    title: 'Tele, 2 humbuckers, 3-way blade, 1V1T push/pull split',
     description: 'Tele, 2 humbuckers, 3-way blade, 1V1T push/pull split',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2H_3B_1V_1TppSPL.pdf',
@@ -2068,8 +2372,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-2h-3way-blade-1vpp-split-1t',
-    title:
-      'Seymour Duncan: Tele, 2 humbuckers, 3-way blade, 1Vpp split neck, 1T',
+    title: 'Tele, 2 humbuckers, 3-way blade, 1Vpp split neck, 1T',
     description: 'Tele, 2 humbuckers, 3-way blade, 1Vpp split neck, 1T',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2H_3B_1VppSPL_1T.pdf',
@@ -2078,7 +2381,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-2s-3way-blade-2v',
-    title: 'Seymour Duncan: Tele, 2 single coils, 2 volumes, 3-way blade',
+    title: 'Tele, 2 single coils, 2 volumes, 3-way blade',
     description: 'Tele, 2 single coils, 2 volumes, 3-way blade',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2S_3B_2V.pdf',
@@ -2087,8 +2390,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-2s-4way-1v-1t',
-    title:
-      'Seymour Duncan: Tele, 2 single-coils, 4-way blade, 1 volume, 1 tone',
+    title: 'Tele, 2 single-coils, 4-way blade, 1 volume, 1 tone',
     description: 'Tele, 2 single-coils, 4-way blade, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2S_4B_1V_1T.pdf',
@@ -2097,7 +2399,7 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-2th-4way-1v-1t',
-    title: 'Seymour Duncan: Tele, 2 humbuckers, 4-way blade, 1 volume, 1 tone',
+    title: 'Tele, 2 humbuckers, 4-way blade, 1 volume, 1 tone',
     description: 'Tele, 2 humbuckers, 4-way blade, 1 volume, 1 tone',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_2TH_4B_1V_1T.pdf',
@@ -2106,10 +2408,34 @@ export const exampleLibrary: {
   },
   {
     id: 'sd-tele-standard',
-    title: 'Seymour Duncan: Standard Telecaster',
+    title: 'Standard Telecaster',
     description: 'Standard Telecaster',
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_Standard.pdf',
     createCircuit: () => JSON.parse(JSON.stringify(sdtele_standard)) as Circuit,
+  },
+  {
+    id: 'strat-sss',
+    title: 'Stratocaster SSS',
+    description:
+      '3 single-coils, 5-way blade, master volume, neck and middle tones. Position order: bridge, bridge+middle, middle, middle+neck, neck.',
+    sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+    createCircuit: sssStratCircuit,
+  },
+  {
+    id: 'strat-hss',
+    title: 'Stratocaster HSS',
+    description:
+      'Bridge humbucker with 2 single-coils, 5-way blade, master volume, neck and middle tones. Position order: bridge, bridge+middle, middle, middle+neck, neck.',
+    sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+    createCircuit: hssStratCircuit,
+  },
+  {
+    id: 'strat-hss-split',
+    title: 'Stratocaster HSS split',
+    description:
+      'HSS Stratocaster with the bridge humbucker split to coil A at blade position 2 (bridge split + middle); master volume, neck and middle tones.',
+    sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+    createCircuit: hssSplitStratCircuit,
   },
 ];

@@ -22,6 +22,9 @@ it.each([
   ['blade4', 2],
   ['blade4', 3],
   ['blade4', 4],
+  ['blade5', 1],
+  ['blade5', 3],
+  ['blade5', 5],
   ['push-pull-volume', 0],
   ['push-pull-volume', 1],
 ] as [PartKind, number][])(
@@ -36,7 +39,7 @@ it.each([
       ...(kind === 'push-pull-volume' ? { isPulled: position === 1 } : {}),
     };
     const contacts = switchConnections(part);
-    if (kind === 'blade' || kind === 'blade4')
+    if (kind === 'blade' || kind === 'blade4' || kind === 'blade5')
       expect(contacts).toEqual(
         ['a', 'b'].map((pole) => [
           `switch:${pole}-common`,

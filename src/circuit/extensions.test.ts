@@ -4,6 +4,9 @@ import { reduceCoilNetwork, type CoilEdge } from './coilNetwork';
 import {
   exampleLibrary,
   fourWayTeleCircuit,
+  hssSplitStratCircuit,
+  hssStratCircuit,
+  sssStratCircuit,
   splitHumbuckerCircuit,
   varitoneCircuit,
 } from './library';
@@ -87,19 +90,38 @@ describe('instance terminals and independent mechanical switches', () => {
     },
   );
 
+  it.each([1, 2, 3, 4, 5])(
+    'closes only blade5 throws %s on both poles',
+    (value) => {
+      const part = { ...createPart('blade5', 'blade'), value };
+      expect(terminalsFor(part)).toHaveLength(12);
+      expect(bladePosition(part)).toBe(value);
+      expect(isBladePart(part)).toBe(true);
+      expect(switchConnections(part)).toEqual([
+        ['blade:a-common', `blade:a${value}`],
+        ['blade:b-common', `blade:b${value}`],
+      ]);
+    },
+  );
+
   it('keeps new side-bank pitches and exits legible at the unchanged scale', () => {
     for (const kind of [
       'push-pull-volume',
       'push-pull-tone',
       'blade4',
+      'blade5',
     ] as const)
       for (const exit of ['left', 'right']) {
         const bank = terminalsFor(createPart(kind, 'part')).filter(
           (terminal) =>
             terminal.exit === exit &&
-            (kind === 'blade4' || terminal.name.startsWith('switch-')),
+            (kind === 'blade4' || kind === 'blade5'
+              ? true
+              : terminal.name.startsWith('switch-')),
         );
-        expect(bank.length).toBe(kind === 'blade4' ? 5 : 3);
+        expect(bank.length).toBe(
+          kind === 'blade5' ? 6 : kind === 'blade4' ? 5 : 3,
+        );
         expect(new Set(bank.map((terminal) => terminal.label)).size).toBe(
           bank.length,
         );
@@ -470,6 +492,52 @@ describe('qualitative series LC shunt', () => {
   });
 });
 
+describe('Stratocaster 5-way blade circuits', () => {
+  const positions = [1, 2, 3, 4, 5];
+
+  // The analyzer supports one tone branch; Strat circuits wire two tones so
+  // they estimate as unavailable. Verify the blade closes the correct contacts
+  // at each position instead.
+  it.each([
+    ['strat-sss', sssStratCircuit],
+    ['strat-hss', hssStratCircuit],
+    ['strat-hss-split', hssSplitStratCircuit],
+  ])(
+    '%s closes the correct blade contacts at every position',
+    (_id, create) => {
+      for (const position of positions) {
+        const circuit = update(create(), 'selector', { value: position });
+        const selector = circuit.parts.find((part) => part.id === 'selector')!;
+        expect(bladePosition(selector)).toBe(position);
+        const contacts = switchConnections(selector);
+        expect(contacts).toHaveLength(2);
+        expect(contacts[0]![0]).toBe('selector:a-common');
+        expect(contacts[1]![0]).toBe('selector:b-common');
+        expect(contacts[0]![1]).toBe(`selector:a${position}`);
+        expect(contacts[1]![1]).toBe(`selector:b${position}`);
+      }
+    },
+  );
+
+  it('splits the bridge humbucker to coil A at blade position 2', () => {
+    // Two tone branches exceed the estimator's single-tone model, so both
+    // positions estimate as unavailable. The switch wiring itself is still
+    // correct: pole B grounds b-start at position 2 to split coil B.
+    const full = analyze(update(hssSplitStratCircuit(), 'selector', { value: 1 }));
+    expect(full.status).toBe('unavailable');
+
+    const split = analyze(update(hssSplitStratCircuit(), 'selector', { value: 2 }));
+    expect(split.status).toBe('unavailable');
+
+    const circuit = update(hssSplitStratCircuit(), 'selector', { value: 2 });
+    const selector = circuit.parts.find((part) => part.id === 'selector')!;
+    expect(switchConnections(selector)).toEqual([
+      ['selector:a-common', 'selector:a2'],
+      ['selector:b-common', 'selector:b2'],
+    ]);
+  });
+});
+
 describe('library and strict portable additions', () => {
   it.each(exampleLibrary)(
     'creates independent valid objects for $id',
@@ -507,7 +575,8 @@ describe('library and strict portable additions', () => {
       } else {
         expectedStatus =
           example.id === 'two-humbuckers-3way-2v-2t' ||
-          example.id === 'two-humbuckers-3way-2v-2t-50s'
+          example.id === 'two-humbuckers-3way-2v-2t-50s' ||
+          example.id.startsWith('strat-')
             ? 'unavailable'
             : 'live';
       }
@@ -556,6 +625,9 @@ describe('library and strict portable additions', () => {
     { kind: 'blade4', value: 0 },
     { kind: 'blade4', value: 5 },
     { kind: 'blade4', value: 2.5 },
+    { kind: 'blade5', value: 0 },
+    { kind: 'blade5', value: 6 },
+    { kind: 'blade5', value: 2.5 },
     { kind: 'varitone', value: 0 },
     { kind: 'varitone', value: 7 },
     { kind: 'varitone', value: 1.5 },
@@ -589,6 +661,7 @@ describe('library and strict portable additions', () => {
       'push-pull-volume',
       'push-pull-tone',
       'blade4',
+      'blade5',
       'varitone',
     ] as const)
       expect(

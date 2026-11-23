@@ -90,6 +90,24 @@ controls, and `GND` has a wired path to the jack sleeve:
 [StewMac's Oak Grigsby instructions](https://www.stewmac.com/video-and-ideas/online-resources/learn-about-guitar-pickups-and-electronics-and-wiring/oak-grigsby-4-way-2-pole-lever-switch-instructions/)
 explain the separate neck-cover ground and use a bridge-first position order.
 
+## Five-way blade switch
+
+A five-way two-pole blade (Stratocaster style) has twelve logical lugs: `AC`,
+`A1`–`A5` and `BC`, `B1`–`B5`. Each settled position connects both commons to
+their matching throws. The position convention is bridge-first:
+
+| Position | Pole A connection | Pole B connection | Authored pickup selection |
+| -------- | ----------------- | ----------------- | ------------------------- |
+| 1        | AC–A1             | BC–B1             | Bridge                    |
+| 2        | AC–A2             | BC–B2             | Bridge + middle           |
+| 3        | AC–A3             | BC–B3             | Middle                    |
+| 4        | AC–A4             | BC–B4             | Middle + neck             |
+| 5        | AC–A5             | BC–B5             | Neck                      |
+
+Single-pole Stratocaster wiring uses one pole with external jumpers between
+adjacent throws (A1–A2 and A3–A4) to create the parallel in-between positions
+2 and 4; the other pole may be left unused.
+
 ## Volume and tone pots
 
 Define lug `2` as the wiper: at **0** it meets lug `1`; at **10** it meets lug `3`.

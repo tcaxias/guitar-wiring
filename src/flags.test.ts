@@ -11,6 +11,7 @@ it('enables local evaluation by default and respects explicit disabled flags', (
     isClearWiringEnabled: true,
     isCompactGroundEnabled: true,
     isSignalFlowEnabled: true,
+    isTruthTableEnabled: true,
   });
   expect(
     readFlags({
@@ -22,6 +23,7 @@ it('enables local evaluation by default and respects explicit disabled flags', (
       VITE_ENABLE_CLEAR_WIRING: 'false',
       VITE_ENABLE_COMPACT_GROUND: 'false',
       VITE_ENABLE_SIGNAL_FLOW: 'false',
+      VITE_ENABLE_TRUTH_TABLE: 'false',
     }),
   ).toEqual({
     isPlaygroundEnabled: false,
@@ -32,5 +34,6 @@ it('enables local evaluation by default and respects explicit disabled flags', (
     isClearWiringEnabled: false,
     isCompactGroundEnabled: false,
     isSignalFlowEnabled: false,
+    isTruthTableEnabled: false,
   });
 });

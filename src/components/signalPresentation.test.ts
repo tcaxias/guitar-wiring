@@ -32,7 +32,13 @@ describe('stable physical lead roles', () => {
     // this loop asserts, so they're skipped here. SD status and
     // serialization are covered by extensions.test.ts and the graph hash by
     // factoryLayout.test.ts instead.
-    if (example.id.startsWith('sd-')) continue;
+    // Stratocaster 5-way blade circuits wire each pickup hot to two selector
+    // contacts (so a pickup sounds at two adjacent positions, e.g. neck at
+    // positions 4 and 5). The single-lead-per-pickup assertions below don't
+    // apply to that topology; their status and coil behavior are covered by
+    // extensions.test.ts instead.
+    if (example.id.startsWith('sd-') || example.id.startsWith('strat-'))
+      continue;
     it(`${example.id}: controls and serialization do not redefine roles`, () => {
       const circuit = example.createCircuit();
       const baseline = signalWireRoles(circuit);
