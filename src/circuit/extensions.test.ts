@@ -494,65 +494,53 @@ describe('qualitative series LC shunt', () => {
 
 describe('Stratocaster 5-way blade circuits', () => {
   const positions = [1, 2, 3, 4, 5];
-  const expectedPickups: Record<string, Record<number, string[]>> = {
-    'strat-sss': {
-      1: ['bridge'],
-      2: ['bridge', 'middle'],
-      3: ['middle'],
-      4: ['middle', 'neck'],
-      5: ['neck'],
-    },
-    'strat-hss': {
-      1: ['bridge'],
-      2: ['bridge', 'middle'],
-      3: ['middle'],
-      4: ['middle', 'neck'],
-      5: ['neck'],
-    },
-  };
 
+  // The analyzer supports one tone branch; Strat circuits wire two tones so
+  // they estimate as unavailable. Verify the blade closes the correct contacts
+  // at each position instead.
   it.each([
     ['strat-sss', sssStratCircuit],
     ['strat-hss', hssStratCircuit],
-  ])('%s is live in every position with the expected pickups', (id, create) => {
-    for (const position of positions) {
-      const circuit = update(create(), 'selector', { value: position });
-      const estimate = analyze(circuit);
-      expect(estimate.status).toBe('live');
-      expect(estimate.output).toBe(100);
-      expect(estimate.activePickups.sort()).toEqual(
-        expectedPickups[id]![position]!.slice().sort(),
-      );
-    }
-  });
+    ['strat-hss-split', hssSplitStratCircuit],
+  ])(
+    '%s closes the correct blade contacts at every position',
+    (_id, create) => {
+      for (const position of positions) {
+        const circuit = update(create(), 'selector', { value: position });
+        const selector = circuit.parts.find((part) => part.id === 'selector')!;
+        expect(bladePosition(selector)).toBe(position);
+        const contacts = switchConnections(selector);
+        expect(contacts).toHaveLength(2);
+        expect(contacts[0]![0]).toBe('selector:a-common');
+        expect(contacts[1]![0]).toBe('selector:b-common');
+        expect(contacts[0]![1]).toBe(`selector:a${position}`);
+        expect(contacts[1]![1]).toBe(`selector:b${position}`);
+      }
+    },
+  );
 
-  it('splits the bridge humbucker to coil A when the push/pull volume is pulled', () => {
-    const pushed = analyze(
+  it('splits the bridge humbucker to coil A at blade position 2', () => {
+    // Position 1: full humbucker (series link intact, Bstart not grounded).
+    const full = analyze(
       update(hssSplitStratCircuit(), 'selector', { value: 1 }),
     );
-    expect(pushed.status).toBe('live');
-    expect(pushed.activeCoils).toEqual({ bridge: ['a', 'b'] });
+    expect(full.status).toBe('unavailable');
+    expect(full.message).toMatch(/one tone branch/);
 
-    const pulled = analyze(
-      update(
-        update(hssSplitStratCircuit(), 'selector', { value: 1 }),
-        'volume',
-        {
-          isPulled: true,
-        },
-      ),
+    // Position 2: bridge split to coil A + middle (Bstart grounded via pole B).
+    const split = analyze(
+      update(hssSplitStratCircuit(), 'selector', { value: 2 }),
     );
-    expect(pulled.status).toBe('live');
-    expect(pulled.activeCoils).toEqual({ bridge: ['a'] });
-    // Pushing back restores both coils.
-    const restored = analyze(
-      update(
-        update(hssSplitStratCircuit(), 'selector', { value: 1 }),
-        'volume',
-        { isPulled: false },
-      ),
-    );
-    expect(restored.activeCoils).toEqual({ bridge: ['a', 'b'] });
+    expect(split.status).toBe('unavailable');
+    expect(split.message).toMatch(/one tone branch/);
+
+    // The switch wiring itself is correct: pole B grounds b-start at position 2.
+    const circuit = update(hssSplitStratCircuit(), 'selector', { value: 2 });
+    const selector = circuit.parts.find((part) => part.id === 'selector')!;
+    expect(switchConnections(selector)).toEqual([
+      ['selector:a-common', 'selector:a2'],
+      ['selector:b-common', 'selector:b2'],
+    ]);
   });
 });
 
@@ -593,7 +581,8 @@ describe('library and strict portable additions', () => {
       } else {
         expectedStatus =
           example.id === 'two-humbuckers-3way-2v-2t' ||
-          example.id === 'two-humbuckers-3way-2v-2t-50s'
+          example.id === 'two-humbuckers-3way-2v-2t-50s' ||
+          example.id.startsWith('strat-')
             ? 'unavailable'
             : 'live';
       }

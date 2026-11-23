@@ -21,8 +21,8 @@ export function factoryLayout(parts: Part[], profile: Profile): Part[] {
     volume: [620, profile === 'split' ? 220 : 320],
     tone: [620, profile === 'split' ? 450 : 460],
     capacitor: [820, 340],
-    ground: [440, 480],
-    jack: [820, 480],
+    ground: profile === 'strat' ? [440, 490] : [440, 480],
+    jack: profile === 'strat' ? [820, 490] : [820, 480],
     varitone: [820, 150],
   };
   return parts.map((part) => {

@@ -46,15 +46,15 @@ and preserve wiring color roles and dash patterns.
 3. **Open** → **Library** → **Load example** loads an editable circuit and closes
    the dialog. **Undo** restores your previous build.
 
-| Library entry          | Select its part, then try                                                    |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| Standard Tele          | The default three-way circuit                                                |
-| Push-pull coil split   | **Pushed** uses both coils; **Pulled** leaves each pickup's A row active     |
-| 4-way Tele             | **Position 1–4**: neck, parallel, bridge, series; neck cover stays grounded  |
-| LC Varitone Tele       | **Varitone position**: 1 bypass; 2–6 select five ideal LC notch-band markers |
-| Stratocaster SSS       | **Position 1–5**: bridge, bridge+middle, middle, middle+neck, neck           |
-| Stratocaster HSS       | **Position 1–5**: bridge humbucker, bridge+middle, middle, middle+neck, neck |
-| Stratocaster HSS split | **Pulled** splits the bridge humbucker to its A coil                         |
+| Library entry          | Select its part, then try                                                                           |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| Standard Tele          | The default three-way circuit                                                                       |
+| Push-pull coil split   | **Pushed** uses both coils; **Pulled** leaves each pickup's A row active                            |
+| 4-way Tele             | **Position 1–4**: neck, parallel, bridge, series; neck cover stays grounded                         |
+| LC Varitone Tele       | **Varitone position**: 1 bypass; 2–6 select five ideal LC notch-band markers                        |
+| Stratocaster SSS       | **Position 1–5**: bridge, bridge+middle, middle, middle+neck, neck; neck and middle tones           |
+| Stratocaster HSS       | **Position 1–5**: bridge humbucker, bridge+middle, middle, middle+neck, neck; neck and middle tones |
+| Stratocaster HSS split | **Position 2**: bridge split to coil A + middle; neck and middle tones                              |
 
 Push-pull buttons change DPDT contact connections independently of knob rotation;
 wires determine the split. Four-way neck-cover **SHIELD** stays separate from **RETURN**. See the
