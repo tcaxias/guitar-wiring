@@ -196,7 +196,7 @@ export function sssStratCircuit(): Circuit {
   const circuit: Circuit = {
     version: 2,
     metadata: {
-      title: '3 single-coils, 5-way blade, 1 volume, 2 tones',
+      title: '3 single-coils, 5-way blade, 1 volume, 1 tone',
       creator: 'Pickup Lab; reference: Seymour Duncan',
       sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
       permission,
@@ -235,31 +235,17 @@ export function sssStratCircuit(): Circuit {
       },
       {
         ...createPart('tone', 'tone'),
-        label: 'Neck tone',
+        label: 'Master tone',
         resistanceKOhms: 250,
         x: 620,
         y: 420,
-      },
-      {
-        ...createPart('tone', 'tone-2'),
-        label: 'Middle tone',
-        resistanceKOhms: 250,
-        x: 620,
-        y: 490,
       },
       {
         ...createPart('capacitor', 'capacitor'),
-        label: 'Neck tone capacitor',
+        label: 'Tone capacitor',
         value: 47,
         x: 820,
         y: 340,
-      },
-      {
-        ...createPart('capacitor', 'capacitor-2'),
-        label: 'Middle tone capacitor',
-        value: 47,
-        x: 820,
-        y: 420,
       },
       { ...createPart('jack', 'jack'), x: 820, y: 480 },
       { ...createPart('ground', 'ground'), x: 440, y: 480 },
@@ -275,21 +261,16 @@ export function sssStratCircuit(): Circuit {
       ['neck:hot', 'selector:a5'],
       ['selector:a-common', 'volume:input'],
       ['selector:b-common', 'volume:input'],
-      // Neck tone: volume bus → tone 1 → capacitor → ground
+      // Master tone: volume bus → tone → capacitor → ground
       ['volume:input', 'tone:input'],
       ['tone:wiper', 'capacitor:a'],
       ['capacitor:b', 'ground:common'],
-      // Middle tone: volume bus → tone 2 → capacitor → ground
-      ['volume:input', 'tone-2:input'],
-      ['tone-2:wiper', 'capacitor-2:a'],
-      ['capacitor-2:b', 'ground:common'],
       // Master volume → jack tip
       ['volume:wiper', 'jack:tip'],
       // Ground returns and pot casings
       ['volume:ground', 'ground:common'],
       ['volume:casing', 'ground:common'],
       ['tone:casing', 'ground:common'],
-      ['tone-2:casing', 'ground:common'],
       ['ground:common', 'jack:sleeve'],
       // Pickup returns to ground
       ['neck:return', 'ground:common'],
@@ -305,7 +286,7 @@ export function hssStratCircuit(): Circuit {
   const circuit: Circuit = {
     version: 2,
     metadata: {
-      title: 'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 2 tones',
+      title: 'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 1 tone',
       creator: 'Pickup Lab; reference: Seymour Duncan',
       sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
       permission,
@@ -344,31 +325,17 @@ export function hssStratCircuit(): Circuit {
       },
       {
         ...createPart('tone', 'tone'),
-        label: 'Neck tone',
+        label: 'Master tone',
         resistanceKOhms: 250,
         x: 620,
         y: 420,
-      },
-      {
-        ...createPart('tone', 'tone-2'),
-        label: 'Middle tone',
-        resistanceKOhms: 250,
-        x: 620,
-        y: 490,
       },
       {
         ...createPart('capacitor', 'capacitor'),
-        label: 'Neck tone capacitor',
+        label: 'Tone capacitor',
         value: 47,
         x: 820,
         y: 340,
-      },
-      {
-        ...createPart('capacitor', 'capacitor-2'),
-        label: 'Middle tone capacitor',
-        value: 47,
-        x: 820,
-        y: 420,
       },
       { ...createPart('jack', 'jack'), x: 820, y: 480 },
       { ...createPart('ground', 'ground'), x: 440, y: 480 },
@@ -389,21 +356,16 @@ export function hssStratCircuit(): Circuit {
       ['bridge:a-finish', 'bridge:b-start'],
       ['bridge:b-finish', 'ground:common'],
       ['bridge:shield', 'ground:common'],
-      // Neck tone: volume bus → tone 1 → capacitor → ground
+      // Master tone: volume bus → tone → capacitor → ground
       ['volume:input', 'tone:input'],
       ['tone:wiper', 'capacitor:a'],
       ['capacitor:b', 'ground:common'],
-      // Middle tone: volume bus → tone 2 → capacitor → ground
-      ['volume:input', 'tone-2:input'],
-      ['tone-2:wiper', 'capacitor-2:a'],
-      ['capacitor-2:b', 'ground:common'],
       // Master volume → jack tip
       ['volume:wiper', 'jack:tip'],
       // Ground returns and pot casings
       ['volume:ground', 'ground:common'],
       ['volume:casing', 'ground:common'],
       ['tone:casing', 'ground:common'],
-      ['tone-2:casing', 'ground:common'],
       ['ground:common', 'jack:sleeve'],
       // Pickup returns to ground
       ['neck:return', 'ground:common'],
@@ -418,8 +380,7 @@ export function hssSplitStratCircuit(): Circuit {
   const circuit: Circuit = {
     version: 2,
     metadata: {
-      title:
-        'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 2 tones, blade split',
+      title: 'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 1 tone, blade split',
       creator: 'Pickup Lab; reference: Seymour Duncan',
       sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
       permission,
@@ -458,31 +419,17 @@ export function hssSplitStratCircuit(): Circuit {
       },
       {
         ...createPart('tone', 'tone'),
-        label: 'Neck tone',
+        label: 'Master tone',
         resistanceKOhms: 250,
         x: 620,
         y: 420,
-      },
-      {
-        ...createPart('tone', 'tone-2'),
-        label: 'Middle tone',
-        resistanceKOhms: 250,
-        x: 620,
-        y: 490,
       },
       {
         ...createPart('capacitor', 'capacitor'),
-        label: 'Neck tone capacitor',
+        label: 'Tone capacitor',
         value: 47,
         x: 820,
         y: 340,
-      },
-      {
-        ...createPart('capacitor', 'capacitor-2'),
-        label: 'Middle tone capacitor',
-        value: 47,
-        x: 820,
-        y: 420,
       },
       { ...createPart('jack', 'jack'), x: 820, y: 480 },
       { ...createPart('ground', 'ground'), x: 440, y: 480 },
@@ -507,21 +454,16 @@ export function hssSplitStratCircuit(): Circuit {
       ['bridge:a-finish', 'bridge:b-start'],
       ['bridge:b-finish', 'ground:common'],
       ['bridge:shield', 'ground:common'],
-      // Neck tone: volume bus → tone 1 → capacitor → ground
+      // Master tone: volume bus → tone → capacitor → ground
       ['volume:input', 'tone:input'],
       ['tone:wiper', 'capacitor:a'],
       ['capacitor:b', 'ground:common'],
-      // Middle tone: volume bus → tone 2 → capacitor → ground
-      ['volume:input', 'tone-2:input'],
-      ['tone-2:wiper', 'capacitor-2:a'],
-      ['capacitor-2:b', 'ground:common'],
       // Master volume → jack tip
       ['volume:wiper', 'jack:tip'],
       // Ground returns and pot casings
       ['volume:ground', 'ground:common'],
       ['volume:casing', 'ground:common'],
       ['tone:casing', 'ground:common'],
-      ['tone-2:casing', 'ground:common'],
       ['ground:common', 'jack:sleeve'],
       // Pickup returns to ground
       ['neck:return', 'ground:common'],
