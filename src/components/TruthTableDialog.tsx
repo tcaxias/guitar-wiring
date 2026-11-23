@@ -32,8 +32,8 @@ export function TruthTableDialog({ circuit }: TruthTableDialogProps) {
     <div className="bench-truth-table-panel">
       <p className="bench-details-intro">
         Every switch position in the current circuit, analysed one at a time.
-        Output level follows the master volume setting; pickup selection
-        changes with each switch position.
+        Output level follows the master volume setting; pickup selection changes
+        with each switch position.
       </p>
       {table.truncated && (
         <p className="bench-truncated">
@@ -49,7 +49,10 @@ export function TruthTableDialog({ circuit }: TruthTableDialogProps) {
       )}
       {table.rows.length > 0 && (
         <div className="bench-table-wrap">
-          <table className="bench-truth-table" aria-label="Switch position truth table">
+          <table
+            className="bench-truth-table"
+            aria-label="Switch position truth table"
+          >
             <thead>
               <tr>
                 <th scope="col">Position</th>
@@ -87,19 +90,19 @@ export function TruthTableDialog({ circuit }: TruthTableDialogProps) {
           </table>
         </div>
       )}
-      {table.rows.length > 0 && table.rows.some((row) => row.estimate.notes.length > 0) && (
-        <details className="bench-notes-details">
-          <summary>Notes</summary>
-          {table.rows
-            .flatMap((row, index) =>
+      {table.rows.length > 0 &&
+        table.rows.some((row) => row.estimate.notes.length > 0) && (
+          <details className="bench-notes-details">
+            <summary>Notes</summary>
+            {table.rows.flatMap((row, index) =>
               row.estimate.notes.map((note) => (
                 <p key={`${index}-${note}`}>
                   <strong>{row.positionLabel}:</strong> {note}
                 </p>
               )),
             )}
-        </details>
-      )}
+          </details>
+        )}
     </div>
   );
 }

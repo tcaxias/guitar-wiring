@@ -1,15 +1,22 @@
 import type { Part } from './model';
 
-type Profile = 'tele' | 'four-way' | 'split' | 'varitone';
+type Profile = 'tele' | 'four-way' | 'split' | 'varitone' | 'strat';
 
 // Factory-only placement: never apply these profiles to restored or edited work.
 export function factoryLayout(parts: Part[], profile: Profile): Part[] {
   const positions: Record<string, readonly [number, number]> = {
     neck: [240, 90],
+    middle: [240, 195],
     bridge: [240, 300],
     selector: [
       620,
-      profile === 'split' ? 60 : profile === 'four-way' ? 130 : 160,
+      profile === 'split'
+        ? 60
+        : profile === 'four-way'
+          ? 130
+          : profile === 'strat'
+            ? 195
+            : 160,
     ],
     volume: [620, profile === 'split' ? 220 : 320],
     tone: [620, profile === 'split' ? 450 : 460],

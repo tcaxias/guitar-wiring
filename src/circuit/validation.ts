@@ -123,10 +123,13 @@ export function isCircuit(value: unknown): value is Circuit {
     )
       return false;
     if (
-      (part.kind === 'blade4' || part.kind === 'varitone') &&
+      (part.kind === 'blade4' ||
+        part.kind === 'blade5' ||
+        part.kind === 'varitone') &&
       (!Number.isInteger(part.value) ||
         part.value < 1 ||
-        part.value > (part.kind === 'blade4' ? 4 : 6))
+        part.value >
+          (part.kind === 'blade5' ? 5 : part.kind === 'blade4' ? 4 : 6))
     )
       return false;
     if (

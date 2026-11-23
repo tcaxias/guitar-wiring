@@ -68,6 +68,7 @@ describe('compact presentation geometry', () => {
       'push-pull-volume',
       'push-pull-tone',
       'blade4',
+      'blade5',
       'varitone',
       'pickup',
     ] as const) {

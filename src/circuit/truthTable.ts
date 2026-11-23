@@ -57,7 +57,7 @@ const switchableParts = (circuit: Circuit): SwitchablePart[] => {
         ],
       });
     } else if (isBladePart(part)) {
-      const count = part.kind === 'blade4' ? 4 : 3;
+      const count = part.kind === 'blade5' ? 5 : part.kind === 'blade4' ? 4 : 3;
       result.push({
         part,
         positions: Array.from({ length: count }, (_, i) => ({

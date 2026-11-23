@@ -192,6 +192,291 @@ export function varitoneCircuit(): Circuit {
   return circuit;
 }
 
+export function sssStratCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: '3 single-coils, 5-way blade, 1 volume, 1 tone',
+      creator: 'Pickup Lab; reference: Seymour Duncan',
+      sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+      permission,
+    },
+    parts: [
+      {
+        ...createPart('pickup', 'neck'),
+        label: 'Neck pickup',
+        x: 240,
+        y: 75,
+      },
+      {
+        ...createPart('pickup', 'middle'),
+        label: 'Middle pickup',
+        x: 240,
+        y: 195,
+      },
+      {
+        ...createPart('pickup', 'bridge'),
+        label: 'Bridge pickup',
+        x: 240,
+        y: 300,
+      },
+      {
+        ...createPart('blade5', 'selector'),
+        label: '5-way blade',
+        x: 620,
+        y: 195,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Master volume',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 320,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Master tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 455,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Tone capacitor',
+        value: 47,
+        x: 820,
+        y: 340,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      // 5-way blade: 1 bridge, 2 bridge+middle, 3 middle, 4 middle+neck, 5 neck.
+      // Both poles close together; both commons join at the volume input so each
+      // position can present two contacts. A pickup wired to two contacts sounds
+      // at both positions (e.g. bridge at 1 and 2) because the selector only
+      // closes one contact per pole per position — the shared contact is never
+      // connected to output at the same time as its mate.
+      ['bridge:hot', 'selector:a1'],
+      ['bridge:hot', 'selector:a2'],
+      ['middle:hot', 'selector:b2'],
+      ['middle:hot', 'selector:a3'],
+      ['middle:hot', 'selector:b4'],
+      ['neck:hot', 'selector:a4'],
+      ['neck:hot', 'selector:a5'],
+      ['selector:a-common', 'volume:input'],
+      ['selector:b-common', 'volume:input'],
+      // Master volume → master tone → capacitor → ground; wiper → jack tip
+      ['volume:wiper', 'jack:tip'],
+      ['volume:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      // Ground returns and pot casings
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+      // Pickup returns to ground
+      ['neck:return', 'ground:common'],
+      ['middle:return', 'ground:common'],
+      ['bridge:return', 'ground:common'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'strat');
+  return circuit;
+}
+
+export function hssStratCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Bridge humbucker, 2 single-coils, 5-way blade, 1 volume, 1 tone',
+      creator: 'Pickup Lab; reference: Seymour Duncan',
+      sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+      permission,
+    },
+    parts: [
+      {
+        ...createPart('pickup', 'neck'),
+        label: 'Neck pickup',
+        x: 240,
+        y: 75,
+      },
+      {
+        ...createPart('pickup', 'middle'),
+        label: 'Middle pickup',
+        x: 240,
+        y: 195,
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: 'Bridge humbucker',
+        x: 240,
+        y: 300,
+      },
+      {
+        ...createPart('blade5', 'selector'),
+        label: '5-way blade',
+        x: 620,
+        y: 195,
+      },
+      {
+        ...createPart('volume', 'volume'),
+        label: 'Master volume',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 320,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Master tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 455,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Tone capacitor',
+        value: 47,
+        x: 820,
+        y: 340,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      // 5-way blade: 1 bridge, 2 bridge+middle, 3 middle, 4 middle+neck, 5 neck.
+      // Both poles close together; both commons join at the volume input.
+      ['bridge:a-start', 'selector:a1'],
+      ['bridge:a-start', 'selector:a2'],
+      ['middle:hot', 'selector:b2'],
+      ['middle:hot', 'selector:a3'],
+      ['middle:hot', 'selector:b4'],
+      ['neck:hot', 'selector:a4'],
+      ['neck:hot', 'selector:a5'],
+      ['selector:a-common', 'volume:input'],
+      ['selector:b-common', 'volume:input'],
+      // Four-conductor humbucker: series link Afinish–Bstart, Bfinish to ground
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      // Master volume → master tone → capacitor → ground; wiper → jack tip
+      ['volume:wiper', 'jack:tip'],
+      ['volume:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      // Ground returns and pot casings
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+      // Pickup returns to ground
+      ['neck:return', 'ground:common'],
+      ['middle:return', 'ground:common'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'strat');
+  return circuit;
+}
+
+export function hssSplitStratCircuit(): Circuit {
+  const circuit: Circuit = {
+    version: 2,
+    metadata: {
+      title: 'Bridge humbucker, 2 single-coils, 5-way blade, push/pull split',
+      creator: 'Pickup Lab; reference: Seymour Duncan',
+      sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+      permission,
+    },
+    parts: [
+      {
+        ...createPart('pickup', 'neck'),
+        label: 'Neck pickup',
+        x: 240,
+        y: 75,
+      },
+      {
+        ...createPart('pickup', 'middle'),
+        label: 'Middle pickup',
+        x: 240,
+        y: 195,
+      },
+      {
+        ...createPart('humbucker', 'bridge'),
+        label: 'Bridge humbucker',
+        x: 240,
+        y: 300,
+      },
+      {
+        ...createPart('blade5', 'selector'),
+        label: '5-way blade',
+        x: 620,
+        y: 195,
+      },
+      {
+        ...createPart('push-pull-volume', 'volume'),
+        label: 'Master volume / coil split',
+        resistanceKOhms: 250,
+        isPulled: false,
+        x: 620,
+        y: 320,
+      },
+      {
+        ...createPart('tone', 'tone'),
+        label: 'Master tone',
+        resistanceKOhms: 250,
+        x: 620,
+        y: 455,
+      },
+      {
+        ...createPart('capacitor', 'capacitor'),
+        label: 'Tone capacitor',
+        value: 47,
+        x: 820,
+        y: 340,
+      },
+      { ...createPart('jack', 'jack'), x: 820, y: 480 },
+      { ...createPart('ground', 'ground'), x: 440, y: 480 },
+    ],
+    wires: wires([
+      // 5-way blade: 1 bridge, 2 bridge+middle, 3 middle, 4 middle+neck, 5 neck.
+      // Both poles close together; both commons join at the volume input.
+      ['bridge:a-start', 'selector:a1'],
+      ['bridge:a-start', 'selector:a2'],
+      ['middle:hot', 'selector:b2'],
+      ['middle:hot', 'selector:a3'],
+      ['middle:hot', 'selector:b4'],
+      ['neck:hot', 'selector:a4'],
+      ['neck:hot', 'selector:a5'],
+      ['selector:a-common', 'volume:input'],
+      ['selector:b-common', 'volume:input'],
+      // Four-conductor humbucker: series link Afinish–Bstart, Bfinish to ground.
+      // The series junction also feeds the push/pull common: pulled grounds it
+      // to short coil B and leave coil A contributing (single-coil split).
+      ['bridge:a-finish', 'bridge:b-start'],
+      ['bridge:a-finish', 'volume:switch-a-common'],
+      ['volume:switch-a2', 'ground:common'],
+      ['bridge:b-finish', 'ground:common'],
+      ['bridge:shield', 'ground:common'],
+      // Master volume → master tone → capacitor → ground; wiper → jack tip
+      ['volume:wiper', 'jack:tip'],
+      ['volume:input', 'tone:input'],
+      ['tone:wiper', 'capacitor:a'],
+      ['capacitor:b', 'ground:common'],
+      // Ground returns and pot casings
+      ['volume:ground', 'ground:common'],
+      ['volume:casing', 'ground:common'],
+      ['tone:casing', 'ground:common'],
+      ['ground:common', 'jack:sleeve'],
+      // Pickup returns to ground
+      ['neck:return', 'ground:common'],
+      ['middle:return', 'ground:common'],
+    ]),
+  };
+  circuit.parts = factoryLayout(circuit.parts, 'strat');
+  return circuit;
+}
+
 export function singlePickupOneVolumeOneTone(): Circuit {
   const circuit: Circuit = {
     version: 2,
@@ -2111,5 +2396,29 @@ export const exampleLibrary: {
     sourceUrl:
       'https://www.seymourduncan.com/images/wiring-diagrams/Tele_Standard.pdf',
     createCircuit: () => JSON.parse(JSON.stringify(sdtele_standard)) as Circuit,
+  },
+  {
+    id: 'strat-sss',
+    title: 'Stratocaster SSS',
+    description:
+      '3 single-coils, 5-way blade, master volume and master tone. Position order: bridge, bridge+middle, middle, middle+neck, neck.',
+    sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+    createCircuit: sssStratCircuit,
+  },
+  {
+    id: 'strat-hss',
+    title: 'Stratocaster HSS',
+    description:
+      'Bridge humbucker with 2 single-coils, 5-way blade, master volume and master tone. Position order: bridge, bridge+middle, middle, middle+neck, neck.',
+    sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+    createCircuit: hssStratCircuit,
+  },
+  {
+    id: 'strat-hss-split',
+    title: 'Stratocaster HSS split',
+    description:
+      'HSS Stratocaster with a push/pull master volume that splits the bridge humbucker to its A coil.',
+    sourceUrl: 'https://www.seymourduncan.com/support/wiring-diagrams/',
+    createCircuit: hssSplitStratCircuit,
   },
 ];

@@ -730,6 +730,7 @@ export function WorkbenchLayout({
                     flags.isExtendedPartsEnabled ||
                     ![
                       'blade4',
+                      'blade5',
                       'push-pull-volume',
                       'push-pull-tone',
                       'varitone',
@@ -887,9 +888,7 @@ export function WorkbenchLayout({
               </p>
             </div>
           )}
-          {dialog === 'Truth table' && (
-            <TruthTableDialog circuit={circuit} />
-          )}
+          {dialog === 'Truth table' && <TruthTableDialog circuit={circuit} />}
         </BenchDialog>
       )}
     </div>

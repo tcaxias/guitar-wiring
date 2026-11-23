@@ -43,6 +43,33 @@ export function PartControl({
         </p>
       </div>
     );
+  if (part.kind === 'blade5')
+    return (
+      <div className="control-group">
+        <div className="control-heading">
+          <label>{part.label}</label>
+          <span>5-WAY BLADE</span>
+        </div>
+        <div className="selector-buttons" role="group" aria-label={part.label}>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <button
+              key={value}
+              aria-pressed={part.value === value}
+              className={part.value === value ? 'is-active' : ''}
+              onClick={() => update({ value })}
+            >
+              Position {value}
+            </button>
+          ))}
+        </div>
+        <p className="control-hint">
+          {switchConnections(part)
+            .map(([from, to]) => `${from.split(':')[1]}–${to.split(':')[1]}`)
+            .join('; ')}{' '}
+          connected.
+        </p>
+      </div>
+    );
   if (part.kind === 'varitone')
     return (
       <div className="control-group">

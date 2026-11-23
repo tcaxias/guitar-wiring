@@ -366,6 +366,7 @@ function Workbench() {
                       flags.isExtendedPartsEnabled ||
                       ![
                         'blade4',
+                        'blade5',
                         'push-pull-volume',
                         'push-pull-tone',
                         'varitone',

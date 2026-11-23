@@ -4,7 +4,9 @@ test.use({
   baseURL: 'http://127.0.0.1:4178',
 });
 
-test('truth table dialog opens and shows switch positions', async ({ page }) => {
+test('truth table dialog opens and shows switch positions', async ({
+  page,
+}) => {
   await page.goto('/');
 
   // Truth table button should be visible in the toolbar
@@ -24,15 +26,29 @@ test('truth table dialog opens and shows switch positions', async ({ page }) => 
   await expect(rows).toHaveCount(4);
 
   // Column headers should be present
-  await expect(dialog.getByRole('columnheader', { name: 'Position' })).toBeVisible();
-  await expect(dialog.getByRole('columnheader', { name: 'Pickups' })).toBeVisible();
-  await expect(dialog.getByRole('columnheader', { name: 'Volume' })).toBeVisible();
-  await expect(dialog.getByRole('columnheader', { name: 'Tone' })).toBeVisible();
-  await expect(dialog.getByRole('columnheader', { name: 'Output' })).toBeVisible();
-  await expect(dialog.getByRole('columnheader', { name: 'Status' })).toBeVisible();
+  await expect(
+    dialog.getByRole('columnheader', { name: 'Position' }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole('columnheader', { name: 'Pickups' }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole('columnheader', { name: 'Volume' }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole('columnheader', { name: 'Tone' }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole('columnheader', { name: 'Output' }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole('columnheader', { name: 'Status' }),
+  ).toBeVisible();
 
   // Close the dialog
-  await dialog.getByRole('button', { name: 'Close dialog', exact: true }).click();
+  await dialog
+    .getByRole('button', { name: 'Close dialog', exact: true })
+    .click();
   await expect(dialog).not.toBeVisible();
 });
 
@@ -54,7 +70,9 @@ test('truth table shows position labels for blade switch', async ({ page }) => {
     dialog.getByRole('cell', { name: 'Position 3', exact: true }),
   ).toBeVisible();
 
-  await dialog.getByRole('button', { name: 'Close dialog', exact: true }).click();
+  await dialog
+    .getByRole('button', { name: 'Close dialog', exact: true })
+    .click();
 });
 
 test('truth table dialog closes with Escape', async ({ page }) => {

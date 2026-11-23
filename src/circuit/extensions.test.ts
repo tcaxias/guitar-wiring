@@ -4,6 +4,9 @@ import { reduceCoilNetwork, type CoilEdge } from './coilNetwork';
 import {
   exampleLibrary,
   fourWayTeleCircuit,
+  hssSplitStratCircuit,
+  hssStratCircuit,
+  sssStratCircuit,
   splitHumbuckerCircuit,
   varitoneCircuit,
 } from './library';
@@ -87,19 +90,38 @@ describe('instance terminals and independent mechanical switches', () => {
     },
   );
 
+  it.each([1, 2, 3, 4, 5])(
+    'closes only blade5 throws %s on both poles',
+    (value) => {
+      const part = { ...createPart('blade5', 'blade'), value };
+      expect(terminalsFor(part)).toHaveLength(12);
+      expect(bladePosition(part)).toBe(value);
+      expect(isBladePart(part)).toBe(true);
+      expect(switchConnections(part)).toEqual([
+        ['blade:a-common', `blade:a${value}`],
+        ['blade:b-common', `blade:b${value}`],
+      ]);
+    },
+  );
+
   it('keeps new side-bank pitches and exits legible at the unchanged scale', () => {
     for (const kind of [
       'push-pull-volume',
       'push-pull-tone',
       'blade4',
+      'blade5',
     ] as const)
       for (const exit of ['left', 'right']) {
         const bank = terminalsFor(createPart(kind, 'part')).filter(
           (terminal) =>
             terminal.exit === exit &&
-            (kind === 'blade4' || terminal.name.startsWith('switch-')),
+            (kind === 'blade4' || kind === 'blade5'
+              ? true
+              : terminal.name.startsWith('switch-')),
         );
-        expect(bank.length).toBe(kind === 'blade4' ? 5 : 3);
+        expect(bank.length).toBe(
+          kind === 'blade5' ? 6 : kind === 'blade4' ? 5 : 3,
+        );
         expect(new Set(bank.map((terminal) => terminal.label)).size).toBe(
           bank.length,
         );
@@ -470,6 +492,70 @@ describe('qualitative series LC shunt', () => {
   });
 });
 
+describe('Stratocaster 5-way blade circuits', () => {
+  const positions = [1, 2, 3, 4, 5];
+  const expectedPickups: Record<string, Record<number, string[]>> = {
+    'strat-sss': {
+      1: ['bridge'],
+      2: ['bridge', 'middle'],
+      3: ['middle'],
+      4: ['middle', 'neck'],
+      5: ['neck'],
+    },
+    'strat-hss': {
+      1: ['bridge'],
+      2: ['bridge', 'middle'],
+      3: ['middle'],
+      4: ['middle', 'neck'],
+      5: ['neck'],
+    },
+  };
+
+  it.each([
+    ['strat-sss', sssStratCircuit],
+    ['strat-hss', hssStratCircuit],
+  ])('%s is live in every position with the expected pickups', (id, create) => {
+    for (const position of positions) {
+      const circuit = update(create(), 'selector', { value: position });
+      const estimate = analyze(circuit);
+      expect(estimate.status).toBe('live');
+      expect(estimate.output).toBe(100);
+      expect(estimate.activePickups.sort()).toEqual(
+        expectedPickups[id]![position]!.slice().sort(),
+      );
+    }
+  });
+
+  it('splits the bridge humbucker to coil A when the push/pull volume is pulled', () => {
+    const pushed = analyze(
+      update(hssSplitStratCircuit(), 'selector', { value: 1 }),
+    );
+    expect(pushed.status).toBe('live');
+    expect(pushed.activeCoils).toEqual({ bridge: ['a', 'b'] });
+
+    const pulled = analyze(
+      update(
+        update(hssSplitStratCircuit(), 'selector', { value: 1 }),
+        'volume',
+        {
+          isPulled: true,
+        },
+      ),
+    );
+    expect(pulled.status).toBe('live');
+    expect(pulled.activeCoils).toEqual({ bridge: ['a'] });
+    // Pushing back restores both coils.
+    const restored = analyze(
+      update(
+        update(hssSplitStratCircuit(), 'selector', { value: 1 }),
+        'volume',
+        { isPulled: false },
+      ),
+    );
+    expect(restored.activeCoils).toEqual({ bridge: ['a', 'b'] });
+  });
+});
+
 describe('library and strict portable additions', () => {
   it.each(exampleLibrary)(
     'creates independent valid objects for $id',
@@ -556,6 +642,9 @@ describe('library and strict portable additions', () => {
     { kind: 'blade4', value: 0 },
     { kind: 'blade4', value: 5 },
     { kind: 'blade4', value: 2.5 },
+    { kind: 'blade5', value: 0 },
+    { kind: 'blade5', value: 6 },
+    { kind: 'blade5', value: 2.5 },
     { kind: 'varitone', value: 0 },
     { kind: 'varitone', value: 7 },
     { kind: 'varitone', value: 1.5 },
@@ -589,6 +678,7 @@ describe('library and strict portable additions', () => {
       'push-pull-volume',
       'push-pull-tone',
       'blade4',
+      'blade5',
       'varitone',
     ] as const)
       expect(

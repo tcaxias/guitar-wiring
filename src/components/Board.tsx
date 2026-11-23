@@ -300,7 +300,9 @@ function PartArtwork({
     const angle =
       part.kind === 'blade4'
         ? -36 + (bladePosition(part) - 1) * 24
-        : -32 + (bladePosition(part) - 1) * 32;
+        : part.kind === 'blade5'
+          ? -40 + (bladePosition(part) - 1) * 20
+          : -32 + (bladePosition(part) - 1) * 32;
     return (
       <>
         <title>
@@ -389,7 +391,9 @@ function PartArtwork({
             x={x}
             y="16"
             width="4"
-            height={part.kind === 'blade4' ? 168 : 128}
+            height={
+              part.kind === 'blade5' ? 208 : part.kind === 'blade4' ? 168 : 128
+            }
             fill="#795137"
             stroke="#ab8050"
           />
@@ -860,7 +864,14 @@ export function Board({
         const newValue = Math.max(0, Math.min(10, part.value + deltaValue));
         onUpdate(part.id, { value: newValue });
       } else if (isBladePart(part)) {
-        if (part.kind === 'blade4') {
+        if (part.kind === 'blade5') {
+          const deltaPos = direction[0] > 0 ? 1 : -1;
+          const newValue = Math.max(
+            1,
+            Math.min(5, (part.value ?? 1) + deltaPos),
+          );
+          onUpdate(part.id, { value: newValue });
+        } else if (part.kind === 'blade4') {
           const deltaPos = direction[0] > 0 ? 1 : -1;
           const newValue = Math.max(
             1,
@@ -1224,11 +1235,13 @@ export function Board({
                     height={
                       isPushPullPart(part)
                         ? 264
-                        : part.kind === 'blade4'
-                          ? 196
-                          : isBladePart(part)
-                            ? 156
-                            : 109
+                        : part.kind === 'blade5'
+                          ? 236
+                          : part.kind === 'blade4'
+                            ? 196
+                            : isBladePart(part)
+                              ? 156
+                              : 109
                     }
                     rx="15"
                     fill="transparent"
